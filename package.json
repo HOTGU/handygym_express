@@ -1,28 +1,31 @@
 {
-  "name": "handygym_express",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/HOTGU/handygym_express.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/HOTGU/handygym_express/issues"
-  },
-  "homepage": "https://github.com/HOTGU/handygym_express#readme",
-  "dependencies": {
-    "cookie-parser": "^1.4.6",
-    "express": "^4.18.2",
-    "gulp": "^4.0.2",
-    "helmet": "^6.0.0",
-    "mongoose": "^6.7.2",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.20"
-  }
+    "name": "handygym_express",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/HOTGU/handygym_express.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/HOTGU/handygym_express/issues"
+    },
+    "homepage": "https://github.com/HOTGU/handygym_express#readme",
+    "dependencies": {
+        "cookie-parser": "^1.4.6",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "gulp": "^4.0.2",
+        "helmet": "^6.0.0",
+        "mongoose": "^6.7.2",
+        "morgan": "^1.10.0",
+        "nodemon": "^2.0.20",
+        "pug": "^3.0.2"
+    }
 }
