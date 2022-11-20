@@ -7,15 +7,14 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
-import passport from "passport";
+import flash from "connect-flash";
 
 import globalRouter from "./routes/globalRouter.js";
 import gymRouter from "./routes/gymRouter.js";
 import postRouter from "./routes/postRouter.js";
 import userRouter from "./routes/userRouter.js";
-import "./utils/passport.js";
-
 import setLocals from "./utils/setLocals.js";
+import passportInit from "./utils/passportInit.js";
 
 const mongoUrl = process.env.DEV_MONGO_URL;
 const app = express();
@@ -47,10 +46,12 @@ app.use(
         cookie: { maxAge: 3.6e6 * 24 }, // 24시간 유효
     })
 );
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(setLocals);
+
+passportInit(app);
+
+app.use(flash());
 app.use("/static", express.static("static"));
+app.use(setLocals);
 
 app.use("/", globalRouter);
 app.use("/gym", gymRouter);

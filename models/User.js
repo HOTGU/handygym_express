@@ -3,15 +3,17 @@ import passportLocalMongoose from "passport-local-mongoose";
 
 const UserSchema = new mongoose.Schema({
     nickname: String,
-    email: String,
     avatarUrl: String,
-    facebookID: Number,
-    githubId: Number,
+    password: String,
+    email: String,
+    email_verified: Boolean,
+    socialId: Number,
+    socialType: String,
 });
 
-UserSchema.plugin(passportLocalMongoose, {
-    usernameField: "email",
-});
+// UserSchema.plugin(passportLocalMongoose, {
+//     usernameField: "email",
+// });
 
 const User = mongoose.model("User", UserSchema);
 export default User;
