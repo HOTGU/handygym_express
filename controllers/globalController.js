@@ -8,7 +8,7 @@ export const home = (req, res) => {
 };
 
 export const signin = (req, res) => {
-    res.render("signin");
+    res.render("signin", { csrfToken: req.csrfToken() });
 };
 
 export const signinPost = (req, res) => {
@@ -39,7 +39,7 @@ export const signinPost = (req, res) => {
 };
 
 export const signup = (req, res) => {
-    res.render("signup");
+    res.render("signup", { csrfToken: req.csrfToken() });
 };
 
 export const signupPost = async (req, res) => {
@@ -49,6 +49,7 @@ export const signupPost = async (req, res) => {
     try {
         if (password !== passwordRepeat) {
             // flash 처리
+            req.flash("error", "비밀번호가 틀립니다");
             return res.status(500);
         }
         const existUser = await User.findOne({ email });

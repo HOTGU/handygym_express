@@ -1,3 +1,4 @@
+import csrf from "csurf";
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
@@ -35,7 +36,7 @@ app.set("view engine", "pug");
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
     session({
