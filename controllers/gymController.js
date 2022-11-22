@@ -3,7 +3,7 @@ export const fetch = (req, res) => {
 };
 
 export const upload = (req, res) => {
-    res.send("Gym Upload");
+    return res.render("home");
 };
 
 export const uploadPost = (req, res) => {

@@ -41,7 +41,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
     session({
         secret: process.env.COOKIE_SECRET,
-        resave: true,
+        resave: false,
         saveUninitialized: true,
         store: MongoStore.create({ mongoUrl }),
         cookie: { maxAge: 3.6e6 * 24 }, // 24시간 유효

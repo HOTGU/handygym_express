@@ -8,9 +8,9 @@
 
 -   [x] 로그아웃
 
--   [ ] CSRF Token
+-   [x] CSRF Token
 
--   [ ] Email Verify
+-   [x] Email Verify
 
 -   [ ] Email 찾기
 
@@ -25,6 +25,8 @@
 -   [ ] GYM 필터
 
 -   [ ] POST 필터
+
+-   [ ] Pagenation
 
 ---
 

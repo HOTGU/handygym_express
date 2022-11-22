@@ -6,6 +6,9 @@ import KakakoPassport from "./oauthKakao.js";
 import User from "../models/User.js";
 
 export default (app) => {
+    app.use(passport.initialize());
+    app.use(passport.session());
+
     passport.serializeUser(function (user, done) {
         done(null, user._id);
     });
@@ -18,7 +21,4 @@ export default (app) => {
     LocalPassport();
     GooglePassport();
     KakakoPassport();
-
-    app.use(passport.initialize());
-    app.use(passport.session());
 };
