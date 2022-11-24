@@ -12,6 +12,8 @@
 
 -   [x] Email Verify
 
+-   [ ] Daum Address API
+
 -   [ ] Email 찾기
 
 -   [ ] 비밀번호 변경

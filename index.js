@@ -1,4 +1,4 @@
-import csrf from "csurf";
+import cors from "cors";
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
@@ -33,8 +33,29 @@ db.once("open", handleDBSuccess);
 
 app.set("view engine", "pug");
 
+// var corsOptions = {
+//     origin: "//t1.daumcdn.net",
+//     optionsSuccessStatus: 200,
+// };
+// app.use(cors(corsOptions));
+
+// console.log(corsOptions);
+
+const cspOptions = {
+    directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        "script-src": ["'self'", "*.daumcdn.net"],
+        "frame-src": ["'self'", "*.map.daum.net"],
+    },
+};
+
+app.use(
+    helmet({
+        contentSecurityPolicy: cspOptions,
+        crossOriginEmbedderPolicy: false,
+    })
+);
 app.use(morgan("dev"));
-app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
