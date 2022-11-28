@@ -12,13 +12,13 @@
 
 -   [x] Email Verify
 
--   [ ] Daum Address API
+-   [x] Daum Address API
 
 -   [ ] Email 찾기
 
 -   [ ] 비밀번호 변경
 
--   [ ] GYM CRUD
+-   [x] GYM CRUD
 
 -   [ ] USER CRUD
 
@@ -28,7 +28,7 @@
 
 -   [ ] POST 필터
 
--   [ ] Pagenation
+-   [x] Pagenation
 
 ---
 

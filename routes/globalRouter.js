@@ -21,7 +21,14 @@ const globalRouter = express.Router();
 
 globalRouter.get("/", home);
 
-globalRouter.route("/signin").all(protectCSRFToken).get(signin).post(signinPost);
+globalRouter
+    .route("/signin")
+    .all(protectCSRFToken, (req, res, next) => {
+        console.log(req);
+        next();
+    })
+    .get(signin)
+    .post(signinPost);
 
 globalRouter.route("/signup").all(protectCSRFToken).get(signup).post(signupPost);
 

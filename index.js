@@ -33,18 +33,12 @@ db.once("open", handleDBSuccess);
 
 app.set("view engine", "pug");
 
-// var corsOptions = {
-//     origin: "//t1.daumcdn.net",
-//     optionsSuccessStatus: 200,
-// };
-// app.use(cors(corsOptions));
-
-// console.log(corsOptions);
-
 const cspOptions = {
     directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-        "script-src": ["'self'", "*.daumcdn.net"],
+        "default-src": ["'self'", "*.kakao.com"],
+        "img-src": ["'self'", "*.daumcdn.net"],
+        "script-src": ["'self'", "*.daumcdn.net", "*.kakao.com"],
         "frame-src": ["'self'", "*.map.daum.net"],
     },
 };
@@ -57,7 +51,7 @@ app.use(
 );
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
     session({

@@ -1,0 +1,14 @@
+extends includes/layout
+
+block content 
+
+    h1 #{gym.name}
+    h1=user._id
+    h1=gym.creator._id
+    if `${user._id}`=== `${gym.creator._id}`
+        a(href=`/gym/${gym._id}/update`) 수정
+        #deleteBtn 삭제
+        
+    script(src="/static/js/useConfirm.js") 
+        
+    

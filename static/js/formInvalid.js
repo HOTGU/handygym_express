@@ -1,1 +1,13 @@
-"use strict";console.log("helloworld !");var fun=function(){console.log("11")},i=2;fun(),console.log(i);
+"use strict";
+
+console.log("helloworld !");
+
+var fun = function fun() {
+    console.log("11");
+};
+
+var i = 2;
+
+fun();
+
+console.log(i);

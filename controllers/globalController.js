@@ -13,6 +13,7 @@ export const signin = (req, res) => {
         query: { redirectUrl },
     } = req;
     res.render("signin", {
+        title: "로그인",
         csrfToken: req.csrfToken(),
         redirectUrl: redirectUrl || "",
     });
@@ -52,7 +53,11 @@ export const signup = (req, res) => {
     const {
         query: { redirectUrl },
     } = req;
-    res.render("signup", { csrfToken: req.csrfToken(), redirectUrl: redirectUrl || "" });
+    res.render("signup", {
+        title: "회원가입",
+        csrfToken: req.csrfToken(),
+        redirectUrl: redirectUrl || "",
+    });
 };
 
 export const signupPost = async (req, res) => {
