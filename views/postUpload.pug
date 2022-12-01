@@ -1,0 +1,12 @@
+extends includes/layout
+
+block content 
+    form(action="/post/upload" method="post")
+        input(type="hidden" name="_csrf" value=csrfToken)
+        input(type="text" name="title" placeholder="한 줄로 표현해보세요")
+        textarea(name="description" placeholder="세부내용")
+        input(type="text" name="category" placeholder="카테고리")
+        input(type="submit" value="생성")
+
+    script(type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js")
+    script(src="/static/js/useRichText.js")

@@ -1,0 +1,7 @@
+extends includes/layout
+
+block content 
+    each post in posts
+        a(href=`/post/${post._id}`)
+            h1=post.title
+            

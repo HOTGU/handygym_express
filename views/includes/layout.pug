@@ -9,7 +9,8 @@ html
               div.message#error=message.error
           if message.info
               div.message#error=message.info
-    include nav
-    block content
+    .bodyWrapper
+      include ./nav.pug
+      block content
     include footer
     

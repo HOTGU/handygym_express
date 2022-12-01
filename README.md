@@ -14,21 +14,23 @@
 
 -   [x] Daum Address API
 
+-   [x] Pagination
+
+-   [x] GYM CRUD
+
+-   [ ] POST CRUD
+
+-   [ ] Rich Text POST
+
 -   [ ] Email 찾기
 
 -   [ ] 비밀번호 변경
 
--   [x] GYM CRUD
-
 -   [ ] USER CRUD
-
--   [ ] Rich Text POST CRUD
 
 -   [ ] GYM 필터
 
 -   [ ] POST 필터
-
--   [x] Pagenation
 
 ---
 

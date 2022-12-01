@@ -38,7 +38,7 @@ const cspOptions = {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
         "default-src": ["'self'", "*.kakao.com"],
         "img-src": ["'self'", "*.daumcdn.net"],
-        "script-src": ["'self'", "*.daumcdn.net", "*.kakao.com"],
+        "script-src": ["'self'", "*.daumcdn.net", "*.kakao.com", "*.jsdelivr.net"],
         "frame-src": ["'self'", "*.map.daum.net"],
     },
 };

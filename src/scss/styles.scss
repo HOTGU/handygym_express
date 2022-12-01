@@ -1,1 +1,9 @@
+@import "./config/_reset.scss";
+@import "./config/_global.scss";
+
+@import "./items/footer.scss";
+@import "./items/nav.scss";
+@import "./items/message.scss";
+
 @import "./pages/gymUpload.scss";
+@import "./pages/home.scss";

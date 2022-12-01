@@ -42,7 +42,7 @@ const paintInitMap = () => {
                 paintMap(lat, lng);
             },
             () => {
-                alert("카카오맵 로딩 실패");
+                alert("위치 허용을 하셔야 이용가능합니다");
             },
             { enableHighAccuracy: true }
         );

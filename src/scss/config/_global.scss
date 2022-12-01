@@ -1,0 +1,25 @@
+@import "variable";
+
+body,
+html {
+    background-color: $bgColor;
+    color: $textColor;
+    font-family: $fontFamilly;
+    line-height: 1.4rem;
+    .bodyWrapper {
+        height: auto;
+        min-height: 100%;
+        margin-bottom: $footerHeight;
+    }
+}
+
+.container {
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.wideContainer {
+    width: 100%;
+    margin: 0 auto;
+}
