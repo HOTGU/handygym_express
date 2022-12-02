@@ -5,7 +5,7 @@ import User from "../models/User.js";
 import sendMail from "../utils/sendMail.js";
 
 export const home = (req, res) => {
-    res.render("home");
+    res.render("home", { title: "홈" });
 };
 
 export const signin = (req, res) => {
@@ -42,7 +42,7 @@ export const signinPost = (req, res) => {
                     req.flash("error", "로그인 오류 발생");
                     return res.redirect("/signin");
                 }
-                req.flash("success", `${user.nickname}님 안녕하세요👋`);
+                req.flash("success", `${user.nickname}님 안녕하세요`);
                 return res.redirect(redirectUrl || "/");
             });
         }
@@ -116,7 +116,7 @@ export const googleCallback = async (req, res) => {
                 req.flash("error", "구글로그인 오류 발생");
                 return res.redirect("/signin");
             }
-            req.flash("success", `${user.nickname}님 안녕하세요👋`);
+            req.flash("success", `${user.nickname}님 안녕하세요`);
             return res.redirect(info.redirectUrl || "/");
         });
     })(req, res);
@@ -134,7 +134,7 @@ export const kakaoCallback = async (req, res) => {
                 req.flash("error", "카카오로그인 오류 발생");
                 return res.redirect("/signin");
             }
-            req.flash("success", `${user.nickname}님 안녕하세요👋`);
+            req.flash("success", `${user.nickname}님 안녕하세요`);
             return res.redirect(info.redirectUrl);
         });
     })(req, res);
@@ -160,7 +160,7 @@ export const verifyEmail = async (req, res) => {
         if (findUser.email_verify_string === key) {
             findUser.email_verified = true;
             await findUser.save();
-            req.flash("success", `${findUser.nickname}님의 이메일 인증 성공👋`);
+            req.flash("success", `${findUser.nickname}님의 이메일 인증 성공`);
             return res.redirect(redirectUrl || "/");
         } else {
             req.flash("error", "잘못된접근입니다");

@@ -36,9 +36,15 @@ app.set("view engine", "pug");
 const cspOptions = {
     directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-        "default-src": ["'self'", "*.kakao.com"],
+        "default-src": ["'self'", "*.kakao.com", "*.fontawesome.com"],
         "img-src": ["'self'", "*.daumcdn.net"],
-        "script-src": ["'self'", "*.daumcdn.net", "*.kakao.com", "*.jsdelivr.net"],
+        "script-src": [
+            "'self'",
+            "*.daumcdn.net",
+            "*.kakao.com",
+            "*.jsdelivr.net",
+            "*.fontawesome.com",
+        ],
         "frame-src": ["'self'", "*.map.daum.net"],
     },
 };

@@ -1,0 +1,8 @@
+mixin oauthBlock
+    .oauthContainer
+        a(href=`/auth/google?redirectUrl=${redirectUrl}`)
+            .google.oauthBtn
+                i.fa-brands.fa-google.fa-xl
+        a(href=`/auth/kakao?redirectUrl=${redirectUrl}`)
+            .kakao.oauthBtn
+                i.fa-solid.fa-comment.fa-xl

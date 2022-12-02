@@ -14,7 +14,7 @@ import protectCSRFToken from "../utils/protectCSRFToken.js";
 
 const gymRouter = express.Router();
 
-gymRouter.get("/", fetch);
+gymRouter.get("/", onlyUser, onlyEmailVerified, fetch);
 
 gymRouter
     .route("/upload")

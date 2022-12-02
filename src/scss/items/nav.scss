@@ -3,12 +3,19 @@
 nav {
     border-bottom: 1px solid $borderColor;
     height: $navHeight;
+    position: fixed;
+    top: 0;
+    z-index: 80;
+    background-color: $bgColor;
     .navContainer {
         height: inherit;
         display: flex;
         align-items: center;
         justify-content: space-between;
         &__item {
+            &:first-child {
+                font-size: 20px;
+            }
             &:last-child {
                 display: flex;
                 gap: 10px;
