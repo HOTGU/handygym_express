@@ -8,8 +8,8 @@ const GymSchema = mongoose.Schema(
         photos: [String],
         title: String,
         description: String,
-        creator: { type: mongoose.SchemaTypes.ObjectId, ref: "User" },
         category: [String],
+        creator: { type: mongoose.SchemaTypes.ObjectId, ref: "User" },
     },
     {
         timestamps: true,

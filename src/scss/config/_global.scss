@@ -16,7 +16,7 @@ html {
     button,
     .btn {
         border: 1px solid $borderColor;
-        height: 50px;
+        height: 44px;
         padding: 0 12px;
         font-family: $fontFamilly;
         border-radius: 2px;
@@ -34,6 +34,7 @@ html {
         font-size: 16px;
         font-weight: 700;
         cursor: pointer;
+        border: none;
     }
     .primary {
         background-color: $accentColor;

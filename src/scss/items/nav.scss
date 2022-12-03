@@ -15,6 +15,7 @@ nav {
         &__item {
             &:first-child {
                 font-size: 20px;
+                color: $accentColor;
             }
             &:last-child {
                 display: flex;

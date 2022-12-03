@@ -9,8 +9,14 @@ const TOTAL_PAGE_CONTAINER = Math.ceil(TOTAL_PAGE / PAGE_CONTAINER_SIZE);
 
 const paintPage = (page) => {
     const pageLink = document.createElement("a");
-    pageLink.innerText = page;
+    const pageText = document.createElement("div");
     pageLink.href = `/gym?page=${page}`;
+    pageText.innerText = page;
+    pageText.classList.add("page");
+    if (PAGE === +page) {
+        pageText.classList.add("currentPage");
+    }
+    pageLink.appendChild(pageText);
     pageContainer.appendChild(pageLink);
 };
 
