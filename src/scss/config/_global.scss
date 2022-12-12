@@ -36,6 +36,13 @@ html {
         cursor: pointer;
         border: none;
     }
+    textarea {
+        border: 1px solid $borderColor;
+        border-radius: 2px;
+        font-family: $fontFamilly;
+        resize: none;
+        padding: 12px;
+    }
     .primary {
         background-color: $accentColor;
         color: $white;
@@ -48,7 +55,8 @@ html {
         color: $accentColor;
         border: 1px solid $accentColor;
         &:hover {
-            background-color: $hoverColor;
+            background-color: $accentColor;
+            color: $white;
         }
     }
     .tertiary {

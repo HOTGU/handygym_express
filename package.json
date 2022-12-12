@@ -7,7 +7,7 @@
     "scripts": {
         "start": "nodemon index.js",
         "dev:assets": "gulp dev",
-        "dev:server": "nodemon index.js"
+        "dev:server": "nodemon index.js --ignore gulpfile.json"
     },
     "repository": {
         "type": "git",

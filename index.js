@@ -37,7 +37,7 @@ const cspOptions = {
     directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
         "default-src": ["'self'", "*.kakao.com", "*.fontawesome.com"],
-        "img-src": ["'self'", "*.daumcdn.net"],
+        "img-src": ["'self'", "blob:", "*.daumcdn.net"],
         "script-src": [
             "'self'",
             "*.daumcdn.net",

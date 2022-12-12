@@ -1,9 +1,6 @@
 const searchAddressBtn = document.getElementById("searchAddressBtn");
 const result = document.getElementById("result");
 const mapContainer = document.getElementById("kakaoMap");
-const loadingText = document.getElementById("loadingText");
-const layer = document.getElementById("postcodeLayer");
-const cancelBtn = document.getElementById("postcodeCancelBtn");
 const addressInput = document.querySelector("input[name=address]");
 const locationInput = document.querySelector("input[name=location]");
 
@@ -31,7 +28,6 @@ const loadingMap = () => {
 };
 
 const paintInitMap = () => {
-    loadingMap();
     if (addressInput.value) {
         moveMapByAddress(addressInput.value);
     } else {
@@ -52,12 +48,8 @@ const paintInitMap = () => {
 const paintAddress = (address) => {
     result.innerHTML = "";
     const div = document.createElement("div");
-    div.innerText = address;
+    div.innerText = `주소: ${address}`;
     result.appendChild(div);
-};
-
-const cancel = () => {
-    layer.style.display = "none";
 };
 
 const moveMapByAddress = (address) => {
@@ -73,8 +65,6 @@ const moveMapByAddress = (address) => {
         }
     };
 
-    paintAddress(address);
-
     const geocoder = new daum.maps.services.Geocoder();
     geocoder.addressSearch(address, handleGeocoder);
 };
@@ -84,17 +74,16 @@ const show = () => {
         oncomplete: function (data) {
             addressInput.value = data.roadAddress;
             locationInput.value = `${data.sido} ${data.sigungu} ${data.bname}`;
+            paintAddress(data.roadAddress);
 
             moveMapByAddress(data.roadAddress);
         },
-    }).embed(layer);
-    layer.style.display = "block";
+    }).open();
 };
 
 const init = () => {
     paintInitMap();
     searchAddressBtn.addEventListener("click", show);
-    cancelBtn.addEventListener("click", cancel);
 };
 
 init();
