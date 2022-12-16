@@ -1,15 +1,54 @@
 extends includes/layout
 
-block content 
+block content
+    .modalContainer
+        .modal
+            .modal__top.modalColumnWrapper
+                .modal__item
+                .modal__item
+                .modal__item#xBtn 취소
+            .modal__middle.modalColumnWrapper
+                .modal__item 
+                    i.fa-solid.fa-chevron-left#prevSlideBtn
+                .modal__item
+                    .slideContainer
+                        each photo in gym.photos
+                            img(src=`/${photo}`, alt="체육관 사진", class="gymImg")
+                .modal__item 
+                    i.fa-solid.fa-chevron-right#nextSlideBtn
+            .modal__bottom.modalColumnWrapper
+                .modal__item 
+                .modal__item 1 / 5
+                .modal__item 
+    .container
+        .gymDetail
+            h1 #{gym.name}
+            h2 #{gym.title}
+            .gymDetail__imgLayout
+                - let i = 0;
+                while i < 4
+                    if i === 0 || i === 1
+                        .imgContainer 
+                            img(src=`/${gym.photos[i]}`,)
+                    if i === 2
+                        .imgContainer 
+                            img(src=`/${gym.photos[i]}`,)
+                            img(src=`/${gym.photos[i+1]}`,)
+                            #viewMore.btn + 사진 더보기
+                    if i === 3
+                        span
+                            
+                    - ++i
 
-    h1 #{gym.name}
-    #format
-    p=gym.description
-    if `${user._id}`=== `${gym.creator._id}`
-        a(href=`/gym/${gym._id}/update`) 수정
-        #deleteBtn 삭제
-        
+
+            
+            p=gym.description
+            if `${user._id}`=== `${gym.creator._id}`
+                a(href=`/gym/${gym._id}/update`) 수정
+                #deleteBtn 삭제
+
+    script(src="/static/js/viewMore.js") 
+    //- script(src="/static/js/imgSlide.js") 
     script(src="/static/js/useConfirm.js") 
-    script(src="/static/js/formatCode.js") 
         
     

@@ -33,8 +33,10 @@ const handleCheckbox = (e) => {
     } = e;
     if (checked) {
         onedayPayInput.value = "모름";
+        onedayPayInput.disabled = true;
     } else {
         onedayPayInput.value = "";
+        onedayPayInput.disabled = false;
     }
 };
 const init = () => {

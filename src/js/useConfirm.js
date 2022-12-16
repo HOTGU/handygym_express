@@ -13,4 +13,10 @@ const handleDelete = async () => {
     }
 };
 
-deleteBtn.addEventListener("click", handleDelete);
+const init = () => {
+    deleteBtn.addEventListener("click", handleDelete);
+};
+
+if (deleteBtn) {
+    init();
+}
