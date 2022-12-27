@@ -2,8 +2,22 @@ extends includes/layout
 include mixins/gymCardBlock
 
 block content 
+    .modalContainer
+        .modal
+            .modal__title 검색
+            form(action=`/gym`)
+                input(type="text" name="searchTerm" placeholder="업체명이나 읍면동을 검색해보세요")
+                .labelContainer
+                    label
+                        input(type="checkbox" name="yearRound")
+                        span 연중무휴
+                    label
+                        input(type="checkbox" name="oneday")
+                        span 일일권
+                button.btn.secondary 검색
     .container.gymContainer
         .gymContainer__head
+            .btn.secondary#modalBtn 검색
             a(href="/gym/upload") 
                 .btn.primary 업로드
         .gymContainer__middle
@@ -18,4 +32,5 @@ block content
 
 
     script(src="/static/js/pagination.js") 
+    script(src="/static/js/createModal.js") 
 

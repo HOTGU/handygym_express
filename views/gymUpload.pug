@@ -61,10 +61,12 @@ block content
                 .flexContainer__item
                     span 일일권가격
                 .flexContainer__item.onedayPayItem
-                    input(type="text" name="onedayPay" pattern="[0-9]+")
+                    input(type="text" name="onedayPay")
                     p 원
                     label
-                        input(type="checkbox" id="onedayPayCheckbox")                 
+                        input(type="checkbox"
+                        name="onedayPayCheckbox"
+                        id="onedayPayCheckbox")                 
                         div 모름
             
             input(type="submit" value="생성").btn.primary

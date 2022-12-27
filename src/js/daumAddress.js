@@ -16,20 +16,15 @@ let marker = new daum.maps.Marker({
 });
 
 const paintMap = (lat, lng) => {
-    mapContainer.style.display = "block";
-    map.relayout();
-    const moveLatLng = new daum.maps.LatLng(lat, lng);
-    map.setCenter(moveLatLng);
-    marker.setPosition(moveLatLng);
-};
-
-const loadingMap = () => {
-    mapContainer.style.display = "none";
+    const coords = new daum.maps.LatLng(lat, lng);
+    map.setCenter(coords);
+    marker.setPosition(coords);
 };
 
 const paintInitMap = () => {
     if (addressInput.value) {
         moveMapByAddress(addressInput.value);
+        paintAddress(addressInput.value);
     } else {
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -58,7 +53,6 @@ const moveMapByAddress = (address) => {
             const result = results[0];
             const lat = Number(result.y);
             const lng = Number(result.x);
-            loadingMap();
             paintMap(lat, lng);
         } else {
             alert("오류발생");

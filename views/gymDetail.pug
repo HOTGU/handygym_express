@@ -1,30 +1,48 @@
 extends includes/layout
 
 block content
-    .modalContainer
-        .modal
-            .modal__top.modalColumnWrapper
-                .modal__item
-                .modal__item
-                .modal__item#xBtn 취소
-            .modal__middle.modalColumnWrapper
-                .modal__item 
+    .viewMoreContainer
+        .viewMore
+            .viewMore__top.viewMore__column
+                .viewMore__item
+                .viewMore__item
+                .viewMore__item#xBtn 취소
+            .viewMore__middle.viewMore__column
+                .viewMore__item 
                     i.fa-solid.fa-chevron-left#prevSlideBtn
-                .modal__item
+                .viewMore__item
                     .slideContainer
                         each photo in gym.photos
                             img(src=`/${photo}`, alt="체육관 사진", class="gymImg")
-                .modal__item 
+                .viewMore__item 
                     i.fa-solid.fa-chevron-right#nextSlideBtn
-            .modal__bottom.modalColumnWrapper
-                .modal__item 
-                .modal__item 1 / 5
-                .modal__item 
+            .viewMore__bottom.viewMore__column
+                .viewMore__item 
+                .viewMore__item#slideNumber 
+                .viewMore__item 
     .container
         .gymDetail
-            h1 #{gym.name}
-            h2 #{gym.title}
-            .gymDetail__imgLayout
+            h1.gymDetail__section #{gym.name}
+            .gymDetail__section.btnContainer
+                if gym.oneday === "가능"
+                    .gymDetail__btn.yes 일일권 가능
+                        if gym.onedayPay === "모름"
+                            span (가격: #{gym.onedayPay})
+                        else 
+                            span (가격: #{gym.onedayPay}원)
+                            
+                else if gym.oneday === "불가능"
+                    .gymDetail__btn.no 일일권 불가능
+                else if gym.oneday === "모름"
+                    .gymDetail__btn 일일권 여부 모름
+                if gym.yearRound === "네"
+                    .gymDetail__btn.yes 연중무휴
+                else if gym.yearRound === "아니오"
+                    .gymDetail__btn.no 연중무휴 아님
+                else if gym.oneday === "모름"
+                    .gymDetail__btn 연중무휴 여부 모름
+            
+            .gymDetail__imgLayout.gymDetail__section
                 - let i = 0;
                 while i < 4
                     if i === 0 || i === 1
@@ -39,16 +57,21 @@ block content
                         span
                             
                     - ++i
-
-
-            
-            p=gym.description
+            h2.gymDetail__section " #{gym.title} "
+            p.gymDetail__section=gym.description
+            .gymDetail__section
+                #kakaoMap
+                    #jsAddress #{gym.address}
+                
             if `${user._id}`=== `${gym.creator._id}`
-                a(href=`/gym/${gym._id}/update`) 수정
-                #deleteBtn 삭제
+                .updateAndDeleteBtn
+                    a(href=`/gym/${gym._id}/update`)
+                        div.btn.primary 수정
+                    #deleteBtn.btn.secondary 삭제
+
 
     script(src="/static/js/viewMore.js") 
-    //- script(src="/static/js/imgSlide.js") 
+    script(src="/static/js/kakaomap.js") 
     script(src="/static/js/useConfirm.js") 
         
     

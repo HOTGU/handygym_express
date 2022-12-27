@@ -7,10 +7,21 @@ const PAGE_CONTAINER_SIZE = 5;
 const CURRENT_PAGE_CONTAINER = Math.ceil(PAGE / PAGE_CONTAINER_SIZE);
 const TOTAL_PAGE_CONTAINER = Math.ceil(TOTAL_PAGE / PAGE_CONTAINER_SIZE);
 
+const setHref = (aEle, pageNum) => {
+    let queryString = `?page=${pageNum}`;
+    const searchTerm = params.get("searchTerm");
+    const yearRound = params.get("yearRound");
+    const oneday = params.get("oneday");
+    if (searchTerm) queryString += `&searchTerm=${searchTerm}`;
+    if (yearRound) queryString += `&yearRound=on`;
+    if (oneday) queryString += `&oneday=on`;
+    aEle.href = `/gym${queryString}`;
+};
+
 const paintPage = (page) => {
     const pageLink = document.createElement("a");
     const pageText = document.createElement("div");
-    pageLink.href = `/gym?page=${page}`;
+    setHref(pageLink, page);
     pageText.innerText = page;
     pageText.classList.add("page");
     if (PAGE === +page) {
@@ -22,10 +33,12 @@ const paintPage = (page) => {
 
 const paintPagination = (TOTAL_PAGE) => {
     if (CURRENT_PAGE_CONTAINER > 1) {
-        const nextLink = document.createElement("a");
-        nextLink.innerText = "<";
-        nextLink.href = `/gym?page=${(CURRENT_PAGE_CONTAINER - 1) * PAGE_CONTAINER_SIZE}`;
-        pageContainer.append(nextLink);
+        const prevLink = document.createElement("a");
+        prevLink.innerText = "<";
+
+        setHref(prevLink, (CURRENT_PAGE_CONTAINER - 1) * PAGE_CONTAINER_SIZE);
+
+        pageContainer.append(prevLink);
     }
     for (let i = 1; i <= TOTAL_PAGE; i++) {
         const iPageContainer = Math.ceil(i / PAGE_CONTAINER_SIZE);
@@ -41,9 +54,7 @@ const paintPagination = (TOTAL_PAGE) => {
         ) {
             const nextLink = document.createElement("a");
             nextLink.innerText = ">";
-            nextLink.href = `/gym?page=${
-                CURRENT_PAGE_CONTAINER * PAGE_CONTAINER_SIZE + 1
-            }`;
+            setHref(nextLink, CURRENT_PAGE_CONTAINER * PAGE_CONTAINER_SIZE + 1);
             pageContainer.append(nextLink);
         }
     }

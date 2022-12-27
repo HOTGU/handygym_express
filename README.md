@@ -18,9 +18,9 @@
 
 -   [x] GYM CRUD
 
--   [ ] POST CRUD
+-   [x] POST CRUD
 
--   [ ] Rich Text POST
+-   [x] Rich Text POST
 
 -   [ ] Email 찾기
 
@@ -28,9 +28,15 @@
 
 -   [ ] USER CRUD
 
--   [ ] GYM 필터
+-   [x] GYM 필터
 
 -   [ ] POST 필터
+
+-   [ ] 좋아요 기능
+
+-   [ ] 댓글 기능
+
+-   [ ] 쪽지 기능
 
 ---
 

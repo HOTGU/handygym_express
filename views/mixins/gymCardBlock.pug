@@ -1,5 +1,5 @@
 mixin gymCardBlock(gym={})
-    a(href=`/gym/${gym._id}`).gymCard
+    a(href=`/gym/${gym._id}` target="_blank").gymCard
         img(src=`/${gym.thumbnail}`)
         h3=gym.name
         h4=gym.title

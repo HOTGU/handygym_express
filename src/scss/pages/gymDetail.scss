@@ -1,9 +1,9 @@
 .gymDetail {
-    height: 300vh;
     &__imgLayout {
         display: flex;
-        max-width: 75%;
+        max-width: 100%;
         aspect-ratio: 7.5 / 4;
+        gap: 5px;
         .imgContainer {
             &:first-child {
                 aspect-ratio: 3 / 4;
@@ -17,6 +17,7 @@
                 width: 20%;
                 display: flex;
                 flex-direction: column;
+                gap: 5px;
                 position: relative;
                 #viewMore {
                     position: absolute;
@@ -31,6 +32,67 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 5px;
+        }
+    }
+    &__section {
+        padding-top: 20px;
+    }
+    .btnContainer {
+        display: flex;
+        gap: 10px;
+    }
+    &__btn {
+        color: $white;
+        background-color: $accentColor;
+        border-radius: 5px;
+        display: inline-block;
+        padding: 6px 12px;
+        font-weight: 700;
+    }
+    .no {
+        background-color: $red;
+    }
+    .yes {
+        background-color: $blue;
+    }
+    h1 {
+        font-size: 34px;
+        font-weight: 700;
+    }
+    h2 {
+        font-size: 28px;
+    }
+    p {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+    #kakaoMap {
+        width: 100%;
+        aspect-ratio: 2 / 1;
+        #jsAddress {
+            background-color: white;
+            padding: 10px;
+            border-radius: 20px;
+            color: black;
+            position: absolute;
+            bottom: 20;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            box-shadow: $boxShadow;
+        }
+    }
+    .updateAndDeleteBtn {
+        display: flex;
+        width: 50%;
+        gap: 20px;
+        margin: 10px 0;
+        a {
+            width: 100%;
+        }
+        #deleteBtn {
+            width: 100%;
         }
     }
 }
