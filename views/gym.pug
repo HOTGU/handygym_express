@@ -27,7 +27,9 @@ block content
                     thumbnail:gym.photos[0],
                     name:gym.name,
                     title:gym.title,
-                    isLike:gym.like_users.includes(String(user._id))
+                    isLike:gym.like_users.includes(String(user._id)),
+                    totalLike:gym.like_users.length,
+                    totalComment:gym.comments.length
                 })
         div(id=totalPage class="jsPageContainer gymContainer__end")
 

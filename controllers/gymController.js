@@ -1,4 +1,5 @@
 import Gym from "../models/Gym.js";
+import Comment from "../models/Comment.js";
 import User from "../models/User.js";
 
 export const fetch = async (req, res) => {
@@ -77,8 +78,11 @@ export const uploadPost = async (req, res) => {
 
 export const detail = async (req, res) => {
     try {
-        const gym = await Gym.findById(req.params.gymId).populate("creator");
-        return res.render("gymDetail", { title: gym.name, gym });
+        const gym = await Gym.findById(req.params.gymId);
+        const comments = await Comment.find({ where: req.params.gymId }).populate(
+            "creator"
+        );
+        return res.render("gymDetail", { title: gym.name, gym, comments });
     } catch (error) {
         console.log(error);
     }
@@ -133,7 +137,6 @@ export const updatePost = async (req, res) => {
 };
 
 export const remove = async (req, res) => {
-    console.log("api 요청 들어옴");
     const {
         params: { gymId },
     } = req;
@@ -146,13 +149,10 @@ export const remove = async (req, res) => {
             return;
         }
 
-        console.log("삭제전");
         await gym.remove();
-        console.log("삭제후");
 
         req.flash("success", "삭제 성공");
         return res.redirect("/gym");
-        return res.status(200).json({ message: "ok" });
     } catch (error) {
         console.log(error);
     }

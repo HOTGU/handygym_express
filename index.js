@@ -16,6 +16,7 @@ import postRouter from "./routes/postRouter.js";
 import userRouter from "./routes/userRouter.js";
 import setLocals from "./utils/setLocals.js";
 import passportInit from "./utils/passportInit.js";
+import commentRouter from "./routes/commentRouter.js";
 
 const mongoUrl = process.env.DEV_MONGO_URL;
 const app = express();
@@ -83,6 +84,7 @@ app.use(setLocals);
 
 app.use("/", globalRouter);
 app.use("/gym", gymRouter);
+app.use("/comment", commentRouter);
 app.use("/post", postRouter);
 app.use("/user", userRouter);
 

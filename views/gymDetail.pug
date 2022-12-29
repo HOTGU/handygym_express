@@ -69,7 +69,16 @@ block content
                     a(href=`/gym/${gym._id}/update`)
                         div.btn.primary 수정
                     #deleteBtn.btn.secondary 삭제
+            form(action=`/comment/${gym._id}` method="POST")
+                input(name="text")
+                input(type="submit" value="댓글작성")
+            each comment in comments
+                h1=comment.text
+                h2 작성자는 #{comment.creator.nickname}
 
+                if `${comment.creator._id}`=== `${user._id}`
+                    .updateAndDeleteBtn
+                        a(href=`/comment/${gym._id}/remove/${comment._id}`) 삭젠
 
     script(src="/static/js/viewMore.js") 
     script(src="/static/js/kakaomap.js") 
