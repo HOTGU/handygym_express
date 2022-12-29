@@ -1,15 +1,36 @@
+@import "../config/variable";
+
 .gymCard {
     width: 100%;
     height: auto;
-    img {
+    position: relative;
+    a {
         width: 100%;
-        aspect-ratio: 3 / 4;
-        object-fit: cover;
-        border-radius: 5px;
+        height: auto;
+        img {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 2px 0;
+        }
     }
-    h3 {
+    .likeBtn {
+        position: absolute;
+        top: 0px;
+        right: 0px;
         font-size: 20px;
-        font-weight: 700;
-        margin: 2px 0;
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 5px;
+        background-color: rgba(255, 255, 255, 0.2);
+        transition: all 0.2s ease-in-out;
+    }
+    .like {
+        color: $red;
     }
 }

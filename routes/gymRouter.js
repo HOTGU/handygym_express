@@ -2,6 +2,8 @@ import express from "express";
 import {
     detail,
     fetch,
+    fetchLike,
+    like,
     remove,
     update,
     updatePost,
@@ -15,6 +17,7 @@ import protectCSRFToken from "../utils/protectCSRFToken.js";
 const gymRouter = express.Router();
 
 gymRouter.get("/", onlyUser, onlyEmailVerified, fetch);
+gymRouter.get("/like", onlyUser, onlyEmailVerified, fetchLike);
 
 gymRouter
     .route("/upload")
@@ -23,6 +26,7 @@ gymRouter
     .post(gymUpload.array("photos", 10), protectCSRFToken, uploadPost);
 
 gymRouter.get("/:gymId", onlyUser, detail);
+gymRouter.get("/:gymId/like", onlyUser, like);
 
 gymRouter
     .route("/:gymId/update")

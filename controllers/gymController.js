@@ -1,4 +1,5 @@
 import Gym from "../models/Gym.js";
+import User from "../models/User.js";
 
 export const fetch = async (req, res) => {
     const {
@@ -22,7 +23,7 @@ export const fetch = async (req, res) => {
         if (req.query.yearRound) {
             searchQuery.yearRound = "네";
         }
-        const LIMIT_SIZE = 1;
+        const LIMIT_SIZE = 10;
         const SKIP_PAGE = (page - 1) * LIMIT_SIZE;
         const TOTAL_GYMS = await Gym.countDocuments(searchQuery);
         const TOTAL_PAGE = Math.ceil(TOTAL_GYMS / LIMIT_SIZE) || 1;
@@ -30,8 +31,19 @@ export const fetch = async (req, res) => {
             .skip(SKIP_PAGE)
             .limit(LIMIT_SIZE)
             .sort({ createdAt: -1 });
-
         return res.render("gym", { title: "체욱관", gyms, totalPage: TOTAL_PAGE });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const fetchLike = async (req, res) => {
+    try {
+        const currentUser = await User.findById(String(req.user._id)).populate(
+            "like_gyms"
+        );
+        const gyms = currentUser.like_gyms;
+        res.render("likeGyms", { title: "좋아요", gyms });
     } catch (error) {
         console.log(error);
     }
@@ -144,4 +156,34 @@ export const remove = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+};
+
+export const like = async (req, res) => {
+    const {
+        params: { gymId },
+        user: { _id },
+    } = req;
+    const userId = String(_id);
+    try {
+        const currentUser = await User.findById(userId);
+        const currentGym = await Gym.findById(gymId);
+        const existsUser = currentGym.like_users.includes(userId);
+        if (existsUser) {
+            const deletedUserArr = currentGym.like_users.filter(
+                (user) => user !== userId
+            );
+            const deletedGymArr = currentUser.like_gyms.filter(
+                (gym) => String(gym._id) !== String(gymId)
+            );
+            currentGym.like_users = deletedUserArr;
+            currentUser.like_gyms = deletedGymArr;
+        } else {
+            currentGym.like_users.push(String(userId));
+            currentUser.like_gyms.push(currentGym._id);
+        }
+        await currentUser.save();
+        await currentGym.save();
+        return res.status(200).json();
+    } catch (error) {}
+    res.status(200).json({ message: `${req.params.gymId}로 좋아요 신청` });
 };

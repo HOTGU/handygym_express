@@ -12,7 +12,7 @@ const GymSchema = mongoose.Schema(
         oneday: String,
         onedayPay: String,
         creator: { type: mongoose.SchemaTypes.ObjectId, ref: "User" },
-        // category: [String],
+        like_users: [String],
     },
     {
         timestamps: true,
