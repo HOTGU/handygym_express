@@ -2,19 +2,25 @@ import Comment from "../models/Comment.js";
 import Gym from "../models/Gym.js";
 
 export const create = async (req, res) => {
+    const {
+        body: { text },
+        params: { gymId },
+        user: { _id: userId },
+    } = req;
+    // console.log(gymId, text);
     try {
-        const { text } = req.body;
-        const newComment = await Comment.create({
+        const comment = await Comment.create({
             text,
-            where: req.params.gymId,
-            creator: req.user._id,
+            where: gymId,
+            creator: userId,
         });
-        await Gym.findOneAndUpdate(req.params.gymId, {
-            $push: { comments: String(newComment._id) },
+        await Gym.findOneAndUpdate(gymId, {
+            $push: { comments: String(comment._id) },
         });
-        return res.redirect(`/gym/${req.params.gymId}`);
+        return res.status(201).json({ comment, user: req.user });
     } catch (error) {
         console.log(error);
+        return res.status(400).json();
     }
 };
 
@@ -29,8 +35,9 @@ export const remove = async (req, res) => {
     try {
         await Comment.findByIdAndDelete(commentId);
         await Gym.findOneAndUpdate(gymId, { $pull: { comments: commentId } });
-        res.redirect(`/gym/${gymId}`);
+        return res.status(200).json({ message: "삭제성공" });
     } catch (error) {
         console.log(error);
+        return res.status(400).json();
     }
 };

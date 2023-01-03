@@ -17,6 +17,7 @@ import userRouter from "./routes/userRouter.js";
 import setLocals from "./utils/setLocals.js";
 import passportInit from "./utils/passportInit.js";
 import commentRouter from "./routes/commentRouter.js";
+import galleryRouter from "./routes/galleryRouter.js";
 
 const mongoUrl = process.env.DEV_MONGO_URL;
 const app = express();
@@ -39,17 +40,19 @@ const cspOptions = {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
         "default-src": [
             "'self'",
+            "blob:*",
             "*.kakao.com",
             "*.fontawesome.com",
             "http://localhost:5000/*",
         ],
-        "img-src": ["'self'", "blob:", "*.daumcdn.net"],
+        "img-src": ["'self'", "blob:", "*.daumcdn.net", "data:"],
         "script-src": [
             "'self'",
             "*.daumcdn.net",
             "*.kakao.com",
             "*.jsdelivr.net",
             "*.fontawesome.com",
+            "https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js",
         ],
         "frame-src": ["'self'", "*.map.daum.net"],
     },
@@ -84,6 +87,7 @@ app.use(setLocals);
 
 app.use("/", globalRouter);
 app.use("/gym", gymRouter);
+app.use("/gallery", galleryRouter);
 app.use("/comment", commentRouter);
 app.use("/post", postRouter);
 app.use("/user", userRouter);

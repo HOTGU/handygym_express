@@ -20,7 +20,7 @@
 
 -   [x] POST CRUD
 
--   [x] Rich Text POST
+-   [ ] GALLEARY CRUD
 
 -   [ ] Email 찾기
 

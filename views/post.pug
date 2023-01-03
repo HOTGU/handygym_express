@@ -1,7 +1,19 @@
 extends includes/layout
 
-block content 
-    each post in posts
-        a(href=`/post/${post._id}`)
-            h1=post.title
+block content
+    .container
+        a(href="/post/upload") 업로드
+        each post in posts
+            .post
+                .post__item 
+                    div=post.category
+                .post__item
+                    a(href=`/post/${post._id}`)
+                        h1=post.title
+                .post__item 
+                    div=post.creator.nickname
+                .post__item 
+                    .postCreatedAt=post.createdAt
+    
+    script(src="/static/js/convertDate.js") 
             

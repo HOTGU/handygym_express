@@ -1,0 +1,36 @@
+@import "../config/variable";
+
+.croppperContainer {
+    max-width: calc(100% - 200px);
+    max-height: calc(100% - 200px);
+    height: 100%;
+    img {
+        max-height: 100%;
+    }
+}
+#closeBtn {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    transform: translateY(-50%);
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 20px;
+}
+.saveBtn {
+    position: absolute;
+    bottom: 50px;
+    right: 50%;
+    transform: translate(50%, 50%);
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    background-color: $bgColor;
+    color: black;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        background-color: $borderColor;
+        text-decoration: underline;
+    }
+}

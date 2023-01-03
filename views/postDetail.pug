@@ -3,9 +3,7 @@ extends includes/layout
 block content
 
     h1=post.title
-    #formattedDescription
-    div#rawDescription=post.description 
-
+    div=post.description 
     if `${user._id}` === `${post.creator._id}`
         a(href=`/post/${post._id}/update`) 수정
         #deleteBtn 삭제

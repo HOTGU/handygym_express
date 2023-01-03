@@ -22,6 +22,8 @@ export const uploadPost = async (req, res) => {
             creator: user,
         });
 
+        console.log(newPost);
+
         await newPost.save();
         return res.redirect("/post");
     } catch (error) {
@@ -35,6 +37,8 @@ export const detail = async (req, res) => {
     } = req;
     try {
         const post = await Post.findById(postId).populate("creator");
+
+        console.log(post);
 
         return res.render("postDetail", { title: `${post.title}`, post });
     } catch (error) {

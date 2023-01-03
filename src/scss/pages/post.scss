@@ -1,0 +1,25 @@
+.post {
+    display: flex;
+    &__item {
+        // a {
+        //     width: inherit;
+        //     height: inherit;
+        // }
+        &:nth-child(1) {
+            width: 150px;
+            background-color: blue;
+        }
+        &:nth-child(2) {
+            width: 100%;
+            background-color: blanchedalmond;
+        }
+        &:nth-child(3) {
+            width: 200px;
+            background-color: orange;
+        }
+        &:nth-child(4) {
+            width: 200px;
+            background-color: orangered;
+        }
+    }
+}

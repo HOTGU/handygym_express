@@ -11,9 +11,9 @@ const GymSchema = mongoose.Schema(
         yearRound: String,
         oneday: String,
         onedayPay: String,
-        creator: { type: mongoose.SchemaTypes.ObjectId, ref: "User" },
         like_users: [String],
         comments: [String],
+        creator: { type: mongoose.SchemaTypes.ObjectId, ref: "User" },
     },
     {
         timestamps: true,

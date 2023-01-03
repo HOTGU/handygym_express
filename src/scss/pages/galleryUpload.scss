@@ -1,0 +1,26 @@
+#galleryPreview {
+    .previewContainer {
+        position: relative;
+        .previewImg {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+        }
+        .btnContainer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            .cropBtn {
+                background-color: white;
+                color: black;
+                cursor: pointer;
+            }
+            .deleteBtn {
+                background-color: red;
+                color: white;
+                cursor: pointer;
+            }
+        }
+    }
+}

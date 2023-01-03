@@ -5,7 +5,6 @@ const handleLike = async (e) => {
     const gymId = btn.id;
     const res = await fetch(`/gym/${gymId}/like`);
     if (res.ok) {
-        // btn.classList.toggle("like");
         if (btn.classList.contains("like")) {
             btn.classList.remove("fa-solid");
             btn.classList.remove("like");
