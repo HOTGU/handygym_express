@@ -4,7 +4,8 @@ const modalWrapper = document.querySelector(".modalWrapper");
 const croppperContainer = document.querySelector(".croppperContainer");
 const closeBtn = document.getElementById("closeBtn");
 
-const inputFile = document.getElementById("cropperFile");
+const realFileInput = document.getElementById("realFileInput");
+const fakeFileInput = document.getElementById("fakeFileInput");
 const galleryPreview = document.getElementById("galleryPreview");
 const result = document.querySelector(".result");
 const saveBtn = document.querySelector(".save");
@@ -13,15 +14,218 @@ let cropper;
 
 const dataTransfer = new DataTransfer();
 
-const cropImgToData = (blob, targetId, newId) => {
-    const convertFile = new File([blob], blob.name || "croppedImg", {
+const generateRandomId = () => {
+    return Math.random().toString(16).slice(2);
+};
+
+const compressFile = async (file) => {
+    const compressOption = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1280,
+        initialQuality: 0.8,
+        useWebWorker: false,
+    };
+    try {
+        let compressedBlob = await imageCompression(file, compressOption);
+        compressedBlob.name = `${file.name || "힙합"}_compressed`;
+
+        const convertFile = convertBlobToFile(compressedBlob);
+
+        return convertFile;
+    } catch (error) {
+        console.log(error);
+        alert("파일 올리는 도중 오류발생");
+        return;
+    }
+};
+
+const convertBlobToFile = (blob) => {
+    const convertFile = new File([blob], blob.name || "preview", {
         type: "images/*",
     });
-    convertFile.id = newId;
+
+    return convertFile;
+};
+
+const openModal = () => {
+    modalContainer.style.transform = "translateY(0)";
+    modalWrapper.style.top = `${window.scrollY}px`;
+    body.style.overflowY = "hidden";
+};
+
+const closeModal = () => {
+    modalContainer.style.transform = "translateY(-100%)";
+    body.style.overflowY = "scroll";
+};
+
+const generateBtnContainer = (newId, blob) => {
+    const btnContainer = document.createElement("div");
+    btnContainer.classList.add("btnContainer");
+
+    const cropBtn = document.createElement("div");
+    cropBtn.innerText = "수정";
+    cropBtn.classList.add("cropBtn");
+    cropBtn.addEventListener("click", (e) => openCrop(blob, newId));
+
+    const changeBtn = document.createElement("div");
+    changeBtn.innerText = "파일변경";
+    changeBtn.classList.add("deleteBtn");
+    changeBtn.addEventListener("click", (e) => changeFile(newId));
+
+    const deleteBtn = document.createElement("div");
+    deleteBtn.innerText = "삭제";
+    deleteBtn.classList.add("deleteBtn");
+    deleteBtn.addEventListener("click", (e) => deletePreview(newId));
+
+    btnContainer.append(changeBtn);
+    btnContainer.append(cropBtn);
+    btnContainer.append(deleteBtn);
+
+    return btnContainer;
+};
+
+const paintPreview = (newId, data) => {
+    const container = document.createElement("div");
+    container.id = newId;
+    container.classList.add("previewContainer");
+
+    const blob = URL.createObjectURL(data.file);
+
+    const img = document.createElement("img");
+    img.src = blob;
+    img.classList.add("previewImg");
+
+    const btnContainer = generateBtnContainer(newId, blob);
+
+    const desc = document.createElement("textarea");
+    desc.name = "captions";
+    desc.placeholder = "사진에 대한 설명을 적어보세요. (선택사항)";
+    if (data.caption) desc.value = data.caption;
+
+    container.append(img);
+    container.append(btnContainer);
+    container.append(desc);
+
+    galleryPreview.append(container);
+};
+
+const updatePreview = (targetId, newId, data) => {
+    const container = document.getElementById(targetId);
+    container.innerHTML = "";
+    container.id = newId;
+
+    const blob = URL.createObjectURL(data.file);
+
+    const img = document.createElement("img");
+    img.src = blob;
+    img.classList.add("previewImg");
+
+    const btnContainer = generateBtnContainer(newId, blob);
+
+    const desc = document.createElement("textarea");
+    desc.name = "captions";
+    desc.placeholder = "사진에 대한 설명을 적어보세요. (선택사항)";
+    if (data.caption) desc.value = data.caption;
+
+    container.append(img);
+    container.append(btnContainer);
+    container.append(desc);
+};
+
+const deletePreview = (targetId) => {
+    const ok = confirm("정말 삭제하시겠습니까?");
+    if (ok) {
+        const container = document.getElementById(targetId);
+        container.remove();
+        deleteImgData(targetId);
+    }
+};
+
+const cropSave = (e, targetId) => {
+    e.preventDefault();
+    cropper
+        .getCroppedCanvas({
+            minWidth: 256,
+            minHeight: 256,
+            maxWidth: 1280,
+            maxHeight: 1280,
+        })
+        .toBlob((blob) => {
+            const randomId = generateRandomId();
+
+            const croppedFile = convertBlobToFile(blob);
+
+            const caption = findCaption(targetId);
+
+            const data = { file: blob, caption };
+
+            updatePreview(targetId, randomId, data);
+
+            updateImgToData(croppedFile, targetId, randomId);
+
+            closeModal();
+        });
+};
+
+const openCrop = (imgSrc, targetId) => {
+    openModal();
+
+    croppperContainer.innerHTML = "";
+
+    const img = document.createElement("img");
+    img.src = imgSrc;
+
+    const cropSaveBtn = document.createElement("div");
+    cropSaveBtn.addEventListener("click", (e) => cropSave(e, targetId));
+    cropSaveBtn.innerText = "저장";
+    cropSaveBtn.classList.add("saveBtn");
+    cropSaveBtn.classList.add("btn");
+    croppperContainer.appendChild(img);
+    modalWrapper.appendChild(cropSaveBtn);
+
+    cropper = new Cropper(img, { aspectRatio: 4 / 3, zoomable: false });
+};
+
+const findCaption = (targetId) => {
+    const container = document.getElementById(targetId);
+    const textarea = container.querySelector("textarea");
+    const caption = textarea.value;
+    if (caption) {
+        return caption;
+    } else {
+        return "";
+    }
+};
+
+const changeFile = (id) => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.click();
+    input.addEventListener("change", async (e) => {
+        const randomId = generateRandomId();
+        const file = e.target.files[0];
+        const compressedFile = await compressFile(file);
+        const caption = findCaption(id);
+        const data = { file: compressedFile, caption };
+        updatePreview(id, randomId, data);
+        updateImgToData(compressedFile, id, randomId);
+    });
+};
+
+const newImgTodData = (file, newId) => {
+    file.id = newId;
+
+    dataTransfer.items.add(file);
+
+    realFileInput.files = dataTransfer.files;
+};
+
+const updateImgToData = (file, targetId, newId) => {
+    file.id = newId;
 
     const updatedFiles = Array.from(dataTransfer.files).map((dataFile) => {
         if (targetId === dataFile.id) {
-            return convertFile;
+            return file;
         }
         return dataFile;
     });
@@ -32,95 +236,7 @@ const cropImgToData = (blob, targetId, newId) => {
         dataTransfer.items.add(updatedFiles[i]);
     }
 
-    inputFile.files = dataTransfer.files;
-};
-
-const cropSave = (e, id) => {
-    e.preventDefault();
-    cropper
-        .getCroppedCanvas({
-            minWidth: 256,
-            minHeight: 256,
-            maxWidth: 1280,
-            maxHeight: 1280,
-        })
-        .toBlob((blob) => {
-            const randomId = Math.random().toString(16).slice(2);
-
-            const previewContainer = document.getElementById(id);
-            previewContainer.innerHTML = "";
-            previewContainer.id = randomId;
-
-            paintPreview(previewContainer, blob, randomId);
-
-            cropImgToData(blob, id, randomId);
-
-            closeModal();
-        });
-};
-
-const openCrop = (imgSrc, id) => {
-    croppperContainer.innerHTML = "";
-    modalContainer.style.transform = "translateY(0)";
-    modalWrapper.style.top = `${window.scrollY}px`;
-    body.style.overflowY = "hidden";
-    const img = document.createElement("img");
-    img.src = imgSrc;
-    const cropSaveBtn = document.createElement("div");
-    cropSaveBtn.addEventListener("click", (e) => cropSave(e, id));
-    cropSaveBtn.innerText = "저장";
-    cropSaveBtn.classList.add("saveBtn");
-    cropSaveBtn.classList.add("btn");
-    croppperContainer.appendChild(img);
-    modalWrapper.appendChild(cropSaveBtn);
-    cropper = new Cropper(img, { aspectRatio: 4 / 3, zoomable: false });
-};
-const closeModal = () => {
-    modalContainer.style.transform = "translateY(-100%)";
-    body.style.overflowY = "scroll";
-};
-
-const deletePreview = (id) => {
-    const ok = confirm("정말 삭제하시겠습니까?");
-    if (ok) {
-        const container = document.getElementById(id);
-        container.remove();
-
-        deleteImgData(id);
-    }
-};
-
-const paintPreview = (containerEle, file, newId) => {
-    const blob = URL.createObjectURL(file);
-
-    const img = document.createElement("img");
-    img.src = blob;
-    img.classList.add("previewImg");
-
-    const btnContainer = document.createElement("div");
-    btnContainer.classList.add("btnContainer");
-
-    const cropBtn = document.createElement("div");
-    cropBtn.innerText = "수정";
-    cropBtn.classList.add("cropBtn");
-    cropBtn.addEventListener("click", (e) => openCrop(blob, newId));
-
-    const deleteBtn = document.createElement("div");
-    deleteBtn.innerText = "삭제";
-    deleteBtn.classList.add("deleteBtn");
-    deleteBtn.addEventListener("click", (e) => deletePreview(newId));
-
-    btnContainer.append(cropBtn);
-    btnContainer.append(deleteBtn);
-
-    containerEle.append(img);
-    containerEle.append(btnContainer);
-};
-
-const newImgTodData = (file, newId) => {
-    file.id = newId;
-    dataTransfer.items.add(file);
-    inputFile.files = dataTransfer.files;
+    realFileInput.files = dataTransfer.files;
 };
 
 const deleteImgData = (id) => {
@@ -128,30 +244,68 @@ const deleteImgData = (id) => {
 
     dataTransfer.items.remove(findIndexById);
 
-    inputFile.files = dataTransfer.files;
+    realFileInput.files = dataTransfer.files;
 };
 
 const handleChange = (e) => {
-    const files = e.target.files;
+    const file = e.target.files[0];
 
-    const preview = (file) => {
-        const randomId = Math.random().toString(16).slice(2);
+    const preview = async (file) => {
+        const randomId = generateRandomId();
 
-        const previewContainer = document.createElement("div");
-        previewContainer.id = randomId;
-        previewContainer.classList.add("previewContainer");
+        const compressedFile = await compressFile(file);
 
-        paintPreview(previewContainer, file, randomId);
+        const data = { file: compressedFile, caption: "" };
 
-        galleryPreview.appendChild(previewContainer);
+        paintPreview(randomId, data);
 
-        newImgTodData(file, randomId);
+        newImgTodData(compressedFile, randomId);
     };
 
-    for (let i = 0; i < files.length; i++) {
-        preview(files[i]);
-    }
+    preview(file);
 };
 
-inputFile.addEventListener("change", handleChange);
-closeBtn.addEventListener("click", closeModal);
+const init = () => {
+    fakeFileInput.addEventListener("change", handleChange);
+    const originalPhotos = document.querySelectorAll(".originalPhoto");
+    const originalCaptions = document.querySelectorAll(".originalCaption");
+    if (originalPhotos.length > 0) {
+        const handleLoad = async () => {
+            const paintOriginalPreview = async (photoEle, captionEle) => {
+                const canvas = document.createElement("canvas");
+                canvas.height = photoEle.naturalHeight;
+                canvas.width = photoEle.naturalWidth;
+                canvas.getContext("2d").drawImage(photoEle, 0, 0);
+                try {
+                    const randomId = generateRandomId();
+
+                    const blob = await new Promise((resolve) =>
+                        canvas.toBlob((blob) => resolve(blob))
+                    );
+
+                    const file = convertBlobToFile(blob);
+                    file.id = randomId;
+
+                    const caption = captionEle.value;
+
+                    const data = { file, caption };
+
+                    paintPreview(randomId, data);
+
+                    newImgTodData(file, randomId);
+                } catch (error) {
+                    console.log(error);
+                    alert("미리보기 생성 중 오류발생");
+                }
+            };
+
+            for (let i = 0; i < originalPhotos.length; i++) {
+                await paintOriginalPreview(originalPhotos[i], originalCaptions[i]);
+            }
+        };
+        window.addEventListener("load", handleLoad);
+    }
+    closeBtn.addEventListener("click", closeModal);
+};
+
+init();

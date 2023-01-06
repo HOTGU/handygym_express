@@ -1,21 +1,24 @@
 const pageContainer = document.querySelector(".jsPageContainer");
 const params = new URLSearchParams(window.location.search);
+const PAGE_TYPE = window.location.href.split("?")[0].split("/").pop();
 
 const PAGE = Number(params.get("page")) || 1;
 const TOTAL_PAGE = Number(pageContainer.id);
-const PAGE_CONTAINER_SIZE = 5;
+const PAGE_CONTAINER_SIZE = 2;
 const CURRENT_PAGE_CONTAINER = Math.ceil(PAGE / PAGE_CONTAINER_SIZE);
 const TOTAL_PAGE_CONTAINER = Math.ceil(TOTAL_PAGE / PAGE_CONTAINER_SIZE);
 
 const setHref = (aEle, pageNum) => {
     let queryString = `?page=${pageNum}`;
-    const searchTerm = params.get("searchTerm");
-    const yearRound = params.get("yearRound");
-    const oneday = params.get("oneday");
-    if (searchTerm) queryString += `&searchTerm=${searchTerm}`;
-    if (yearRound) queryString += `&yearRound=on`;
-    if (oneday) queryString += `&oneday=on`;
-    aEle.href = `/gym${queryString}`;
+    if (PAGE_TYPE === "gym") {
+        const searchTerm = params.get("searchTerm");
+        const yearRound = params.get("yearRound");
+        const oneday = params.get("oneday");
+        if (searchTerm) queryString += `&searchTerm=${searchTerm}`;
+        if (yearRound) queryString += `&yearRound=on`;
+        if (oneday) queryString += `&oneday=on`;
+    }
+    aEle.href = `/${PAGE_TYPE}${queryString}`;
 };
 
 const paintPage = (page) => {
@@ -49,7 +52,7 @@ const paintPagination = (TOTAL_PAGE) => {
 
         if (
             i === TOTAL_PAGE &&
-            TOTAL_PAGE > 5 &&
+            TOTAL_PAGE > PAGE_CONTAINER_SIZE &&
             TOTAL_PAGE_CONTAINER !== CURRENT_PAGE_CONTAINER
         ) {
             const nextLink = document.createElement("a");
@@ -61,9 +64,9 @@ const paintPagination = (TOTAL_PAGE) => {
 };
 
 const init = () => {
-    if (PAGE > TOTAL_PAGE) {
-        window.location.href = `/gym?page=1`;
-    }
+    // if (PAGE > TOTAL_PAGE) {
+    //     window.location.href = `/gym?page=1`;
+    // }
     paintPagination(TOTAL_PAGE);
 };
 

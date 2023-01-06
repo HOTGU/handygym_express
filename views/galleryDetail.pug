@@ -1,3 +1,17 @@
 extends includes/layout
 
 block content 
+    .container 
+        .galleryDetail 
+            .galleryDetail__section
+                h1=gallery.title
+            each photoObj in gallery.photos
+                .galleryDetail__section
+                    img(src=`/${photoObj.photo}`)
+                    p=photoObj.caption
+
+
+        if `${gallery.creator._id}` === `${user._id}`
+            a(href=`/gallery/${gallery._id}/update`).btn 수정
+            a(href=`/gallery/${gallery._id}/remove`).btn 삭제
+            //- #deleteBtn.btn 글삭제

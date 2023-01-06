@@ -11,10 +11,10 @@ const generateRandomId = () => {
     return Math.random().toString(16).slice(2);
 };
 
-const compressedFile = async (file) => {
+const compressFile = async (file) => {
     const compressOption = {
         maxSizeMB: 1,
-        maxWidthOrHeight: 760,
+        maxWidthOrHeight: 960,
         initialQuality: 0.8,
         useWebWorker: false,
     };
@@ -126,7 +126,7 @@ const addChange = async (event) => {
     for (let i = 0; i < imgFiles.length; i++) {
         console.log(imgFiles[i]);
         const newId = generateRandomId();
-        const file = await compressedFile(imgFiles[i]);
+        const file = await compressFile(imgFiles[i]);
         file.id = newId;
 
         paintPreview(file, newId);
@@ -141,7 +141,7 @@ const addChange = async (event) => {
 const updateChange = async (e, targetId) => {
     try {
         const newId = generateRandomId();
-        const file = await compressedFile(e.target.files[0]);
+        const file = await compressFile(e.target.files[0]);
         file.id = newId;
 
         handleUpdateFile(file, targetId);

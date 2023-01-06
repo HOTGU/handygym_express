@@ -24,7 +24,7 @@ export const fetch = async (req, res) => {
         if (req.query.yearRound) {
             searchQuery.yearRound = "네";
         }
-        const LIMIT_SIZE = 10;
+        const LIMIT_SIZE = 1;
         const SKIP_PAGE = (page - 1) * LIMIT_SIZE;
         const TOTAL_GYMS = await Gym.countDocuments(searchQuery);
         const TOTAL_PAGE = Math.ceil(TOTAL_GYMS / LIMIT_SIZE) || 1;

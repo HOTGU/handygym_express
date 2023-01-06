@@ -22,9 +22,13 @@ block content
                 .flexContainer__item
                     span 사진
                 .flexContainer__item
-            input(type="file" id="cropperFile" name="photos" multiple)
+            input(type="file" id="realFileInput" name="photos" multiple)
             #galleryPreview
+            input(type="file" id="fakeFileInput")
             
             input(type="submit" value="생성").btn.primary
+
     script(src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js") 
+    script(type="text/javascript" src="https://cdn.jsdelivr.net/npm/browser-image-compression@1.0.15/dist/browser-image-compression.js")
+
     script(src="/static/js/cropper.js") 
