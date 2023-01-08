@@ -102,7 +102,7 @@ export const updatePost = async (req, res) => {
                 photos: returnPhotosObj,
             },
             {
-                $new: true,
+                new: true,
             }
         );
         return res.redirect(`/gallery/${updatedGallery._id}`);

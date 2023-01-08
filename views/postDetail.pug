@@ -4,9 +4,10 @@ block content
 
     h1=post.title
     div=post.description 
+    div=post.category 
     if `${user._id}` === `${post.creator._id}`
         a(href=`/post/${post._id}/update`) 수정
         #deleteBtn 삭제
+    
 
-    script(src="/static/js/formatText.js")
     script(src="/static/js/useConfirm.js")

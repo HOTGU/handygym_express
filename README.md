@@ -18,23 +18,25 @@
 
 -   [x] GYM CRUD
 
+-   [x] GALLEARY CRUD
+
 -   [x] POST CRUD
 
--   [ ] GALLEARY CRUD
+-   [x] POST 필터
+
+-   [x] GYM 필터
+
+-   [x] 좋아요 기능
+
+-   [x] 댓글 기능
+
+-   [ ] GALLERY 필터
+
+-   [ ] USER CRUD
 
 -   [ ] Email 찾기
 
 -   [ ] 비밀번호 변경
-
--   [ ] USER CRUD
-
--   [x] GYM 필터
-
--   [ ] POST 필터
-
--   [x] 좋아요 기능
-
--   [ ] 댓글 기능
 
 -   [ ] 쪽지 기능
 

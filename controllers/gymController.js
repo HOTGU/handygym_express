@@ -7,31 +7,41 @@ export const fetch = async (req, res) => {
         query: { page = 1 },
     } = req;
     const searchQuery = new Object();
+    let searchQueryString = "";
     try {
-        if (Number(page) <= 0) {
-            res.redirect("/gym?page=1");
-            return;
-        }
         if (req.query.searchTerm) {
             searchQuery.$or = [
                 { name: { $regex: req.query.searchTerm } },
                 { location: { $regex: req.query.searchTerm } },
             ];
+            searchQueryString += `&searchTerm=${req.query.searchTerm}`;
         }
         if (req.query.oneday) {
             searchQuery.oneday = "가능";
+            searchQueryString += `&oneday=on`;
         }
         if (req.query.yearRound) {
             searchQuery.yearRound = "네";
+            searchQueryString += `&yearRound=on`;
         }
+
+        let PAGE = +page;
+
         const LIMIT_SIZE = 1;
-        const SKIP_PAGE = (page - 1) * LIMIT_SIZE;
         const TOTAL_GYMS = await Gym.countDocuments(searchQuery);
         const TOTAL_PAGE = Math.ceil(TOTAL_GYMS / LIMIT_SIZE) || 1;
+        const SKIP_PAGE = (PAGE - 1) * LIMIT_SIZE;
+
+        if (!PAGE || PAGE < 1 || PAGE > TOTAL_PAGE) {
+            res.redirect(`/gym?page=1${searchQueryString}`);
+            return;
+        }
+
         const gyms = await Gym.find(searchQuery)
             .skip(SKIP_PAGE)
             .limit(LIMIT_SIZE)
             .sort({ createdAt: -1 });
+
         return res.render("gym", { title: "체욱관", gyms, totalPage: TOTAL_PAGE });
     } catch (error) {
         console.log(error);
@@ -124,10 +134,14 @@ export const updatePost = async (req, res) => {
             return file.path;
         });
 
-        const updatedGym = await Gym.findByIdAndUpdate(gymId, {
-            ...body,
-            photos: returnPath.length > 0 ? returnPath : gym.photos,
-        });
+        const updatedGym = await Gym.findByIdAndUpdate(
+            gymId,
+            {
+                ...body,
+                photos: returnPath.length > 0 ? returnPath : gym.photos,
+            },
+            { new: true }
+        );
 
         req.flash("success", "업데이트 성공");
 

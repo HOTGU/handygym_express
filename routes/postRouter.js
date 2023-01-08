@@ -25,6 +25,10 @@ postRouter.route("/:postId").get(detail);
 
 postRouter.get("/:postId/remove", remove);
 
-postRouter.route("/:postId/update").get(update).post(updatePost);
+postRouter
+    .route("/:postId/update")
+    .all(onlyUser, onlyEmailVerified, protectCSRFToken)
+    .get(update)
+    .post(updatePost);
 
 export default postRouter;
