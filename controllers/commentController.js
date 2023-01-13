@@ -1,22 +1,44 @@
 import Comment from "../models/Comment.js";
 import Gym from "../models/Gym.js";
+import Post from "../models/Post.js";
 
 export const create = async (req, res) => {
     const {
-        body: { text },
-        params: { gymId },
+        body: { text, type },
+        params: { whereId },
         user: { _id: userId },
     } = req;
-    // console.log(gymId, text);
     try {
         const comment = await Comment.create({
             text,
-            where: gymId,
+            where: whereId,
             creator: userId,
         });
-        await Gym.findOneAndUpdate(gymId, {
-            $push: { comments: String(comment._id) },
-        });
+        if (type === "post") {
+            await Post.findByIdAndUpdate(
+                whereId,
+                {
+                    $push: { comments: String(comment._id) },
+                },
+                {
+                    new: true,
+                }
+            );
+        }
+        if (type === "gym") {
+            await Gym.findByIdAndUpdate(
+                whereId,
+                {
+                    $push: { comments: String(comment._id) },
+                },
+                {
+                    new: true,
+                }
+            );
+        }
+        if (type === "gallery") {
+            console.log("gallery");
+        }
         return res.status(201).json({ comment, user: req.user });
     } catch (error) {
         console.log(error);
@@ -30,7 +52,7 @@ export const update = (req, res) => {
 
 export const remove = async (req, res) => {
     const {
-        params: { commentId, gymId },
+        params: { commentId, whereId },
     } = req;
     try {
         await Comment.findByIdAndDelete(commentId);

@@ -1,0 +1,30 @@
+extends includes/layout
+include mixins/gymCardBlock
+
+block content 
+    .container.userUpdate
+        form(action="/user/update" method="POST" enctype="multipart/form-data") 
+            input(type="hidden" name="_csrf" value=csrfToken)
+            input(name="nickname" value=user.nickname)
+            if user.avatarUrl
+                img(src=`/${user.avatarUrl}`)#jsAvatarImg
+            else
+                img(src="/static/images/noUser.png")#jsAvatarImg
+
+            #deleteBtn 아바타삭제
+            #fileBtn 아바타변경
+
+            if user.avatarUrl
+                img(src=`/${user.avatarUrl}` id="originalImg"  hidden)
+
+            img(src="/static/images/noUser.png" id="noUserImg" hidden)
+
+            input(type="file" name="avatar" hidden)
+            input(type="file" id="fakeFileInput" hidden)
+            input(type="submit", value="전송")
+
+    script(type="text/javascript" src="https://cdn.jsdelivr.net/npm/browser-image-compression@1.0.15/dist/browser-image-compression.js")
+
+    script(src="/static/js/avatarPreview.js") 
+    
+    

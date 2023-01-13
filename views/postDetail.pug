@@ -8,6 +8,23 @@ block content
     if `${user._id}` === `${post.creator._id}`
         a(href=`/post/${post._id}/update`) 수정
         #deleteBtn 삭제
+    input(name="text")
+    #commentBtn 댓글생성
+
+    if post.like_users.includes(String(user._id))
+        .likeBtn.fa-solid.fa-heart.like(id=`${post._id}`)
+    else
+        .likeBtn.fa-regular.fa-heart(id=`${post._id}`)
+
+    .commentsWrapper
+        each comment in comments
+            .comment
+                div=comment.text
+                div #{comment.creator.nickname}
+
+                if `${comment.creator._id}`=== `${user._id}`
+                    button.commentDeleteBtn(id=comment._id) 삭제
     
 
-    script(src="/static/js/useConfirm.js")
+    script(src="/static/js/comment.js")
+    script(src="/static/js/likeFun.js")

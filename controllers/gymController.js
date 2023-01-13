@@ -7,6 +7,7 @@ export const fetch = async (req, res) => {
         query: { page = 1 },
     } = req;
     const searchQuery = new Object();
+    let renderQuery = new Object();
     let searchQueryString = "";
     try {
         if (req.query.searchTerm) {
@@ -15,14 +16,17 @@ export const fetch = async (req, res) => {
                 { location: { $regex: req.query.searchTerm } },
             ];
             searchQueryString += `&searchTerm=${req.query.searchTerm}`;
+            renderQuery.searchTerm = req.query.searchTerm;
         }
         if (req.query.oneday) {
             searchQuery.oneday = "가능";
             searchQueryString += `&oneday=on`;
+            renderQuery.isOneday = true;
         }
         if (req.query.yearRound) {
             searchQuery.yearRound = "네";
             searchQueryString += `&yearRound=on`;
+            renderQuery.isYearRound = true;
         }
 
         let PAGE = +page;
@@ -42,7 +46,12 @@ export const fetch = async (req, res) => {
             .limit(LIMIT_SIZE)
             .sort({ createdAt: -1 });
 
-        return res.render("gym", { title: "체욱관", gyms, totalPage: TOTAL_PAGE });
+        return res.render("gym", {
+            title: "체욱관",
+            gyms,
+            totalPage: TOTAL_PAGE,
+            renderQuery,
+        });
     } catch (error) {
         console.log(error);
     }
@@ -54,7 +63,6 @@ export const fetchLike = async (req, res) => {
     } = req;
     try {
         const gyms = await Gym.find({ like_users: { $in: `${_id}` } });
-        console.log(gyms);
         res.render("likeGyms", { title: "좋아요", gyms });
     } catch (error) {
         console.log(error);

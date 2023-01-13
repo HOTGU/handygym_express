@@ -1,0 +1,13 @@
+extends includes/layout
+include mixins/gymCardBlock
+
+block content
+    .container.me
+        h1=user.nickname
+        if user.avatarUrl
+            img(src=`/${user.avatarUrl}`, alt="", srcset="")
+        else
+            img(src="/static/images/noUser.png")
+            //- img(src="/static/images/user.png")
+            //- img(src="/static/images/no_user.jpg")
+        a(href=`/user/update`) 유저 정보 수정

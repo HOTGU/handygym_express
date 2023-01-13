@@ -2,6 +2,7 @@ import express from "express";
 import {
     detail,
     fetch,
+    like,
     remove,
     update,
     updatePost,
@@ -22,6 +23,7 @@ postRouter
     .post(uploadPost);
 
 postRouter.route("/:postId").get(detail);
+postRouter.route("/:postId/like").get(like);
 
 postRouter.get("/:postId/remove", remove);
 

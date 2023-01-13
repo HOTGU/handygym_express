@@ -2,10 +2,29 @@ nav.wideContainer
     .container.navContainer
         .navContainer__item
             a(href="/")
-                i.fa-solid.fa-dumbbell.fa-2xl
+                //- i.fa-solid.fa-dumbbell.fa-2xl
+                h1 HANDY GYM
         .navContainer__item
             if user
-                a(href="/logout") 로그아웃
+                .menuBar
+                    i.fa-solid.fa-bars
+                    if user.avatarUrl
+                        img(src=`/${user.avatarUrl}`)
+                    else
+                        img(src="/static/images/noUser.png")
+                        //- img(src="/static/images/user.png")
+                        //- img(src="/static/images/no_user.jpg")
+                    //- i.fa-solid.fa-circle-user
+                .menuModal.hidden
+                    a(href="/user/me") 내 정보
+                    a(href="/message") 쪽지함
+                    a(href="/logout") 로그아웃
             else
                 a(href="/signin") 로그인
                 a(href="/signup") 회원가입
+    .container.navContainer
+        a(href="/post").navLink 게시판
+        a(href="/gym").navLink 체육관
+        a(href="/gallery").navLink 사진
+        
+script(src="/static/js/navModal.js") 

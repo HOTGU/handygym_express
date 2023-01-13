@@ -4,8 +4,8 @@ import { onlyEmailVerified, onlyUser } from "../utils/protectAuth.js";
 
 const commentRouter = express.Router();
 
-commentRouter.post("/:gymId", onlyUser, onlyEmailVerified, create);
+commentRouter.post("/:whereId", onlyUser, onlyEmailVerified, create);
 
-commentRouter.get("/:gymId/remove/:commentId", onlyUser, onlyEmailVerified, remove);
+commentRouter.get("/:whereId/remove/:commentId", onlyUser, onlyEmailVerified, remove);
 
 export default commentRouter;

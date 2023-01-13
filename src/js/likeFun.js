@@ -1,9 +1,15 @@
+const href = window.location.href;
+const hrefArr = href.split("/");
+const type = hrefArr[3];
+
+console.log(type);
+
 const btns = document.querySelectorAll(".likeBtn");
 
 const handleLike = async (e) => {
     const btn = e.target;
-    const gymId = btn.id;
-    const res = await fetch(`/gym/${gymId}/like`);
+    const id = btn.id;
+    const res = await fetch(`/${type}/${id}/like`);
     if (res.ok) {
         if (btn.classList.contains("like")) {
             btn.classList.remove("fa-solid");

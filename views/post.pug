@@ -4,14 +4,19 @@ block content
     .container
         a(href="/post/upload") 업로드
         form(action="/post" method="get")
-            input(name="searchTerm")
+            input(name="searchTerm" value=renderQuery.searchTerm)
             select(name="category")
                 - let i = 0;
-                - const arr = ["자유","질문","공유","리뷰","Flex"]
+                - const arr = ["모두","자유","질문","공유","리뷰","Flex"]
                 while i < arr.length
-                    option(value=arr[i])=arr[i]
+                    option(value=arr[i] selected=(renderQuery.category === arr[i] ? true : undefined))=arr[i]
                     - i++
-            button 검색
+            label
+                span 추천순
+                input(type="checkbox" name="orderByRecommend" value="on" checked=renderQuery.isRecommend)
+            a(href="/post").btn.secondary 초기화
+            button.btn.primary 검색
+
         each post in posts
             .post
                 .post__item 
@@ -19,6 +24,9 @@ block content
                 .post__item
                     a(href=`/post/${post._id}`)
                         h1=post.title
+                .post__item
+                    h1=post.comments.length
+                    h1=post.like_users.length
                 .post__item 
                     div=post.creator.nickname
                 .post__item 

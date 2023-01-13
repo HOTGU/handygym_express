@@ -3,16 +3,26 @@ import {
     detail,
     findEmail,
     findEmailPost,
+    me,
     update,
     updatePost,
 } from "../controllers/userController.js";
+import { avatarUpload } from "../utils/fileUpload.js";
+import { onlyEmailVerified, onlyUser } from "../utils/protectAuth.js";
+import protectCSRFToken from "../utils/protectCSRFToken.js";
 
 const userRouter = express.Router();
 
 userRouter.route("/find-email").get(findEmail).post(findEmailPost);
 
-userRouter.route("/:userId").get(detail);
+userRouter.route("/me").get(onlyUser, onlyEmailVerified, me);
 
-userRouter.route("/:userId/update").get(update).delete(updatePost);
+userRouter
+    .route("/update")
+    .all(onlyUser, onlyEmailVerified)
+    .get(protectCSRFToken, update)
+    .post(avatarUpload.single("avatar"), protectCSRFToken, updatePost);
+
+userRouter.route("/:userId").get(detail);
 
 export default userRouter;

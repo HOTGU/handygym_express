@@ -123,8 +123,8 @@ const paintPreview = (imgSrc, id) => {
 
 const addChange = async (event) => {
     const imgFiles = event.target.files;
+    console.log(imgFiles);
     for (let i = 0; i < imgFiles.length; i++) {
-        console.log(imgFiles[i]);
         const newId = generateRandomId();
         const file = await compressFile(imgFiles[i]);
         file.id = newId;
@@ -194,7 +194,7 @@ const init = () => {
                     const id = generateRandomId();
                     file.id = id;
                     paintPreview(file, id);
-                    handleDataTransfer(file);
+                    handleAddFile(file);
                 } catch (error) {
                     console.log(error);
                     alert("미리보기 생성 중 오류발생");
