@@ -1,13 +1,10 @@
 extends includes/layout
 include mixins/gymCardBlock
+include mixins/avatarBlock
 
 block content
     .container.me
         h1=user.nickname
-        if user.avatarUrl
-            img(src=`/${user.avatarUrl}`, alt="", srcset="")
-        else
-            img(src="/static/images/noUser.png")
-            //- img(src="/static/images/user.png")
-            //- img(src="/static/images/no_user.jpg")
+        +avatarBlock(user.avatarUrl, true)
         a(href=`/user/update`) 유저 정보 수정
+        //- a(href=`/user/change-password`) 비밀번호 변경

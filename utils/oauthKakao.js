@@ -38,7 +38,8 @@ export default () => {
                             nickname:
                                 profile.username || profile._json.properties.nickname,
                             email: profile._json.kakao_account.email || undefined,
-                            avatarUrl: profile._json.properties.thumbnail_image || "",
+                            avatarUrl: "",
+                            // avatarUrl: profile._json.properties.thumbnail_image || "",
                             socialId: profile.id || profile._json.id,
                             socialType: "카카오",
                             email_verified: true,

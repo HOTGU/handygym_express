@@ -18,6 +18,8 @@ import setLocals from "./utils/setLocals.js";
 import passportInit from "./utils/passportInit.js";
 import commentRouter from "./routes/commentRouter.js";
 import galleryRouter from "./routes/galleryRouter.js";
+import messageRouter from "./routes/messageRouter.js";
+import conversationRouter from "./routes/conversationRouter.js";
 
 const mongoUrl = process.env.DEV_MONGO_URL;
 const app = express();
@@ -45,7 +47,14 @@ const cspOptions = {
             "*.fontawesome.com",
             "http://localhost:5000/*",
         ],
-        "img-src": ["'self'", "blob:", "*.daumcdn.net", "data:"],
+        "img-src": [
+            "'self'",
+            "blob:",
+            "*.daumcdn.net",
+            "*.kakaocdn.net",
+            "*.googleusercontent.com",
+            "data:",
+        ],
         "script-src": [
             "'self'",
             "*.daumcdn.net",
@@ -86,6 +95,8 @@ app.use("/uploads", express.static("uploads"));
 app.use(setLocals);
 
 app.use("/", globalRouter);
+app.use("/conversation", conversationRouter);
+app.use("/message", messageRouter);
 app.use("/gym", gymRouter);
 app.use("/gallery", galleryRouter);
 app.use("/comment", commentRouter);

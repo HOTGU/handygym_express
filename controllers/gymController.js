@@ -44,7 +44,8 @@ export const fetch = async (req, res) => {
         const gyms = await Gym.find(searchQuery)
             .skip(SKIP_PAGE)
             .limit(LIMIT_SIZE)
-            .sort({ createdAt: -1 });
+            .sort({ createdAt: -1 })
+            .populate("creator");
 
         return res.render("gym", {
             title: "체욱관",

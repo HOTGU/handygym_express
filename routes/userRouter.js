@@ -1,5 +1,7 @@
 import express from "express";
 import {
+    changePassword,
+    changePasswordPost,
     detail,
     findEmail,
     findEmailPost,
@@ -22,6 +24,12 @@ userRouter
     .all(onlyUser, onlyEmailVerified)
     .get(protectCSRFToken, update)
     .post(avatarUpload.single("avatar"), protectCSRFToken, updatePost);
+
+userRouter
+    .route("/change-password")
+    .all(onlyUser, onlyEmailVerified)
+    .get(changePassword)
+    .post(changePasswordPost);
 
 userRouter.route("/:userId").get(detail);
 

@@ -1,0 +1,20 @@
+include userBlock
+
+mixin postCardBlock(post={})
+    .post
+        .post__item 
+            div=post.category
+        .post__item
+            a(href=`/post/${post._id}`)
+                h1=post.title
+        .post__item
+            h1=post.commentLength
+            h1=post.likeLength
+        .post__item 
+            +userBlock({
+                _id:post.creator._id,
+                avatarUrl:post.creator.avatarUrl,
+                nickname:post.creator.nickname
+            })
+        .post__item 
+            .postCreatedAt=post.createdAt

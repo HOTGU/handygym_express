@@ -1,3 +1,6 @@
+import Gallery from "../models/Gallery.js";
+import Gym from "../models/Gym.js";
+import Post from "../models/Post.js";
 import User from "../models/User.js";
 
 export const findEmail = (req, res) => {
@@ -8,8 +11,25 @@ export const findEmailPost = (req, res) => {
     res.send("Find Email Post");
 };
 
-export const detail = (req, res) => {
-    res.send("User Detail");
+export const detail = async (req, res) => {
+    const {
+        params: { userId },
+    } = req;
+    try {
+        const findUser = await User.findById(userId);
+        const gyms = await Gym.find({ creator: userId });
+        const posts = await Post.find({ creator: userId });
+        const galleries = await Gallery.find({ creator: userId });
+        return res.render("userDetail", {
+            title: `${findUser.nickname} 상세`,
+            findUser,
+            gyms,
+            posts,
+            galleries,
+        });
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 export const update = (req, res) => {
@@ -22,10 +42,9 @@ export const update = (req, res) => {
 
 export const updatePost = async (req, res) => {
     const { body, file, user } = req;
-    console.log(file);
 
     try {
-        const updatedUser = await User.findByIdAndUpdate(
+        await User.findByIdAndUpdate(
             user._id,
             {
                 ...body,
@@ -35,7 +54,6 @@ export const updatePost = async (req, res) => {
                 new: true,
             }
         );
-        console.log(updatedUser);
 
         return res.redirect("/user/me");
     } catch (error) {
@@ -46,3 +64,9 @@ export const updatePost = async (req, res) => {
 export const me = (req, res) => {
     res.render("me", { title: "내 정보", user: req.user });
 };
+
+export const changePassword = (req, res) => {
+    res.send("change password");
+};
+
+export const changePasswordPost = (req, res) => {};

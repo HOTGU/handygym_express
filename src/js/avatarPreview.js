@@ -75,10 +75,12 @@ const imgSrcToFile = async (imageEle) => {
     canvas.height = imageEle.naturalHeight;
     canvas.width = imageEle.naturalWidth;
     canvas.getContext("2d").drawImage(imageEle, 0, 0);
+    console.log(imageEle);
     try {
         const blob = await new Promise((resolve) =>
             canvas.toBlob((blob) => resolve(blob))
         );
+        console.log(blob);
         return convertBlobToFile(blob);
     } catch (error) {
         console.log(error);

@@ -1,0 +1,5 @@
+mixin avatarBlock(avatar, big = false)
+    if avatar
+        img(src=`/${avatar}` class=(big ? "big" : "")).avatar
+    else
+        img(src="/static/images/noUser.png" class=(big ? "big" : "")).avatar

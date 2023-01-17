@@ -1,3 +1,5 @@
+include ../mixins/avatarBlock
+
 nav.wideContainer
     .container.navContainer
         .navContainer__item
@@ -8,15 +10,9 @@ nav.wideContainer
             if user
                 .menuBar
                     i.fa-solid.fa-bars
-                    if user.avatarUrl
-                        img(src=`/${user.avatarUrl}`)
-                    else
-                        img(src="/static/images/noUser.png")
-                        //- img(src="/static/images/user.png")
-                        //- img(src="/static/images/no_user.jpg")
-                    //- i.fa-solid.fa-circle-user
+                    +avatarBlock(user.avatarUrl)
                 .menuModal.hidden
-                    a(href="/user/me") 내 정보
+                    a(href=`/user/${user._id}`) 내 정보
                     a(href="/message") 쪽지함
                     a(href="/logout") 로그아웃
             else

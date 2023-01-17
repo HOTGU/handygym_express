@@ -1,0 +1,32 @@
+extends includes/layout
+include mixins/gymCardBlock
+include mixins/galleryCardBlock
+include mixins/avatarBlock
+
+block content
+    .container
+        if `${findUser._id}` === `${user._id}`
+            h1 내 정보
+
+        +avatarBlock(findUser.avatarUrl, true)
+
+        if `${findUser._id}` === `${user._id}`
+            a(href=`/user/update`) 유저 정보 수정
+
+        form(action=`/message/create` method="post")
+            input(type="text" name="to" value=findUser._id readOnly )
+            input(name="message")
+            button 쪽지보내기
+
+        div=findUser.nickname
+        div #{findUser.nickname}님이 쓴 체육관글
+            each gym in gyms
+                a(href=`/gym/${gym._id}`)
+                    div=gym.title
+        div #{findUser.nickname}님이 쓴 게시글
+            each post in posts 
+                div=post.title
+        div #{findUser.nickname}님이 쓴 사진
+            each gallery in galleries
+                div=gallery.title
+            
