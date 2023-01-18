@@ -2,8 +2,6 @@ const href = window.location.href;
 const hrefArr = href.split("/");
 const type = hrefArr[3];
 
-console.log(type);
-
 const btns = document.querySelectorAll(".likeBtn");
 
 const handleLike = async (e) => {

@@ -3,7 +3,7 @@ const hrefArr = href.split("/");
 const whereId = hrefArr.pop();
 const type = hrefArr[3];
 
-const input = document.querySelector("input[name=text]");
+const input = document.querySelector("textarea[name=text]");
 const createBtn = document.getElementById("commentBtn");
 const commentsWrapper = document.querySelector(".commentsWrapper");
 const deleteBtns = document.querySelectorAll(".commentDeleteBtn");
@@ -34,6 +34,15 @@ const createComment = async (e) => {
 const paintComment = ({ comment, user }) => {
     const commentContainer = document.createElement("div");
     commentContainer.classList.add("comment");
+    const creatorImg = document.createElement("img");
+    if (user.avatarUrl) {
+        creatorImg.src = `/${user.avatarUrl}`;
+    } else {
+        creatorImg.src = "/static/images/noUser.png";
+    }
+    creatorImg.style.width = "40px";
+    creatorImg.style.height = "40px";
+    creatorImg.classList.add("avatar");
     const creatorName = document.createElement("div");
     creatorName.innerText = user.nickname;
     const commentText = document.createElement("div");
@@ -42,8 +51,9 @@ const paintComment = ({ comment, user }) => {
     deleteBtn.id = comment._id;
     deleteBtn.innerText = "삭제";
     deleteBtn.addEventListener("click", handleDelete);
-    commentContainer.append(commentText);
+    commentContainer.append(creatorImg);
     commentContainer.append(creatorName);
+    commentContainer.append(commentText);
     commentContainer.append(deleteBtn);
 
     commentsWrapper.append(commentContainer);

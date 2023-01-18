@@ -1,38 +1,7 @@
 @import "../config/variable";
 
-.gymContainer {
-    min-height: calc(100% - $navHeight);
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    &__head {
-        display: flex;
-        margin: 10px 0;
-        justify-content: space-between;
-    }
-    &__middle {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-        gap: 20px;
-    }
-    &__end {
-        margin-top: auto;
-        align-self: center;
-        padding: 20px 0;
-        display: flex;
-        gap: 5px;
-        .page {
-            border: 1px solid $hoverColor;
-            width: 26px;
-            height: 26px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .currentPage {
-            background-color: $accentColor;
-            border: none;
-            color: $white;
-        }
-    }
+.gymWrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 20px;
 }

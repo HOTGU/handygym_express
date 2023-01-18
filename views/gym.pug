@@ -18,12 +18,12 @@ block content
                     a(href="/gym").btn.secondary 초기화
                     button.btn.primary 검색
                 //- a(href="/gym").btn.secondary 초기화
-    .container.gymContainer
-        .gymContainer__head
+    .container.pageContainer
+        .pageHead
             .btn.secondary#modalBtn 검색
             a(href="/gym/upload") 
                 .btn.primary 업로드
-        .gymContainer__middle
+        .gymWrapper
             each gym in gyms
                 +gymCardBlock({
                     _id:gym._id,
@@ -35,7 +35,7 @@ block content
                     totalLike:gym.like_users.length,
                     totalComment:gym.comments.length
                 })
-        div(id=totalPage class="jsPageContainer gymContainer__end")
+        div(id=totalPage class="jsPageContainer pagination")
 
 
     script(src="/static/js/pagination.js")

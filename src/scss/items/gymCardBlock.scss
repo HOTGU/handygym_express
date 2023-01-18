@@ -4,6 +4,12 @@
     width: 100%;
     height: auto;
     position: relative;
+    // border-radius: 5px;
+    // border: 1px solid $borderColor;
+    .section {
+        margin-bottom: 5px;
+        // padding: 0 10px;
+    }
     a {
         width: 100%;
         height: auto;
@@ -16,7 +22,7 @@
         h3 {
             font-size: 20px;
             font-weight: 700;
-            margin: 2px 0;
+            // margin: 2px 0;
         }
     }
     .likeBtn {
@@ -30,7 +36,12 @@
         background-color: rgba(255, 255, 255, 0.2);
         transition: all 0.2s ease-in-out;
     }
-    .like {
-        color: $red;
+    &__bottom {
+        display: flex;
+        justify-content: space-around;
+        .emojiWrapper {
+            display: flex;
+            gap: 5px;
+        }
     }
 }
