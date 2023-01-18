@@ -1,8 +1,13 @@
 extends includes/layout
+include mixins/avatarBlock
 
 block content
     .container
-        each message in messages
-            .message(class=(message.from === `${user._id}` ? "me" : ""))
-                p=message.message
+        each conversation in conversations
+            each conversationUser in conversation.users
+                if `${conversationUser._id}` !== `${user._id}`
+                    a(href=`/conversation/${conversation._id}`)
+                        +avatarBlock(conversationUser.avatarUrl, "60px")
+                        div #{conversationUser.nickname}(님)과의 쪽지
+                        
             

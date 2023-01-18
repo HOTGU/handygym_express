@@ -1,6 +1,10 @@
 @import "../config/variable";
 .postDetail {
-    padding: 30px 0;
+    padding: 30px;
+    max-width: 760px;
+    background-color: $white;
+    box-shadow: $boxShadow;
+    margin: 30px auto;
     h2 {
         font-size: 36px;
         font-weight: 700;

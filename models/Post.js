@@ -11,6 +11,7 @@ const PostSchema = mongoose.Schema(
         comments: [String],
         like_users: [String],
         category: String,
+        views: { type: Number, default: 0 },
     },
     { timestamps: true }
 );

@@ -2,13 +2,13 @@ html
   include head
   body
     if message
-      .messageContainer
+      .flashMessageContainer
           if message.success
-              div.message#success=message.success
+              div.flashMessage#success=message.success
           if message.error
-              div.message#error=message.error
+              div.flashMessage#error=message.error
           if message.info
-              div.message#error=message.info
+              div.flashMessage#error=message.info
     
       
     include ./nav.pug

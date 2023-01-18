@@ -7,11 +7,9 @@ export const create = async (req, res) => {
         body: { to, message },
     } = req;
     const from = String(user._id);
-    console.log(from);
-    console.log(to);
     try {
         const existsConversation = await Conversation.findOne({
-            users: [to, from],
+            users: { $all: [to, from] },
         });
         if (existsConversation) {
             console.log("대화방있음");

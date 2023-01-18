@@ -1,46 +1,14 @@
-@import "../config/variable";
-
-@keyframes message {
-    0% {
-        transform: translateY(-200px);
-    }
-    20% {
-        transform: translateY(10px);
-    }
-    80% {
-        transform: translateY(10px);
-    }
-    100% {
-        transform: translateY(-200px);
-    }
-}
-
 .messageContainer {
-    position: fixed;
-    top: 0;
-    width: 100%;
     display: flex;
-    transform: translateY(-200px);
-    justify-content: center;
-    align-items: center;
-    animation: message 2s ease-in-out;
-    z-index: 100;
+    flex-direction: column;
     .message {
-        width: fit-content;
-        height: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 5px;
-        font-weight: 600;
-        padding: 0 20px;
-    }
-    #success {
-        background-color: $accentColor;
+        padding: 10px;
+        background-color: blue;
         color: white;
+        align-self: start;
     }
-    #error {
-        background-color: $red;
-        color: white;
+    .me {
+        background-color: red;
+        align-self: end;
     }
 }

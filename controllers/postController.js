@@ -78,13 +78,52 @@ export const uploadPost = async (req, res) => {
 export const detail = async (req, res) => {
     const {
         params: { postId },
+        cookies,
     } = req;
+
+    const HOUR = 1000 * 60 * 60;
+    const DAY = HOUR * 24;
+    const CURRENT_YEAR = new Date().getFullYear();
+    const CURRENT_MONTH = new Date().getMonth();
+
     try {
         const post = await Post.findById(postId).populate("creator");
 
+        if (!cookies[postId] || +cookies[postId] < Date.now()) {
+            res.cookie(postId, Date.now() + DAY, {
+                expires: new Date(Date.now() + DAY + 9 * HOUR),
+            });
+            post.views++;
+            await post.save();
+        }
+
         const comments = await Comment.find({ where: postId }).populate("creator");
 
-        return res.render("postDetail", { title: `${post.title}`, post, comments });
+        const popluatePosts = await Post.aggregate([
+            {
+                $match: {
+                    createdAt: {
+                        $gte: new Date(Date.UTC(CURRENT_YEAR, CURRENT_MONTH)),
+                        $lte: new Date(Date.UTC(CURRENT_YEAR, CURRENT_MONTH + 1)),
+                    },
+                },
+            },
+            {
+                $limit: 5,
+            },
+            {
+                $sort: {
+                    view: -1,
+                },
+            },
+        ]);
+
+        return res.render("postDetail", {
+            title: `${post.title}`,
+            post,
+            comments,
+            popluatePosts,
+        });
     } catch (error) {
         console.log(error);
     }
@@ -180,4 +219,12 @@ export const like = async (req, res) => {
         return res.status(200).json();
     } catch (error) {}
     res.status(200).json({ message: `${req.params.gymId}로 좋아요 신청` });
+};
+
+export const views = async (req, res) => {
+    try {
+        return res.status(200).json(post);
+    } catch (error) {
+        console.log(error);
+    }
 };

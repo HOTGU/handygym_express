@@ -8,7 +8,7 @@ block content
         if `${findUser._id}` === `${user._id}`
             h1 내 정보
 
-        +avatarBlock(findUser.avatarUrl, true)
+        +avatarBlock(findUser.avatarUrl, "120px")
 
         if `${findUser._id}` === `${user._id}`
             a(href=`/user/update`) 유저 정보 수정
