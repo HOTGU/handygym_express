@@ -1,4 +1,5 @@
 extends includes/layout
+include mixins/categoryBlock
 
 block content
     .viewMoreContainer
@@ -22,6 +23,12 @@ block content
                 .viewMore__item 
     .container
         .gymDetail
+            .gymDetail__section
+                +categoryBlock({
+                    views:gym.views,
+                    likes:gym.like_users.length,
+                    comments:comments.length
+                })
             h1.gymDetail__section #{gym.name}
             .gymDetail__section.btnContainer
                 if gym.oneday === "가능"
@@ -41,9 +48,8 @@ block content
                     .gymDetail__btn.no 연중무휴 아님
                 else if gym.oneday === "모름"
                     .gymDetail__btn 연중무휴 여부 모름
-                #likeBtn 좋아요
             
-            .gymDetail__imgLayout.gymDetail__section
+            .gymDetail__imgLayout.gymDetail__section.gymDetail__bigSection
                 - let i = 0;
                 while i < 4
                     if i === 0 || i === 1
@@ -58,29 +64,37 @@ block content
                         span
                             
                     - ++i
-            h2.gymDetail__section " #{gym.title} "
-            p.gymDetail__section=gym.description
-            .gymDetail__section
+            .gymDetail__bigSection
+                h2 체육관 소개
+                h3.gymDetail__section " #{gym.title} "
+                p.gymDetail__section=gym.description
+            .gymDetail__section.gymDetail__bigSection
                 #kakaoMap
                     #jsAddress #{gym.address}
                 
-            if `${user._id}`=== `${gym.creator._id}`
-                .updateAndDeleteBtn
-                    a(href=`/gym/${gym._id}/update`)
-                        div.btn.primary 수정
-                    #deleteBtn.btn.secondary 삭제
-            input(name="text")
+            //- if `${user._id}`=== `${gym.creator._id}`
+            //-     .updateAndDeleteBtn
+            //-         a(href=`/gym/${gym._id}/update`)
+            //-             div.btn.primary 수정
+            //-         #deleteBtn.btn.secondary 삭제
+            .gymDetail__section.gymDetail__bigSection
+                .commentsWrapper
+                    h4 댓글 #{comments.length}
+                    each comment in comments
+                        .comment
+                            +userBlock({
+                                _id:comment.creator._id,
+                                nickname:comment.creator.nickname,
+                                avatarUrl:comment.creator.avatarUrl
+                            }, "40px")
+                            p=comment.text
 
-            button#commentBtn 댓글생성
-
-            .commentsWrapper
-                each comment in comments
-                    .comment
-                        div=comment.text
-                        div #{comment.creator.nickname}
-
-                        if `${comment.creator._id}`=== `${user._id}`
-                            button.commentDeleteBtn(id=comment._id) 삭제
+                            if `${comment.creator._id}`=== `${user._id}`
+                                button.commentDeleteBtn(id=comment._id) 삭제
+                .commentInput
+                    +avatarBlock(user.avatarUrl, "70px")
+                    textarea(name="text")
+                    #commentBtn.primary 댓글달기
                     
     .modalContainer
         .modal

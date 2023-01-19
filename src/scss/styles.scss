@@ -1,6 +1,7 @@
 @import "./config/_reset.scss";
 @import "./config/_global.scss";
 
+@import "./items/category.scss";
 @import "./items/comment.scss";
 @import "./items/userBlock.scss";
 @import "./items/cropper.scss";
@@ -9,6 +10,7 @@
 @import "./items/flashMessage.scss";
 @import "./items/oauthBlock.scss";
 @import "./items/gymCardBlock.scss";
+@import "./items/galleryCardBlock.scss";
 @import "./items/form.scss";
 @import "./items/pageHead.scss";
 @import "./items/pagination.scss";
@@ -17,11 +19,12 @@
 @import "./items/modal.scss";
 @import "./items/viewMore.scss";
 
-@import "./pages/gymUpload.scss";
+@import "./pages/gallery.scss";
 @import "./pages/galleryUpload.scss";
+@import "./pages/gym.scss";
+@import "./pages/gymUpload.scss";
 @import "./pages/gymDetail.scss";
 @import "./pages/home.scss";
-@import "./pages/gym.scss";
 @import "./pages/me.scss";
 @import "./pages/post.scss";
 @import "./pages/postDetail.scss";

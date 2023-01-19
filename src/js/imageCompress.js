@@ -11,6 +11,24 @@ const generateRandomId = () => {
     return Math.random().toString(16).slice(2);
 };
 
+const startLoading = (ele) => {
+    ele.innerHTML = "";
+    if (ele.classList.contains("fa-pen")) {
+        ele.classList.remove("fa-pen");
+        ele.classList.add("fa-spinner");
+        ele.classList.add("fa-spin-pulse");
+        return;
+    }
+    ele.innerHTML = `<i class="fa-solid fa-spinner fa-spin-pulse"></i>`;
+    ele.disabled = true;
+};
+
+const endLoading = (ele) => {
+    ele.innerHTML = "";
+    ele.innerHTML = `<i class="fa-solid fa-plus" ></i>`;
+    ele.disabled = false;
+};
+
 const compressFile = async (file) => {
     const compressOption = {
         maxSizeMB: 1,
@@ -56,21 +74,21 @@ const generateBtns = (id) => {
         fileInput.files = dataTransfer.files;
     };
 
-    const updatePreview = (id) => {
+    const updatePreview = (id, btn) => {
         const input = document.createElement("input");
         input.type = "file";
         input.click();
-        input.addEventListener("change", (e) => updateChange(e, id));
+        input.addEventListener("change", (e) => updateChange(e, id, btn));
     };
     const deleteBtn = document.createElement("div");
     deleteBtn.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
-    deleteBtn.addEventListener("click", () => {
+    deleteBtn.addEventListener("click", (e) => {
         deletePreview(id);
     });
     const updateBtn = document.createElement("div");
     updateBtn.innerHTML = `<i class="fa-solid fa-pen"></i>`;
-    updateBtn.addEventListener("click", () => {
-        updatePreview(id);
+    updateBtn.addEventListener("click", (e) => {
+        updatePreview(id, e.target);
     });
     return { deleteBtn, updateBtn };
 };
@@ -123,23 +141,30 @@ const paintPreview = (imgSrc, id) => {
 
 const addChange = async (event) => {
     const imgFiles = event.target.files;
-    console.log(imgFiles);
+
+    startLoading(fakeFileBtn);
+
     for (let i = 0; i < imgFiles.length; i++) {
         const newId = generateRandomId();
         const file = await compressFile(imgFiles[i]);
-        file.id = newId;
+        if (file) {
+            file.id = newId;
 
-        paintPreview(file, newId);
-        handleAddFile(file);
+            paintPreview(file, newId);
+            handleAddFile(file);
+        }
     }
 
     if (dataTransfer.files.length >= MAX_FILE) {
         alert(`최대 ${MAX_FILE}장까지 업로드 가능합니다`);
     }
+    endLoading(fakeFileBtn);
 };
 
-const updateChange = async (e, targetId) => {
+const updateChange = async (e, targetId, updateBtn) => {
     try {
+        startLoading(updateBtn);
+
         const newId = generateRandomId();
         const file = await compressFile(e.target.files[0]);
         file.id = newId;
@@ -178,7 +203,10 @@ const handleUpdateFile = (file, targetId) => {
 
 const init = () => {
     fileInput.addEventListener("change", addChange);
-    fakeFileBtn.addEventListener("click", () => fileInput.click());
+    fakeFileBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        fileInput.click();
+    });
     if (originalPreviews.length > 0) {
         const handleLoad = async () => {
             const paintPhoto = async (imageEle) => {

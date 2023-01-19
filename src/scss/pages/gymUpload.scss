@@ -85,7 +85,6 @@
                 gap: 2px;
                 div {
                     cursor: pointer;
-                    color: $red;
                     z-index: 50;
                     width: 20px;
                     height: 20px;
@@ -94,13 +93,11 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    font-size: 10px;
+                    color: $blue;
                     .fa-xmark {
                         font-size: 14px;
                         color: $red;
-                    }
-                    .fa-pen {
-                        font-size: 10px;
-                        color: $blue;
                     }
                 }
             }

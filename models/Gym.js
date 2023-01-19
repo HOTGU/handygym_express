@@ -14,6 +14,7 @@ const GymSchema = mongoose.Schema(
         like_users: [String],
         comments: [String],
         creator: { type: mongoose.SchemaTypes.ObjectId, ref: "User" },
+        views: { type: Number, default: 0 },
     },
     {
         timestamps: true,

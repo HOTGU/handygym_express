@@ -5,7 +5,7 @@ export const fetch = async (req, res) => {
         query: { page = 1 },
     } = req;
     try {
-        const LIMIT_SIZE = 1;
+        const LIMIT_SIZE = 6;
         const SKIP_PAGE = (page - 1) * LIMIT_SIZE;
         const TOTAL_GALLERIES = await Gallery.countDocuments();
         const TOTAL_PAGE = Math.ceil(TOTAL_GALLERIES / LIMIT_SIZE) || 1;
@@ -34,15 +34,28 @@ export const uploadPost = async (req, res) => {
         files,
         user,
     } = req;
+
+    let captionsArr = new Array();
+
+    if (typeof captions === "string") {
+        // 캡션이 한개일 때
+        captionsArr.push(captions);
+    } else {
+        // 캡션이 여러개일 때
+        captionsArr = captions;
+    }
+
     try {
         const returnPhotosObj = files.map((__, index) => {
-            return { photo: files[index].path, caption: captions[index] };
+            return { photo: files[index].path, caption: captionsArr[index] };
         });
+
         await Gallery.create({
             title,
             photos: returnPhotosObj,
             creator: user._id,
         });
+
         return res.redirect("/gallery");
     } catch (error) {
         console.log(error);

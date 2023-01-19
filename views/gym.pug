@@ -27,13 +27,15 @@ block content
             each gym in gyms
                 +gymCardBlock({
                     _id:gym._id,
+                    location:gym.location,
                     creator:gym.creator,
                     thumbnail:gym.photos[0],
                     name:gym.name,
                     title:gym.title,
                     isLike:gym.like_users.includes(String(user._id)),
                     totalLike:gym.like_users.length,
-                    totalComment:gym.comments.length
+                    totalComment:gym.comments.length,
+                    views:gym.views
                 })
         div(id=totalPage class="jsPageContainer pagination")
 

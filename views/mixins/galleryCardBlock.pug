@@ -3,7 +3,7 @@ include userBlock
 mixin galleryCardBlock(gallery={})
     .galleryCard 
         a(href=`/gallery/${gallery._id}`)
-            img(src=`${gallery.thumbnail}`, alt=`${gallery.title}`)
+            img(src=`${gallery.thumbnail}`, alt=`${gallery.title}`).thumbnail
             h3=gallery.title
             +userBlock({
                 _id:gallery.creator._id,

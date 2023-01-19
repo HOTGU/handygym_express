@@ -99,7 +99,7 @@ export const detail = async (req, res) => {
 
         const comments = await Comment.find({ where: postId }).populate("creator");
 
-        const popluatePosts = await Post.aggregate([
+        const populatePosts = await Post.aggregate([
             {
                 $match: {
                     createdAt: {
@@ -122,7 +122,7 @@ export const detail = async (req, res) => {
             title: `${post.title}`,
             post,
             comments,
-            popluatePosts,
+            populatePosts,
         });
     } catch (error) {
         console.log(error);
@@ -219,12 +219,4 @@ export const like = async (req, res) => {
         return res.status(200).json();
     } catch (error) {}
     res.status(200).json({ message: `${req.params.gymId}로 좋아요 신청` });
-};
-
-export const views = async (req, res) => {
-    try {
-        return res.status(200).json(post);
-    } catch (error) {
-        console.log(error);
-    }
 };

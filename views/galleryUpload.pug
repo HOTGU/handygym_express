@@ -10,8 +10,6 @@ block content
     .container
         form(action="/gallery/upload" method="post" enctype="multipart/form-data").uploadContainer
             input(type="hidden" name="_csrf" value=csrfToken)
-            input(type="hidden" name="address")
-            input(type="hidden" name="location")
             h3 사진 업로드
             .flexContainer
                 .flexContainer__item
@@ -22,11 +20,13 @@ block content
                 .flexContainer__item
                     span 사진
                 .flexContainer__item
-            input(type="file" id="realFileInput" name="photos" multiple)
+            input(type="file" id="realFileInput" name="photos" multiple hidden)
             #galleryPreview
-            input(type="file" id="fakeFileInput")
+            button.btn.secondary#fakeFileBtn
+                i.fa-solid.fa-plus
+            input(type="file" id="fakeFileInput" hidden)
             
-            input(type="submit" value="생성").btn.primary
+            button(type="submit").btn.primary 생성
 
     script(src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js") 
     script(type="text/javascript" src="https://cdn.jsdelivr.net/npm/browser-image-compression@1.0.15/dist/browser-image-compression.js")

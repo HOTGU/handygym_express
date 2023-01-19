@@ -8,7 +8,6 @@ import {
     updatePost,
     upload,
     uploadPost,
-    views,
 } from "../controllers/postController.js";
 import { onlyEmailVerified, onlyUser } from "../utils/protectAuth.js";
 import protectCSRFToken from "../utils/protectCSRFToken.js";
@@ -25,7 +24,6 @@ postRouter
 
 postRouter.route("/:postId").get(detail);
 postRouter.route("/:postId/like").get(like);
-postRouter.route("/:postId/views").get(views);
 
 postRouter.get("/:postId/remove", remove);
 

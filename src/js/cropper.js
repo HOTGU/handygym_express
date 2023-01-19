@@ -5,6 +5,7 @@ const croppperContainer = document.querySelector(".croppperContainer");
 const closeBtn = document.getElementById("closeBtn");
 
 const realFileInput = document.getElementById("realFileInput");
+const fakeFileBtn = document.getElementById("fakeFileBtn");
 const fakeFileInput = document.getElementById("fakeFileInput");
 const galleryPreview = document.getElementById("galleryPreview");
 const result = document.querySelector(".result");
@@ -27,6 +28,9 @@ const compressFile = async (file) => {
     };
     try {
         if (file) {
+            fakeFileBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin-pulse"></i>`;
+            fakeFileBtn.disabled = true;
+
             let compressedBlob = await imageCompression(file, compressOption);
             compressedBlob.name = `${file.name || "힙합"}_compressed`;
 
@@ -262,9 +266,16 @@ const handleChange = async (e) => {
     paintPreview(randomId, data);
 
     newImgTodData(compressedFile, randomId);
+
+    fakeFileBtn.innerHTML = `<i class="fa-solid fa-plus" ></i>`;
+    fakeFileBtn.disabled = false;
 };
 
 const init = () => {
+    fakeFileBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        fakeFileInput.click();
+    });
     fakeFileInput.addEventListener("change", handleChange);
     const originalPhotos = document.querySelectorAll(".originalPhoto");
     const originalCaptions = document.querySelectorAll(".originalCaption");
