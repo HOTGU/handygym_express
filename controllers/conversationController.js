@@ -2,13 +2,10 @@ import Conversation from "../models/Conversation.js";
 import Message from "../models/Message.js";
 
 export const fetch = async (req, res) => {
-    console.log("----------------나--------------");
-    console.log(req.user);
     try {
         const conversations = await Conversation.find({
             users: { $in: [req.user._id] },
         }).populate("users");
-        console.log(conversations);
         return res.render("conversation", { title: "쪽지함", conversations });
     } catch (error) {
         console.log(error);
@@ -31,13 +28,16 @@ export const detail = async (req, res) => {
             return res.redirect("/");
         }
 
+        const filterOtherUser = conversation.users.filter((conversationUser) => {
+            return String(conversationUser._id) !== String(user._id);
+        });
+        const otherUserId = String(filterOtherUser[0]._id);
+
         const messages = await Message.find({ conversationId: id })
             .populate("from")
             .populate("to");
 
-        console.log(messages);
-
-        res.render("conversationDetail", { title: "쪽지함", messages });
+        res.render("conversationDetail", { title: "쪽지함", messages, otherUserId });
     } catch (error) {
         console.log(error);
     }

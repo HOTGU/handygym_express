@@ -12,29 +12,23 @@ export const create = async (req, res) => {
             users: { $all: [to, from] },
         });
         if (existsConversation) {
-            console.log("대화방있음");
-            console.log(existsConversation);
-            const newMessage = await Message.create({
+            await Message.create({
                 from,
                 to,
                 message,
                 conversationId: String(existsConversation._id),
             });
-            console.log(newMessage);
             return res.redirect(`/conversation/${existsConversation._id}`);
         } else {
-            console.log("대화방없음");
             const newConversation = await Conversation.create({
                 users: [to, from],
             });
-            console.log(newConversation);
-            const newMessage = await Message.create({
+            await Message.create({
                 from,
                 to,
                 message,
                 conversationId: String(newConversation._id),
             });
-            console.log(newMessage);
             return res.redirect(`/conversation/${newConversation._id}`);
         }
     } catch (error) {

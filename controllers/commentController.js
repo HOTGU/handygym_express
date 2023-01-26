@@ -1,4 +1,5 @@
 import Comment from "../models/Comment.js";
+import Gallery from "../models/Gallery.js";
 import Gym from "../models/Gym.js";
 import Post from "../models/Post.js";
 
@@ -37,7 +38,15 @@ export const create = async (req, res) => {
             );
         }
         if (type === "gallery") {
-            console.log("gallery");
+            await Gallery.findByIdAndUpdate(
+                whereId,
+                {
+                    $push: { comments: String(comment._id) },
+                },
+                {
+                    new: true,
+                }
+            );
         }
         return res.status(201).json({ comment, user: req.user });
     } catch (error) {

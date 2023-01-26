@@ -1,0 +1,15 @@
+.galleryDetail {
+    &__section {
+        margin-bottom: 20px;
+
+        h1 {
+            font-size: 30px;
+            font-weight: 700;
+        }
+        img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+        }
+    }
+}

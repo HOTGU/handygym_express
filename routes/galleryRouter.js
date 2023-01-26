@@ -7,6 +7,7 @@ import {
     update,
     updatePost,
     remove,
+    like,
 } from "../controllers/galleryController.js";
 import { galleryUpload } from "../utils/fileUpload.js";
 import { onlyEmailVerified, onlyUser } from "../utils/protectAuth.js";
@@ -23,6 +24,7 @@ galleryRouter
     .post(galleryUpload.array("photos", 10), protectCSRFToken, uploadPost);
 
 galleryRouter.get("/:galleryId", onlyUser, detail);
+galleryRouter.get("/:galleryId/like", onlyUser, like);
 
 galleryRouter
     .route("/:galleryId/update")

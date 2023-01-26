@@ -21,7 +21,7 @@ block content
                     avatarUrl:post.creator.avatarUrl
                 }, "40px","40px")
             p.section=post.description
-            .thumbsUp
+            .centerLikeBtn
                 if post.like_users.includes(String(user._id))
                     i.likeBtn.fa-solid.fa-thumbs-up.like.fa-2xl(id=`${post._id}`)
                     div 추천

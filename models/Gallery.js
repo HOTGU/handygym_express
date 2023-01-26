@@ -8,6 +8,9 @@ const GalleryScehma = mongoose.Schema({
             caption: String,
         },
     ],
+    views: { type: Number, default: 0 },
+    comments: [String],
+    like_users: [String],
     creator: { type: mongoose.SchemaTypes.ObjectId, ref: "User" },
 });
 

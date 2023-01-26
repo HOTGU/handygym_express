@@ -17,11 +17,12 @@ block content
                     span 타이틀
                 .flexContainer__item 
                     input(type="text" name="title" value=gallery.title)
-            
 
-            input(type="file" id="realFileInput" name="photos" multiple accept="*" )
+            input(type="file" id="realFileInput" name="photos" multiple accept="*" hidden)
             #galleryPreview
-            input(type="file" id="fakeFileInput" accept="*" )
+            button.btn.secondary#fakeFileBtn
+                i.fa-solid.fa-plus
+            input(type="file" id="fakeFileInput" accept="*" hidden )
 
             input(type="submit" value="변경" class="btn primary")
 

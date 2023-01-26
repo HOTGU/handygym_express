@@ -1,3 +1,4 @@
+import Comment from "../models/Comment.js";
 import Gallery from "../models/Gallery.js";
 
 export const fetch = async (req, res) => {
@@ -65,14 +66,29 @@ export const uploadPost = async (req, res) => {
 export const detail = async (req, res) => {
     const {
         params: { galleryId },
+        cookies,
     } = req;
-
+    const HOUR = 1000 * 60 * 60;
+    const DAY = HOUR * 24;
     try {
         const gallery = await Gallery.findById(galleryId).populate("creator");
+
+        if (!cookies[galleryId] || +cookies[galleryId] < Date.now()) {
+            res.cookie(galleryId, Date.now() + DAY, {
+                expires: new Date(Date.now() + DAY + 9 * HOUR),
+            });
+            gallery.views++;
+            await gallery.save();
+        }
+
+        const comments = await Comment.find({ where: galleryId }).populate("creator");
+
+        console.log(comments);
 
         return res.render("galleryDetail", {
             title: gallery.title,
             gallery,
+            comments,
             // comments,
         });
     } catch (error) {
@@ -144,4 +160,24 @@ export const remove = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+};
+
+export const like = async (req, res) => {
+    const {
+        params: { galleryId },
+        user: { _id },
+    } = req;
+    const userId = String(_id);
+    try {
+        const currentGallery = await Gallery.findById(galleryId);
+        const existsUser = currentGallery.like_users.includes(userId);
+        if (existsUser) {
+            await Gallery.findByIdAndUpdate(galleryId, { $pull: { like_users: userId } });
+        } else {
+            await Gallery.findByIdAndUpdate(galleryId, { $push: { like_users: userId } });
+        }
+
+        return res.status(200).json();
+    } catch (error) {}
+    res.status(200).json({ message: `${req.params.gymId}로 좋아요 신청` });
 };

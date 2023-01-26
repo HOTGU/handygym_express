@@ -1,8 +1,10 @@
+@import "./config/_container.scss";
 @import "./config/_reset.scss";
 @import "./config/_global.scss";
 
 @import "./items/category.scss";
 @import "./items/comment.scss";
+@import "./items/likeBtn.scss";
 @import "./items/userBlock.scss";
 @import "./items/cropper.scss";
 @import "./items/footer.scss";
@@ -16,10 +18,14 @@
 @import "./items/pagination.scss";
 @import "./items/postCardBlock.scss";
 @import "./items/message.scss";
+@import "./items/previewBtnContainer.scss";
 @import "./items/modal.scss";
 @import "./items/viewMore.scss";
 
+@import "./pages/conversation.scss";
+@import "./pages/conversationDetail.scss";
 @import "./pages/gallery.scss";
+@import "./pages/galleryDetail.scss";
 @import "./pages/galleryUpload.scss";
 @import "./pages/gym.scss";
 @import "./pages/gymUpload.scss";

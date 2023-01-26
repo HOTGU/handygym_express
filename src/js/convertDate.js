@@ -1,4 +1,4 @@
-const createdTexts = document.querySelectorAll(".postCreatedAt");
+const createdTexts = document.querySelectorAll(".createdAt");
 
 const convertDate = (ele) => {
     const rawText = ele.innerText;
