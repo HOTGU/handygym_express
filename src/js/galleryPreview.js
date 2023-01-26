@@ -111,10 +111,11 @@ const paintPreview = (newId, data) => {
     const container = document.createElement("div");
     container.id = newId;
     container.classList.add("previewContainer");
+    container.classList.add("galleryPreview");
 
     const img = document.createElement("img");
     img.src = imgSrc;
-    img.classList.add("previewImg");
+    img.classList.add("previewContainer__img");
 
     const btnContainer = generateBtnContainer(newId, imgSrc);
 
@@ -140,7 +141,7 @@ const updatePreview = (targetId, newId, data) => {
 
     const img = document.createElement("img");
     img.src = imgSrc;
-    img.classList.add("previewImg");
+    img.classList.add("previewContainer__img");
 
     const btnContainer = generateBtnContainer(newId, imgSrc);
 

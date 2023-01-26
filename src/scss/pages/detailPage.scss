@@ -1,5 +1,6 @@
 @import "../config/variable";
-.postDetail {
+
+.detailPage {
     display: flex;
     width: 100%;
     gap: 20px;
@@ -20,6 +21,9 @@
     .section {
         margin-bottom: 20px;
     }
+    .desc {
+        min-height: 250px;
+    }
 
     &__item {
         background-color: $white;
@@ -28,6 +32,11 @@
         &:first-child {
             width: 80%;
             padding: 30px;
+            img {
+                width: 100%;
+                object-fit: cover;
+                aspect-ratio: 4 / 3;
+            }
         }
         &:last-child {
             padding: 20px;

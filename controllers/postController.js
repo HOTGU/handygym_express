@@ -113,7 +113,7 @@ export const detail = async (req, res) => {
             },
             {
                 $sort: {
-                    view: -1,
+                    views: -1,
                 },
             },
         ]);

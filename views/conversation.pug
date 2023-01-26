@@ -2,7 +2,7 @@ extends includes/layout
 include mixins/conversationCardBlock
 
 block content
-    .conversationContainer.pageContainer
+    .narrowContainer
         each conversation in conversations
             each conversationUser in conversation.users
                 if `${conversationUser._id}` !== `${user._id}`

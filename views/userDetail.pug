@@ -15,7 +15,7 @@ block content
 
         form(action=`/message/create` method="post")
             input(type="text" name="to" value=findUser._id readOnly )
-            input(name="message")
+            textarea(name="message")
             button 쪽지보내기
 
         div=findUser.nickname

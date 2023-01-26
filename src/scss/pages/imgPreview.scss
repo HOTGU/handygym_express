@@ -1,6 +1,27 @@
 @import "../config/variable";
 
+#gymPreview {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 3px;
+    gap: 5px;
+}
+
 .previewContainer {
+    position: relative;
+    width: 100%;
+    border: 1px solid $borderColor;
+    border-radius: 3px;
+    &__img {
+        width: 100%;
+        height: 100%;
+        right: 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        object-fit: cover;
+    }
     &__btn {
         position: absolute;
         top: 0;
@@ -31,4 +52,16 @@
             }
         }
     }
+    textarea[name="captions"] {
+        width: 100%;
+        height: 140px;
+    }
+}
+.gymPreview {
+    width: 100px;
+    aspect-ratio: 3 / 4;
+}
+.galleryPreview {
+    aspect-ratio: 4 / 3;
+    margin-top: 10px;
 }

@@ -22,17 +22,28 @@
     margin: 0 auto;
 }
 
-.paperContainer {
-    max-width: 960px;
-    padding: 30px;
-    background-color: $white;
-    margin: 20px auto;
-    box-shadow: $boxShadow;
+.narrowContainer {
+    max-width: 840px;
+    width: 100%;
+    padding: 0 4px;
+    margin: 0 auto;
 }
 
-.pageContainer {
-    min-height: calc(100% - $navHeight);
-    height: auto;
+.paper {
+    background-color: $white;
+    box-shadow: $boxShadow;
+    padding: 30px;
+    margin: 20px auto;
+}
+
+.box {
+    border: 1px solid $borderColor;
+    padding: 30px;
+    margin: 20px auto;
+}
+
+.uploadContainer {
     display: flex;
     flex-direction: column;
+    gap: 30px;
 }

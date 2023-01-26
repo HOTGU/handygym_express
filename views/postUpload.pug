@@ -1,15 +1,27 @@
 extends includes/layout
 
 block content
-    .container
-        form(action="/post/upload" method="post")
-            input(type="hidden" name="_csrf" value=csrfToken)
-            input(type="text" name="title" placeholder="한 줄로 표현해보세요")
-            textarea(name="description" placeholder="세부내용")
-            select(name="category")
-                - let i = 0;
-                - const arr = ["자유","질문","공유","리뷰","Flex"]
-                while i < arr.length
-                    option(value=arr[i])=arr[i]
-                    - i++
-            input(type="submit" value="생성")
+    form(action="/post/upload" method="post").narrowContainer.uploadContainer.box
+        input(type="hidden" name="_csrf" value=csrfToken)
+        h3.uploadHead 포스트 업로드
+        .uploadColumn
+            .uploadColumn__item 
+                span 제목
+            .uploadColumn__item 
+                input(type="text" name="title" placeholder="한 줄로 표현해보세요")
+        .uploadColumn
+            .uploadColumn__item 
+                span 세부내용
+            .uploadColumn__item 
+                textarea(name="description" placeholder="세부내용")
+        .uploadColumn
+            .uploadColumn__item 
+                span 카테고리
+            .uploadColumn__item
+                select(name="category")
+                    - let i = 0;
+                    - const arr = ["자유","질문","공유","리뷰","Flex"]
+                    while i < arr.length
+                        option(value=arr[i])=arr[i]
+                        - i++
+        input(type="submit" value="생성")

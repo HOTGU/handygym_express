@@ -70,6 +70,8 @@ export const detail = async (req, res) => {
     } = req;
     const HOUR = 1000 * 60 * 60;
     const DAY = HOUR * 24;
+    const CURRENT_YEAR = new Date().getFullYear();
+    const CURRENT_MONTH = new Date().getMonth();
     try {
         const gallery = await Gallery.findById(galleryId).populate("creator");
 
@@ -83,13 +85,30 @@ export const detail = async (req, res) => {
 
         const comments = await Comment.find({ where: galleryId }).populate("creator");
 
-        console.log(comments);
+        const populateGalleries = await Gallery.aggregate([
+            {
+                $match: {
+                    createdAt: {
+                        $gte: new Date(Date.UTC(CURRENT_YEAR, CURRENT_MONTH)),
+                        $lte: new Date(Date.UTC(CURRENT_YEAR, CURRENT_MONTH + 1)),
+                    },
+                },
+            },
+            {
+                $limit: 5,
+            },
+            {
+                $sort: {
+                    views: -1,
+                },
+            },
+        ]);
 
         return res.render("galleryDetail", {
             title: gallery.title,
             gallery,
             comments,
-            // comments,
+            populateGalleries,
         });
     } catch (error) {
         console.log(error);

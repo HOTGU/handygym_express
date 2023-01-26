@@ -1,5 +1,5 @@
 const fileInput = document.querySelector("input[name=photos]");
-const preview = document.getElementById("preview");
+const preview = document.getElementById("gymPreview");
 const fakeFileBtn = document.getElementById("fakeFileBtn");
 const originalPreviews = document.querySelectorAll(".originalPreview");
 
@@ -125,6 +125,7 @@ const paintPreview = (imgSrc, id) => {
     previewImg.src = url;
 
     previewContainer.classList.add("previewContainer");
+    previewContainer.classList.add("gymPreview");
     previewImg.classList.add("previewContainer__img");
     btnContainer.classList.add("previewContainer__btn");
 
