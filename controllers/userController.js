@@ -26,6 +26,7 @@ export const detail = async (req, res) => {
             gyms,
             posts,
             galleries,
+            csrfToken: req.csrfToken(),
         });
     } catch (error) {
         console.log(error);
@@ -55,7 +56,7 @@ export const updatePost = async (req, res) => {
             }
         );
 
-        return res.redirect("/user/me");
+        return res.redirect(`/user/${user._id}`);
     } catch (error) {
         console.log(error);
     }

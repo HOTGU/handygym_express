@@ -4,7 +4,7 @@ const fakeFileInput = document.getElementById("fakeFileInput");
 const avatarBtn = document.getElementById("fileBtn");
 const deleteBtn = document.getElementById("deleteBtn");
 
-const avatarImg = document.getElementById("jsAvatarImg");
+const avatarImg = document.querySelector(".avatarImg");
 
 let dataTransfer = new DataTransfer();
 

@@ -4,29 +4,91 @@ include mixins/galleryCardBlock
 include mixins/avatarBlock
 
 block content
-    .container
-        if `${findUser._id}` === `${user._id}`
-            h1 내 정보
+    .modalContainer
+        .modalWrapper
+            .modal
+                if `${findUser._id}` === `${user._id}`
+                    form(action="/user/update" method="POST" enctype="multipart/form-data").userUpdateForm
+                        input(type="hidden" name="_csrf" value=csrfToken)
+                        .imgContainer
+                            if user.avatarUrl
+                                img(src=`/${user.avatarUrl}`).avatarImg#fileBtn
+                            else
+                                img(src="/static/images/noUser.png").avatarImg#fileBtn
+                            .deleteBtn#deleteBtn
+                                i.fa-solid.fa-xmark
 
-        +avatarBlock(findUser.avatarUrl, "120px")
+                        input(name="nickname" value=user.nickname)
 
-        if `${findUser._id}` === `${user._id}`
-            a(href=`/user/update`) 유저 정보 수정
+                        if user.avatarUrl
+                            img(src=`/${user.avatarUrl}` id="originalImg"  hidden)
 
-        form(action=`/message/create` method="post")
-            input(type="text" name="to" value=findUser._id readOnly )
-            textarea(name="message")
-            button 쪽지보내기
+                        img(src="/static/images/noUser.png" id="noUserImg" hidden)
 
-        div=findUser.nickname
-        div #{findUser.nickname}님이 쓴 체육관글
-            each gym in gyms
-                a(href=`/gym/${gym._id}`)
-                    div=gym.title
-        div #{findUser.nickname}님이 쓴 게시글
-            each post in posts 
-                div=post.title
-        div #{findUser.nickname}님이 쓴 사진
-            each gallery in galleries
-                div=gallery.title
+                        input(type="file" name="avatar" hidden)
+                        input(type="file" id="fakeFileInput" hidden)
+                        input(type="submit", value="전송").btn.primary
+                else
+                    form(action=`/message/create` method="post").userDetailMessage
+                        div #{findUser.nickname}님에게 쪽지 보내기
+                        input(type="text" name="to" value=findUser._id readOnly hidden )
+                        textarea(name="message")
+                        button.btn.primary 쪽지보내기
+    .narrowContainer
+        .userDetail
+            .userDetail__item
+                +avatarBlock(findUser.avatarUrl, "120px")
+                if `${findUser._id}` === `${user._id}`
+                    div.nickname #{user.nickname}(나)
+                    .btn.primary#modalBtn 
+                        .emojiText
+                            i.fa-regular.fa-pen-to-square 
+                            span 정보 수정
+                else 
+                    div.nickname #{findUser.nickname}
+                    .btn.primary#modalBtn
+                        .emojiText
+                            i.fa-regular.fa-envelope 
+                            span 쪽지 보내기
+                
+
+            .userDetail__item
+                .section
+                    .head #{findUser.nickname}님이 쓴 체육관글
+                    if gyms.length > 0
+                        each gym, index in gyms
+                            a(href=`/gym/${gym._id}` target="_blank")
+                                span.index=index+1
+                                div=gym.title
+                    else
+                        h4 작성한 글이 없습니다
+                .section
+                    .head #{findUser.nickname}님이 쓴 게시글
+                    if posts.length > 0
+                        each post, index in posts
+                            a(href=`/post/${post._id}` target="_blank")
+                                span.index=index+1
+                                div=post.title
+                    else
+                        h4 작성한 글이 없습니다
+
+                .section
+                    .head #{findUser.nickname}님이 쓴 사진
+                    if galleries.length > 0
+                        each gallery, index in galleries
+                            a(href=`/gallery/${gallery._id}` target="_blank")
+                                span.index=index+1
+                                div=gallery.title
+                    else
+                        h4 작성한 글이 없습니다
+
+                
+
+
+
+    script(type="text/javascript" src="https://cdn.jsdelivr.net/npm/browser-image-compression@1.0.15/dist/browser-image-compression.js")
+
+    script(src="/static/js/avatarPreview.js")
+    script(src="/static/js/createModal.js") 
+
             

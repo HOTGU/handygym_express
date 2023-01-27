@@ -19,11 +19,14 @@ userRouter.route("/find-email").get(findEmail).post(findEmailPost);
 
 userRouter.route("/me").get(onlyUser, onlyEmailVerified, me);
 
-userRouter
-    .route("/update")
-    .all(onlyUser, onlyEmailVerified)
-    .get(protectCSRFToken, update)
-    .post(avatarUpload.single("avatar"), protectCSRFToken, updatePost);
+userRouter.post(
+    "/update",
+    onlyUser,
+    onlyEmailVerified,
+    avatarUpload.single("avatar"),
+    protectCSRFToken,
+    updatePost
+);
 
 userRouter
     .route("/change-password")
@@ -31,6 +34,6 @@ userRouter
     .get(changePassword)
     .post(changePasswordPost);
 
-userRouter.route("/:userId").get(detail);
+userRouter.route("/:userId").get(onlyUser, onlyEmailVerified, protectCSRFToken, detail);
 
 export default userRouter;

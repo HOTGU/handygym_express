@@ -4,3 +4,4 @@ mixin userBlock(user, size)
     a(href=`/user/${user._id}`).userBlock
         +avatarBlock(user.avatarUrl, size)
         div=user.nickname
+
