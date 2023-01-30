@@ -60,23 +60,35 @@ export const signup = (req, res) => {
     });
 };
 
-export const signupPost = async (req, res) => {
+export const signupPost = async (req, res, next) => {
     const {
         body: { nickname, email, password, passwordRepeat },
         query: { redirectUrl },
     } = req;
     try {
-        if (password !== passwordRepeat) {
-            req.flash("error", "비밀번호가 틀립니다");
-            return res.status(500);
+        // throw Error();
+        if (!nickname || !email || !password || !passwordRepeat) {
+            req.flashMessage = "빈칸 없이 작성해주세요";
+            req.flashType = "error";
+            req.flashRedirect = "/signup";
+            return next();
         }
+        if (password !== passwordRepeat) {
+            req.flashMessage = "비밀번호 확인이 다릅니다";
+            req.flashType = "error";
+            req.flashRedirect = "/signup";
+            return next();
+        }
+
         const existUser = await User.findOne({ email });
         if (existUser) {
+            req.flashType = "info";
+            req.flashRedirect = "/signin";
+            req.flashMessage = `이메일로 가입한 유저가 있습니다`;
             if (existUser.socialId) {
-                req.flash("info", `${existUser.socialType}(으)로 로그인한 이메일입니다`);
+                req.flashMessage = `${existUser.socialType}(으)로 로그인한 이메일입니다`;
             }
-            req.flash("info", `이메일로 가입한 유저가 있습니다`);
-            return res.redirect("/signin");
+            return next();
         }
         const hashedPassword = bcrypt.hashSync(password, 10);
 
@@ -97,24 +109,20 @@ export const signupPost = async (req, res) => {
             return res.redirect(`/signin`);
         }
     } catch (error) {
-        console.log(error);
-        if (error.message === "A user with the given username is already registered") {
-            console.log("유저가 있음");
-        }
+        next();
     }
 };
 
-export const googleCallback = async (req, res) => {
+export const googleCallback = async (req, res, next) => {
     passport.authenticate("google", (err, user, info) => {
         if (err) {
-            req.flash("error", "구글로그인 오류 발생");
-            return res.redirect("/signin");
+            return next();
         }
 
         req.logIn(user, (err) => {
             if (err) {
-                req.flash("error", "구글로그인 오류 발생");
-                return res.redirect("/signin");
+                req.flashRedirect = "/signin";
+                return next();
             }
             req.flash("success", `${user.nickname}님 안녕하세요`);
             return res.redirect(info.redirectUrl || "/");
@@ -122,17 +130,16 @@ export const googleCallback = async (req, res) => {
     })(req, res);
 };
 
-export const kakaoCallback = async (req, res) => {
+export const kakaoCallback = async (req, res, next) => {
     passport.authenticate("kakao", (err, user, info) => {
         if (err) {
-            req.flash("error", "카카오로그인 오류 발생");
-            return res.redirect("/signin");
+            return next();
         }
 
         req.logIn(user, (err) => {
             if (err) {
-                req.flash("error", "카카오로그인 오류 발생");
-                return res.redirect("/signin");
+                req.flashRedirect = "/signin";
+                return next();
             }
             req.flash("success", `${user.nickname}님 안녕하세요`);
             return res.redirect(info.redirectUrl);
@@ -140,11 +147,10 @@ export const kakaoCallback = async (req, res) => {
     })(req, res);
 };
 
-export const logout = (req, res) => {
+export const logout = (req, res, next) => {
     req.logout(req.user, (err) => {
         if (err) {
-            req.flash("error", "로그아웃 실패");
-            return res.status(500);
+            return next();
         }
         req.flash("success", "로그아웃 성공");
         res.redirect("/");

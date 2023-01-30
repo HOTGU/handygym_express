@@ -2,27 +2,26 @@ extends includes/layout
 
 block content
     .container.home
-        //- .home__quotes#jsLifeQuotes
-        .box
-            .box__item.first.row
-                .box__item__img
+        .homeBox
+            .homeBox__item.first.row
+                .homeBox__item__img
                     img(src="/static/images/main-img4.png")
-                .box__item__text 
+                .homeBox__item__text 
                     p 정보의 바다에서 헤엄쳐보세요
                     a(href="/post")
                         .btn.primary 게시판 바로가기
-        .box
-            .box__item.second.column
-                .box__item__img
+        .homeBox
+            .homeBox__item.second.column
+                .homeBox__item__img
                     img(src="/static/images/main-img.png")
-                .box__item__text 
+                .homeBox__item__text 
                     p 근처 체육관이 궁금하신가요?
                     a(href="/gym")
                         .btn.secondary 체육관 찾으러가기
-            .box__item.third.column
-                .box__item__img
+            .homeBox__item.third.column
+                .homeBox__item__img
                     img(src="/static/images/main-img2.png")
-                .box__item__text 
+                .homeBox__item__text 
                     p 자신이 아는 체육관을 알려보세요
                     a(href="/gallery")
                         .btn.secondary 사진게시판
