@@ -19,14 +19,13 @@ export const signin = (req, res) => {
     });
 };
 
-export const signinPost = (req, res) => {
+export const signinPost = (req, res, next) => {
     const {
         query: { redirectUrl },
     } = req;
     passport.authenticate("local", (err, user, info) => {
         if (err) {
-            req.flash("error", "로그인 오류 발생");
-            return res.redirect("/signup");
+            return next();
         }
 
         if (!user) {
@@ -39,8 +38,7 @@ export const signinPost = (req, res) => {
         } else {
             req.logIn(user, (err) => {
                 if (err) {
-                    req.flash("error", "로그인 오류 발생");
-                    return res.redirect("/signin");
+                    return next();
                 }
                 req.flash("success", `${user.nickname}님 안녕하세요`);
                 return res.redirect(redirectUrl || "/");
@@ -66,7 +64,7 @@ export const signupPost = async (req, res, next) => {
         query: { redirectUrl },
     } = req;
     try {
-        // throw Error();
+        // return next();
         if (!nickname || !email || !password || !passwordRepeat) {
             req.flashMessage = "빈칸 없이 작성해주세요";
             req.flashType = "error";
@@ -115,6 +113,7 @@ export const signupPost = async (req, res, next) => {
 
 export const googleCallback = async (req, res, next) => {
     passport.authenticate("google", (err, user, info) => {
+        console.log(err);
         if (err) {
             return next();
         }
@@ -157,7 +156,7 @@ export const logout = (req, res, next) => {
     });
 };
 
-export const verifyEmail = async (req, res) => {
+export const verifyEmail = async (req, res, next) => {
     const {
         query: { key, id, redirectUrl },
     } = req;
@@ -173,11 +172,11 @@ export const verifyEmail = async (req, res) => {
             return res.redirect("/");
         }
     } catch (error) {
-        console.log(error);
+        next();
     }
 };
 
-export const resendEmail = async (req, res) => {
+export const resendEmail = async (req, res, next) => {
     const {
         user: { email, _id, email_verify_string },
         query: { redirectUrl },
@@ -188,10 +187,10 @@ export const resendEmail = async (req, res) => {
         req.flash("success", `인증이메일을 보냈습니다 ${email}을 확인하세요`);
 
         return res.redirect(
-            `/no-access?redirectUrl=${redirectUrl}&disAllowedType=resendEmail`
+            `/no-access?redirectUrl=${redirectUrl}&&disAllowedType=resendEmail`
         );
     } catch (error) {
-        console.log(error);
+        next();
     }
 };
 
@@ -200,28 +199,19 @@ export const noAccess = (req, res) => {
         query: { redirectUrl, disAllowedType },
     } = req;
 
-    const createRule = () => {
-        if (disAllowedType === "user") {
-            return { message: "로그인을 해야 이용가능합니다", type: "user" };
-        }
+    const createMessage = () => {
         if (disAllowedType === "email") {
-            return {
-                message: "인증이메일 재전송을 원하면 아래버튼을 누르세요",
-                type: "email",
-            };
+            return `이메일 인증이 안되었습니다.\n ${req?.user?.email}을 확인해주세요.\n 이메일이 없으시면 아래 재전송 버튼을 눌러주세요.`;
         }
         if (disAllowedType === "resendEmail") {
-            return {
-                message: `인증이메일을 보냈습니다. ${req?.user?.email}을 확인해주세요`,
-                type: "email",
-            };
+            return `인증이메일을 보냈습니다.\n ${req?.user?.email}을 확인해주세요\n 이메일이 없으시면 아래 재전송 버튼을 눌러주세요.`;
         }
     };
 
-    const ruleObj = createRule();
+    const message = createMessage();
 
     return res.render("noAccess", {
-        ruleObj,
+        message,
         redirectUrl,
     });
 };

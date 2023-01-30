@@ -107,7 +107,7 @@ app.use((req, res) => {
     const redirect = req.flashRedirect || "/";
 
     const message =
-        req.flashMessage || "서버 오류가 발생했습니다\n 불편함을 드려 죄송합니다";
+        req.flashMessage || "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다";
 
     const type = req.flashType || "error";
 

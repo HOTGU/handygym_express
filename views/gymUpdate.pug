@@ -8,6 +8,7 @@ block content
         each photo in gym.photos
             img(src=`/${photo}` class="originalPreview" hidden)
         h3.uploadHead 체육관 업데이트
+        #validErrorMessage
         .uploadColumn
             .uploadColumn__item
                 span 이름
@@ -39,12 +40,13 @@ block content
                 input(type="file" name="photos" multiple)
                 #gymPreview
         
-        input(type="submit" value="수정")
+        .btn.primary#jsSubmit 업데이트
 
     script(type="text/javascript" src="https://cdn.jsdelivr.net/npm/browser-image-compression@1.0.15/dist/browser-image-compression.js")
 
     script(src="/static/js/daumAddress.js")
     script(src="/static/js/gymPreview.js")
+    script(src="/static/js/validForm.js")
 
     
         

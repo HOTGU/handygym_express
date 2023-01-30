@@ -56,7 +56,7 @@ export const fetch = async (req, res) => {
     }
 };
 
-export const upload = (req, res) => {
+export const upload = (req, res, next) => {
     return res.render("postUpload", { title: "게시판 등록", csrfToken: req.csrfToken() });
 };
 
@@ -71,7 +71,7 @@ export const uploadPost = async (req, res) => {
         await newPost.save();
         return res.redirect("/post");
     } catch (error) {
-        console.log(error);
+        next();
     }
 };
 
@@ -129,7 +129,7 @@ export const detail = async (req, res) => {
     }
 };
 
-export const update = async (req, res) => {
+export const update = async (req, res, next) => {
     const {
         params: { postId },
         user,
@@ -138,8 +138,10 @@ export const update = async (req, res) => {
         const post = await Post.findById(postId).populate("creator");
 
         if (String(user._id) !== String(post.creator._id)) {
-            req.flash("error", "권한이 없습니다");
-            return res.redirect("/post");
+            req.flashType = "error";
+            req.flashMessage = "권한이 없습니다";
+            req.flashRedirect = "/post";
+            next();
         }
 
         return res.render("postUpdate", {
@@ -152,7 +154,7 @@ export const update = async (req, res) => {
     }
 };
 
-export const updatePost = async (req, res) => {
+export const updatePost = async (req, res, next) => {
     const {
         params: { postId },
         body,
@@ -162,8 +164,10 @@ export const updatePost = async (req, res) => {
         const post = await Post.findById(postId).populate("creator");
 
         if (String(user._id) !== String(post.creator._id)) {
-            req.flash("error", "권한이 없습니다");
-            return res.redirect("/post");
+            req.flashType = "error";
+            req.flashMessage = "권한이 없습니다";
+            req.flashRedirect = "/post";
+            next();
         }
 
         const updatedPost = await Post.findByIdAndUpdate(
@@ -176,7 +180,7 @@ export const updatePost = async (req, res) => {
 
         return res.redirect(`/post/${updatedPost._id}`);
     } catch (error) {
-        console.log(error);
+        next();
     }
 };
 

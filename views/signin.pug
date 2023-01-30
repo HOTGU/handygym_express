@@ -7,10 +7,12 @@ block content
             h3 로그인
             form(action=`/signin?redirectUrl=${redirectUrl}` method="post")
                 input(type="hidden" name="_csrf" value=csrfToken)
+                #validErrorMessage
                 input(type="email" name="email" placeholder="이메일")
                 input(type="password" name="password" placeholder="비밀번호")
-                input(type="submit" value="로그인").primary
+                .btn.primary#jsSubmit 로그인
                 a(href=`/signup?redirectUrl=${redirectUrl}`)
                     .btn.tertiary 계정이 없으신가요?
                 +oauthBlock
-    script(src="/static/js/formInvalid.js") 
+
+    script(src="/static/js/validForm.js") 
