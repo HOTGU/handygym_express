@@ -23,7 +23,7 @@ gymRouter
     .route("/upload")
     .all(onlyUser, onlyEmailVerified)
     .get(protectCSRFToken, upload)
-    .post(gymUpload.array("photos", 10), protectCSRFToken, uploadPost);
+    .post(gymUpload.array("gymPhotos", 10), protectCSRFToken, uploadPost);
 
 gymRouter.get("/:gymId", onlyUser, detail);
 gymRouter.get("/:gymId/like", onlyUser, like);
@@ -32,7 +32,7 @@ gymRouter
     .route("/:gymId/update")
     .all(onlyUser, onlyEmailVerified)
     .get(protectCSRFToken, update)
-    .post(gymUpload.array("photos", 10), protectCSRFToken, updatePost);
+    .post(gymUpload.array("gymPhotos", 10), protectCSRFToken, updatePost);
 
 gymRouter.get("/:gymId/remove", onlyUser, remove);
 

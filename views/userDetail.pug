@@ -18,7 +18,7 @@ block content
                             .deleteBtn#deleteBtn
                                 i.fa-solid.fa-xmark
 
-                        input(name="nickname" value=user.nickname)
+                        input(name="nickname" value=user.nickname placeholder="닉네임")
 
                         if user.avatarUrl
                             img(src=`/${user.avatarUrl}` id="originalImg"  hidden)
@@ -27,7 +27,8 @@ block content
 
                         input(type="file" name="avatar" hidden)
                         input(type="file" id="fakeFileInput" hidden)
-                        input(type="submit", value="전송").btn.primary
+                        .btn.primary#jsSubmit 업데이트
+                        //- button 어베
                 else
                     form(action=`/message/create` method="post").userDetailMessage
                         div #{findUser.nickname}님에게 쪽지 보내기
@@ -90,5 +91,5 @@ block content
 
     script(src="/static/js/avatarPreview.js")
     script(src="/static/js/createModal.js") 
-
+    script(src="/static/js/validForm.js")
             

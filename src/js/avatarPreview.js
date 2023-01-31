@@ -52,7 +52,6 @@ const compressFile = async (file) => {
 
         return convertFile;
     } catch (error) {
-        console.log(error);
         alert("파일 올리는 도중 오류발생");
         return;
     }
@@ -75,15 +74,14 @@ const imgSrcToFile = async (imageEle) => {
     canvas.height = imageEle.naturalHeight;
     canvas.width = imageEle.naturalWidth;
     canvas.getContext("2d").drawImage(imageEle, 0, 0);
-    console.log(imageEle);
     try {
         const blob = await new Promise((resolve) =>
             canvas.toBlob((blob) => resolve(blob))
         );
-        console.log(blob);
         return convertBlobToFile(blob);
     } catch (error) {
-        console.log(error);
+        alert("서버 오류발생");
+        return;
     }
 };
 

@@ -33,11 +33,7 @@ block content
                 h4 댓글 #{comments.length}
                 each comment in comments
                     .comment
-                        +userBlock({
-                            _id:comment.creator._id,
-                            nickname:comment.creator.nickname,
-                            avatarUrl:comment.creator.avatarUrl
-                        }, "40px")
+                        +userBlock(comment.creator, "40px")
                         p=comment.text
 
                         if `${comment.creator._id}`=== `${user._id}`

@@ -9,25 +9,24 @@ const commentsWrapper = document.querySelector(".commentsWrapper");
 const deleteBtns = document.querySelectorAll(".commentDeleteBtn");
 
 const createComment = async (e) => {
-    try {
-        const text = input.value;
+    const text = input.value;
 
-        if (!text) return alert("내용을 작성해주세요");
+    if (!text) return alert("내용을 작성해주세요");
 
-        const res = await fetch(`/comment/${whereId}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                text,
-                type,
-            }),
-        });
+    const res = await fetch(`/comment/${whereId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            text,
+            type,
+        }),
+    });
+    if (res.ok) {
         const data = await res.json();
-
         return data;
-    } catch (error) {
-        console.log(error);
-        alert("댓글생성중 에러발생");
+    } else {
+        alert("댓글 생성 중 서버오류 발생");
+        return;
     }
 };
 
@@ -73,19 +72,15 @@ const handleClick = async (e) => {
 
 const handleDelete = async (e) => {
     const commentId = e.target.id;
-    try {
-        const ok = confirm("정말 삭제하시겠습니까?");
-        if (ok) {
-            const res = await fetch(`/comment/${whereId}/remove/${commentId}`);
-            if (res.ok) {
-                const comment = e.target.parentNode;
-                comment.remove();
-            } else {
-                alert("삭제하는데 오류가 발생했습니다");
-            }
+    const ok = confirm("정말 삭제하시겠습니까?");
+    if (ok) {
+        const res = await fetch(`/comment/${whereId}/remove/${commentId}?type=${type}`);
+        if (res.ok) {
+            const comment = e.target.parentNode;
+            comment.remove();
+        } else {
+            alert("삭제하는데 오류가 발생했습니다");
         }
-    } catch (error) {
-        alert(error);
     }
 };
 

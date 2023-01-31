@@ -50,7 +50,6 @@ export const create = async (req, res) => {
         }
         return res.status(201).json({ comment, user: req.user });
     } catch (error) {
-        console.log(error);
         return res.status(400).json();
     }
 };
@@ -62,13 +61,45 @@ export const update = (req, res) => {
 export const remove = async (req, res) => {
     const {
         params: { commentId, whereId },
+        query: { type },
     } = req;
     try {
         await Comment.findByIdAndDelete(commentId);
-        await Gym.findOneAndUpdate(gymId, { $pull: { comments: commentId } });
+        if (type === "post") {
+            await Post.findByIdAndUpdate(
+                whereId,
+                {
+                    $pull: { comments: String(commentId) },
+                },
+                {
+                    new: true,
+                }
+            );
+        }
+        if (type === "gym") {
+            await Gym.findByIdAndUpdate(
+                whereId,
+                {
+                    $pull: { comments: String(commentId) },
+                },
+                {
+                    new: true,
+                }
+            );
+        }
+        if (type === "gallery") {
+            await Gallery.findByIdAndUpdate(
+                whereId,
+                {
+                    $pull: { comments: String(commentId) },
+                },
+                {
+                    new: true,
+                }
+            );
+        }
         return res.status(200).json({ message: "삭제성공" });
     } catch (error) {
-        console.log(error);
         return res.status(400).json();
     }
 };

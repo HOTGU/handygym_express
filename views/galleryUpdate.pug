@@ -20,15 +20,16 @@ block content
             .uploadColumn__item
                 span 사진
             .uploadColumn__item
-        input(type="file" id="realFileInput" name="photos" multiple accept="*" hidden)
+        input(type="file" id="realFileInput" name="galleryPhotos" multiple accept="*" hidden)
         #galleryPreview
-        button.btn.secondary#fakeFileBtn
+        .btn.secondary#fakeFileBtn
             i.fa-solid.fa-plus
         input(type="file" id="fakeFileInput" accept="*" hidden )
 
         input(type="submit" value="변경" class="btn primary")
 
     script(src="/static/js/galleryPreview.js") 
+    script(src="/static/js/validForm.js") 
     script(src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js")
 
     script(type="text/javascript" src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.0/dist/browser-image-compression.js")
