@@ -20,6 +20,7 @@ export const detail = async (req, res) => {
         const gyms = await Gym.find({ creator: userId });
         const posts = await Post.find({ creator: userId });
         const galleries = await Gallery.find({ creator: userId });
+
         return res.render("userDetail", {
             title: `${findUser.nickname} 상세`,
             findUser,

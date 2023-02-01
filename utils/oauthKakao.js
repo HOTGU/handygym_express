@@ -17,6 +17,7 @@ export default () => {
             async (req, authToken, refreshToken, profile, done) => {
                 const redirectUrl = req.session.redirectUrl || "/";
                 delete req.session.redirectUrl;
+                console.log(profile);
                 try {
                     const existUser = await User.findOne({
                         $or: [
@@ -37,7 +38,9 @@ export default () => {
                         const newUser = new User({
                             nickname:
                                 profile.username || profile._json.properties.nickname,
-                            email: profile._json.kakao_account.email || undefined,
+                            email:
+                                profile._json.kakao_account.email ||
+                                `${profile._json.id}@kakao.com`,
                             avatarUrl: "",
                             // avatarUrl: profile._json.properties.thumbnail_image || "",
                             socialId: profile.id || profile._json.id,

@@ -34,7 +34,7 @@ block content
                         div #{findUser.nickname}님에게 쪽지 보내기
                         input(type="text" name="to" value=findUser._id readOnly hidden )
                         textarea(name="message")
-                        button.btn.primary 쪽지보내기
+                        .btn.primary#jsSubmit 쪽지보내기
     .narrowContainer
         .userDetail
             .userDetail__item

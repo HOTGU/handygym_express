@@ -8,7 +8,11 @@ export const fetch = async (req, res) => {
         }).populate("users");
         return res.render("conversation", { title: "쪽지함", conversations });
     } catch (error) {
-        console.log(error);
+        req.flash(
+            "error",
+            "쪽지함을 불러오는 도중 서버 오류가 발생했습니다\n불편함을 드려 죄송합니다"
+        );
+        return res.redirect("/");
     }
 };
 
@@ -18,7 +22,6 @@ export const detail = async (req, res) => {
         user,
     } = req;
     try {
-        // req.user conversation.users contains
         const conversation = await Conversation.findById(id);
 
         const inUser = conversation.users.includes(String(user._id));
@@ -39,6 +42,10 @@ export const detail = async (req, res) => {
 
         res.render("conversationDetail", { title: "쪽지함", messages, otherUserId });
     } catch (error) {
-        console.log(error);
+        req.flash(
+            "error",
+            "쪽지를 불러오는 도중 서버 오류가 발생했습니다\n불편함을 드려 죄송합니다"
+        );
+        return res.redirect("/");
     }
 };

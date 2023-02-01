@@ -1,4 +1,4 @@
-const fileInput = document.querySelector("input[name=photos]");
+const fileInput = document.querySelector("input[name=gymPhotos]");
 const preview = document.getElementById("gymPreview");
 const fakeFileBtn = document.getElementById("fakeFileBtn");
 const originalPreviews = document.querySelectorAll(".originalPreview");

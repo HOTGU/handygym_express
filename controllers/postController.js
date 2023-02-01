@@ -31,7 +31,7 @@ export const fetch = async (req, res) => {
     try {
         let PAGE = +page;
 
-        const PAGE_SIZE = 10;
+        const PAGE_SIZE = 1;
         const TOTAL_POSTS = await Post.countDocuments(searchQuery);
         const TOTAL_PAGE = Math.ceil(TOTAL_POSTS / PAGE_SIZE) || 1;
 
@@ -85,7 +85,7 @@ export const detail = async (req, res) => {
     const DAY = HOUR * 24;
     const CURRENT_YEAR = new Date().getFullYear();
     const CURRENT_MONTH = new Date().getMonth();
-
+    console.log(req.session.current_url);
     try {
         const post = await Post.findById(postId).populate("creator");
 
