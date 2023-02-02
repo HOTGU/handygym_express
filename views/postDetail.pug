@@ -25,9 +25,7 @@ block content
                     i.likeBtn.fa-regular.fa-thumbs-up.fa-2xl(id=`${post._id}`)
                     div 추천
                     
-            //- if `${user._id}` === `${post.creator._id}`
-            //-     a(href=`/post/${post._id}/update`) 수정
-            //-     #deleteBtn 삭제
+           
 
             .commentsWrapper
                 h4 댓글 #{comments.length}
@@ -49,6 +47,12 @@ block content
                     p 
                         span.index #{index + 1}
                         span.title #{populatePost.title}
+                    
+    if `${user._id}` === `${post.creator._id}`
+        .updateAndDeleteBtn
+            a(href=`/post/${post._id}/update`)
+                button 수정하기
+            button#deleteBtn 삭제하기
             
         
 

@@ -82,10 +82,10 @@ const formValid = () => {
                 if (name === "galleryPhotos") {
                     const btn = document.getElementById("fakeFileBtn");
                     const files = ele.files;
-                    initBtn(btn);
+                    initBorder(btn);
                     if (files.length === 0) {
                         ok = false;
-                        paintBtnError(btn);
+                        paintBorderError(btn);
                         errorMessage = "사진을 1장이상 넣어주세요";
                     }
                 }

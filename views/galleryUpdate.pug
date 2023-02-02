@@ -10,7 +10,7 @@ block content
         each photoObj in gallery.photos
             img(src=`/${photoObj.photo}` hidden class="originalPhoto")
             textarea(hidden class="originalCaption")=photoObj.caption
-        h3.columnHead 갤러리 업데이트
+        h3.uploadHead 사진 업데이트
         .uploadColumn
             .uploadColumn__item
                 span 타이틀
@@ -20,13 +20,17 @@ block content
             .uploadColumn__item
                 span 사진
             .uploadColumn__item
+                #galleryPreview
+                .galleryBtn#fakeFileBtn
+                    i.fa-solid.fa-camera
         input(type="file" id="realFileInput" name="galleryPhotos" multiple accept="*" hidden)
-        #galleryPreview
-        .btn.secondary#fakeFileBtn
-            i.fa-solid.fa-plus
         input(type="file" id="fakeFileInput" accept="*" hidden )
 
-        input(type="submit" value="변경" class="btn primary")
+        .submitBtnWrapper
+            .submitBtn.secondary#jsSubmit 
+                .emojiText
+                    i.fa-solid.fa-cloud-arrow-up 
+                    span 업로드
 
     script(src="/static/js/galleryPreview.js") 
     script(src="/static/js/validForm.js") 

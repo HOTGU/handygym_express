@@ -18,13 +18,16 @@ block content
             .uploadColumn__item
                 span 사진
             .uploadColumn__item
+                #galleryPreview
+                .galleryBtn#fakeFileBtn
+                    i.fa-solid.fa-camera
         input(type="file" id="realFileInput" name="galleryPhotos" multiple hidden)
-        #galleryPreview
-        .btn.secondary#fakeFileBtn
-            i.fa-solid.fa-plus
         input(type="file" id="fakeFileInput" hidden)
-        
-        .btn.primary#jsSubmit 생성
+        .submitBtnWrapper
+            .submitBtn.secondary#jsSubmit 
+                .emojiText
+                    i.fa-solid.fa-cloud-arrow-up 
+                    span 업로드
 
     script(src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js") 
     script(type="text/javascript" src="https://cdn.jsdelivr.net/npm/browser-image-compression@1.0.15/dist/browser-image-compression.js")

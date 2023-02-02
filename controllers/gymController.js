@@ -54,7 +54,11 @@ export const fetch = async (req, res) => {
             renderQuery,
         });
     } catch (error) {
-        console.log(error);
+        req.flash(
+            "error",
+            "체육관을 불러오는 도중 서버 오류가 발생했습니다\n불편함을 드려 죄송합니다"
+        );
+        return res.redirect("/");
     }
 };
 
@@ -66,7 +70,8 @@ export const fetchLike = async (req, res) => {
         const gyms = await Gym.find({ like_users: { $in: `${_id}` } });
         res.render("likeGyms", { title: "좋아요", gyms });
     } catch (error) {
-        console.log(error);
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -92,7 +97,11 @@ export const uploadPost = async (req, res) => {
         req.flash("success", "업로드 성공");
         return res.redirect("/gym");
     } catch (error) {
-        console.log(error);
+        req.flash(
+            "error",
+            "업로드 도중 서버 오류가 발생했습니다\n불편함을 드려 죄송합니다"
+        );
+        return res.redirect("/");
     }
 };
 
@@ -118,7 +127,8 @@ export const detail = async (req, res) => {
         const comments = await Comment.find({ where: gymId }).populate("creator");
         return res.render("gymDetail", { title: gym.name, gym, comments });
     } catch (error) {
-        console.log(error);
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -134,7 +144,8 @@ export const update = async (req, res) => {
             csrfToken: req.csrfToken(),
         });
     } catch (error) {
-        console.log(error);
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -170,7 +181,8 @@ export const updatePost = async (req, res) => {
 
         return res.redirect(`/gym/${updatedGym._id}`);
     } catch (error) {
-        console.log(error);
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -192,7 +204,8 @@ export const remove = async (req, res) => {
         req.flash("success", "삭제 성공");
         return res.redirect("/gym");
     } catch (error) {
-        console.log(error);
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -212,6 +225,8 @@ export const like = async (req, res) => {
         }
 
         return res.status(200).json();
-    } catch (error) {}
-    res.status(200).json({ message: `${req.params.gymId}로 좋아요 신청` });
+    } catch (error) {
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
+    }
 };

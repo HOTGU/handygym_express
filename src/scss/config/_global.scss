@@ -26,14 +26,6 @@ html {
         outline: none;
         background-color: white;
     }
-    .btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        cursor: pointer;
-        font-weight: 700;
-    }
     input[type="submit"] {
         font-size: 16px;
         font-weight: 700;
@@ -47,6 +39,14 @@ html {
         resize: none;
         background-color: white;
         padding: 12px;
+    }
+    .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        font-weight: 700;
     }
     .primary {
         background-color: $accentColor;
@@ -66,6 +66,8 @@ html {
     }
     .tertiary {
         color: $accentColor;
+        background-color: $bgColor;
+
         &:hover {
             background-color: $hoverColor;
         }

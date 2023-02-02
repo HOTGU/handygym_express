@@ -85,7 +85,6 @@ export const detail = async (req, res) => {
     const DAY = HOUR * 24;
     const CURRENT_YEAR = new Date().getFullYear();
     const CURRENT_MONTH = new Date().getMonth();
-    console.log(req.session.current_url);
     try {
         const post = await Post.findById(postId).populate("creator");
 

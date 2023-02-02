@@ -73,11 +73,6 @@ block content
                 #kakaoMap
                     #jsAddress #{gym.address}
                 
-            //- if `${user._id}`=== `${gym.creator._id}`
-            //-     .updateAndDeleteBtn
-            //-         a(href=`/gym/${gym._id}/update`)
-            //-             div.btn.primary 수정
-            //-         #deleteBtn.btn.secondary 삭제
             .gymDetail__section.gymDetail__bigSection
                 .commentsWrapper
                     h4 댓글 #{comments.length}
@@ -92,6 +87,11 @@ block content
                     +avatarBlock(user.avatarUrl, "70px")
                     textarea(name="text")
                     #commentBtn.primary 댓글달기
+        if `${user._id}`=== `${gym.creator._id}`
+            .updateAndDeleteBtn
+                a(href=`/gym/${gym._id}/update`)
+                    button 수정하기
+                button#deleteBtn 삭제하기
                     
     .modalContainer
         .modal
