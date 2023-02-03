@@ -31,7 +31,7 @@ export const fetch = async (req, res) => {
 
         let PAGE = +page;
 
-        const LIMIT_SIZE = 1;
+        const LIMIT_SIZE = 10;
         const TOTAL_GYMS = await Gym.countDocuments(searchQuery);
         const TOTAL_PAGE = Math.ceil(TOTAL_GYMS / LIMIT_SIZE) || 1;
         const SKIP_PAGE = (PAGE - 1) * LIMIT_SIZE;

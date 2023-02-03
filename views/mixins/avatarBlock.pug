@@ -1,4 +1,4 @@
-mixin avatarBlock(avatar, size)
+mixin avatarBlock(avatar, size = "24px")
     if avatar
         img(src=`/${avatar}` style={"width":size, "height":size}).avatar
     else

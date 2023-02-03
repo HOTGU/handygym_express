@@ -13,7 +13,7 @@ block content
                 })
             h2.section=gallery.title
             .section
-                +userBlock(gallery.creator, "40px")
+                +userBlock(gallery.creator)
             .section 
                 each photoObj in gallery.photos
                     img(src=`/${photoObj.photo}`)
@@ -29,17 +29,13 @@ block content
                 h4 댓글 #{comments.length}
                 each comment in comments
                     .comment
-                        +userBlock({
-                            _id:comment.creator._id,
-                            nickname:comment.creator.nickname,
-                            avatarUrl:comment.creator.avatarUrl
-                        }, "40px")
+                        +userBlock(comment.creator)
                         p=comment.text
 
                         if `${comment.creator._id}`=== `${user._id}`
                             button.commentDeleteBtn(id=comment._id) 삭제
             .commentInput
-                +avatarBlock(user.avatarUrl, "70px")
+                +avatarBlock(user.avatarUrl, "40px")
                 textarea(name="text")
                 #commentBtn.primary 댓글달기
         .detailPage__item
