@@ -22,10 +22,10 @@ postRouter
     .get(upload)
     .post(uploadPost);
 
-postRouter.route("/:postId").get(detail);
-postRouter.route("/:postId/like").get(like);
+postRouter.route("/:postId").get(onlyUser, onlyEmailVerified, detail);
+postRouter.route("/:postId/like").get(onlyUser, onlyEmailVerified, like);
 
-postRouter.get("/:postId/remove", remove);
+postRouter.get("/:postId/remove", onlyUser, onlyEmailVerified, remove);
 
 postRouter
     .route("/:postId/update")

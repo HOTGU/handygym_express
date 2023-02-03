@@ -33,6 +33,9 @@ const createComment = async (e) => {
 const paintComment = ({ comment, user }) => {
     const commentContainer = document.createElement("div");
     commentContainer.classList.add("comment");
+    const creatorUserContainer = document.createElement("a");
+    creatorUserContainer.classList.add("userBlock");
+    creatorUserContainer.href = `/user/${user._id}`;
     const creatorImg = document.createElement("img");
     if (user.avatarUrl) {
         creatorImg.src = `/${user.avatarUrl}`;
@@ -44,14 +47,16 @@ const paintComment = ({ comment, user }) => {
     creatorImg.classList.add("avatar");
     const creatorName = document.createElement("div");
     creatorName.innerText = user.nickname;
-    const commentText = document.createElement("div");
+    const commentText = document.createElement("p");
     commentText.innerText = comment.text;
     const deleteBtn = document.createElement("button");
     deleteBtn.id = comment._id;
     deleteBtn.innerText = "삭제";
     deleteBtn.addEventListener("click", handleDelete);
-    commentContainer.append(creatorImg);
-    commentContainer.append(creatorName);
+
+    creatorUserContainer.append(creatorImg);
+    creatorUserContainer.append(creatorName);
+    commentContainer.append(creatorUserContainer);
     commentContainer.append(commentText);
     commentContainer.append(deleteBtn);
 

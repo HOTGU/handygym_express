@@ -7,6 +7,4 @@ const messageRouter = express.Router();
 
 messageRouter.route("/create").all(onlyUser, onlyEmailVerified).post(create);
 
-// messageRouter.get("/", fetch);
-
 export default messageRouter;

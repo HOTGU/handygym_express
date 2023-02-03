@@ -6,7 +6,7 @@ import saveCurrentUrl from "../utils/saveCurrentUrl.js";
 
 const conversationRouter = express.Router();
 
-conversationRouter.get("/", fetch);
-conversationRouter.get("/:id", saveCurrentUrl, detail);
+conversationRouter.get("/", onlyUser, onlyEmailVerified, fetch);
+conversationRouter.get("/:id", onlyUser, onlyEmailVerified, saveCurrentUrl, detail);
 
 export default conversationRouter;

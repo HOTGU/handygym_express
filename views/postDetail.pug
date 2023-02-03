@@ -24,8 +24,6 @@ block content
                 else
                     i.likeBtn.fa-regular.fa-thumbs-up.fa-2xl(id=`${post._id}`)
                     div 추천
-                    
-           
 
             .commentsWrapper
                 h4 댓글 #{comments.length}
@@ -33,7 +31,6 @@ block content
                     .comment
                         +userBlock(comment.creator, "40px")
                         p=comment.text
-
                         if `${comment.creator._id}`=== `${user._id}`
                             button.commentDeleteBtn(id=comment._id) 삭제
             .commentInput

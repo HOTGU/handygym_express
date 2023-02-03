@@ -15,7 +15,7 @@ import protectCSRFToken from "../utils/protectCSRFToken.js";
 
 const galleryRouter = express.Router();
 
-galleryRouter.get("/", onlyUser, onlyEmailVerified, fetch);
+galleryRouter.get("/", fetch);
 
 galleryRouter
     .route("/upload")
@@ -23,8 +23,8 @@ galleryRouter
     .get(protectCSRFToken, upload)
     .post(galleryUpload.array("galleryPhotos", 10), protectCSRFToken, uploadPost);
 
-galleryRouter.get("/:galleryId", onlyUser, detail);
-galleryRouter.get("/:galleryId/like", onlyUser, like);
+galleryRouter.get("/:galleryId", onlyUser, onlyEmailVerified, detail);
+galleryRouter.get("/:galleryId/like", onlyUser, onlyEmailVerified, like);
 
 galleryRouter
     .route("/:galleryId/update")

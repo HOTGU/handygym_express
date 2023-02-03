@@ -15,3 +15,11 @@ export const onlyEmailVerified = (req, res, next) => {
     const redirectUrl = req.originalUrl || "";
     return res.redirect(`/no-access?redirectUrl=${redirectUrl}&&disAllowedType=email`);
 };
+
+export const onlyPublic = (req, res, next) => {
+    if (!req.user) {
+        return next();
+    }
+    req.flash("error", "권한이 없습니다");
+    return res.redirect(`/`);
+};
