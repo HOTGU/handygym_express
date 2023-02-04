@@ -5,7 +5,7 @@ import {
     detail,
     updatePost,
 } from "../controllers/userController.js";
-import { avatarUpload } from "../utils/fileUpload.js";
+import { avatarUpload, s3AvatarUpload } from "../utils/fileUpload.js";
 import { onlyEmailVerified, onlyUser } from "../utils/protectAuth.js";
 import protectCSRFToken from "../utils/protectCSRFToken.js";
 import saveCurrentUrl from "../utils/saveCurrentUrl.js";
@@ -20,7 +20,7 @@ userRouter.post(
     "/update",
     onlyUser,
     onlyEmailVerified,
-    avatarUpload,
+    s3AvatarUpload.single("avatar"),
     protectCSRFToken,
     updatePost
 );

@@ -26,6 +26,8 @@ const addFile = (file) => {
 
 const removeFile = () => {
     dataTransfer.clearData();
+    const check = document.querySelector("input[name=isAvatar");
+    check.checked = false;
     fileInput.files = dataTransfer.files;
 };
 
@@ -86,7 +88,7 @@ const imgSrcToFile = async (imageEle) => {
 };
 
 const init = () => {
-    const originalImg = document.getElementById("originalImg");
+    // const originalImg = document.getElementById("originalImg");
     const noUserImg = document.getElementById("noUserImg");
 
     const handleLoad = async () => {
@@ -100,11 +102,11 @@ const init = () => {
         });
 
         fakeFileInput.addEventListener("change", fakeHandleFile);
-
-        if (originalImg) {
-            const originalImgFile = await imgSrcToFile(originalImg);
-            addFile(originalImgFile);
-        }
+        // console.log(originalImg);
+        // if (originalImg) {
+        //     const originalImgFile = await imgSrcToFile(originalImg);
+        //     addFile(originalImgFile);
+        // }
         const noUserImgFile = await imgSrcToFile(noUserImg);
         const noUserImgUrl = URL.createObjectURL(noUserImgFile);
         noUserImgSrc = noUserImgUrl;

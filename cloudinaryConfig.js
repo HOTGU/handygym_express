@@ -8,10 +8,6 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_CLOUD_API_SECRET,
 });
 
-console.log(process.env.CLOUDINARY_CLOUD_NAME);
-console.log(process.env.CLOUDINARY_CLOUD_API_KEY);
-console.log(process.env.CLOUDINARY_CLOUD_API_SECRET);
-
 cloudinary.uploads = (file, folder) => {
     return new Promise((resolve) => {
         cloudinary.uploader.upload(

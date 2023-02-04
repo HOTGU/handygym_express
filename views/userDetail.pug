@@ -12,7 +12,7 @@ block content
                         input(type="hidden" name="_csrf" value=csrfToken)
                         .imgContainer
                             if user.avatarUrl
-                                img(src=`/${user.avatarUrl}`).avatarImg#fileBtn
+                                img(src=`${user.avatarUrl}`).avatarImg#fileBtn
                             else
                                 img(src="/static/images/noUser.png").avatarImg#fileBtn
                             .deleteBtn#deleteBtn
@@ -20,8 +20,10 @@ block content
 
                         input(name="nickname" value=user.nickname placeholder="닉네임")
 
+                        input(name="isAvatar" type="checkbox" checked=(user.avatarUrl ? true : false) hidden)
+        
                         if user.avatarUrl
-                            img(src=`/${user.avatarUrl}` id="originalImg"  hidden)
+                            img(src=`${user.avatarUrl}` id="originalImg"  hidden)
 
                         img(src="/static/images/noUser.png" id="noUserImg" hidden)
 

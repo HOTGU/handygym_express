@@ -45,6 +45,7 @@ const cspOptions = {
             "blob:*",
             "*.kakao.com",
             "*.fontawesome.com",
+            "https://handygym-express.s3.ap-northeast-2.amazonaws.com",
             "http://localhost:5000/*",
         ],
         "img-src": [
@@ -53,6 +54,7 @@ const cspOptions = {
             "*.daumcdn.net",
             "*.kakaocdn.net",
             "*.googleusercontent.com",
+            "https://handygym-express.s3.ap-northeast-2.amazonaws.com",
             "data:",
         ],
         "script-src": [
@@ -66,6 +68,10 @@ const cspOptions = {
         "frame-src": ["'self'", "*.map.daum.net"],
     },
 };
+const corsOption = {
+    origin: "https://handygym-express.s3.ap-northeast-2.amazonaws.com",
+    credentials: true,
+};
 
 app.use(
     helmet({
@@ -73,6 +79,7 @@ app.use(
         crossOriginEmbedderPolicy: false,
     })
 );
+app.use(cors(corsOption));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

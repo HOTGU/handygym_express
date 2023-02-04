@@ -39,23 +39,16 @@ export const updatePost = async (req, res) => {
     const { body, file, user } = req;
 
     try {
-        console.log(file);
-        const uploader = async (path) => await cloudinary.uploads(path, "Images");
-        if (file) {
-            const { path } = file;
-            const newPath = await uploader(path);
-            console.log(newPath);
-        }
-        // await User.findByIdAndUpdate(
-        //     user._id,
-        //     {
-        //         ...body,
-        //         avatarUrl: file ? file.path : "",
-        //     },
-        //     {
-        //         new: true,
-        //     }
-        // );
+        await User.findByIdAndUpdate(
+            user._id,
+            {
+                ...body,
+                avatarUrl: file ? file.location : body.isAvatar ? user.avatarUrl : "",
+            },
+            {
+                new: true,
+            }
+        );
 
         return res.redirect(`/user/${user._id}`);
     } catch (error) {
