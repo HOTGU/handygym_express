@@ -20,7 +20,7 @@ userRouter.post(
     "/update",
     onlyUser,
     onlyEmailVerified,
-    avatarUpload.single("avatar"),
+    avatarUpload,
     protectCSRFToken,
     updatePost
 );

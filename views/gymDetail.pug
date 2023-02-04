@@ -50,7 +50,7 @@ block content
                 else if gym.oneday === "모름"
                     .gymDetail__btn 연중무휴 여부 모름
             
-            .gymDetail__imgLayout.gymDetail__section.gymDetail__bigSection
+            .gymDetail__imgLayout.gymDetail__section.gymDetail__bigSection#imgLayout
                 - let i = 0;
                 while i < 4
                     if i === 0 || i === 1
@@ -65,6 +65,13 @@ block content
                         span
                             
                     - ++i
+            .gymDetail__phoneImgLayout.gymDetail__section.gymDetail__bigSection
+                .phoneImgContainer
+                    each photo in gym.photos
+                        img(src=`/${photo}`, alt="체육관 사진", class="phoneImg")
+                    
+                    i.fa-solid.fa-chevron-right#phoneNextBtn
+                    i.fa-solid.fa-chevron-left#phonePrevBtn
             .gymDetail__bigSection
                 h2 체육관 소개
                 h3.gymDetail__section " #{gym.title} "

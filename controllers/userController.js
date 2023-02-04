@@ -2,6 +2,7 @@ import Gallery from "../models/Gallery.js";
 import Gym from "../models/Gym.js";
 import Post from "../models/Post.js";
 import User from "../models/User.js";
+import cloudinary from "../cloudinaryConfig.js";
 
 export const detail = async (req, res) => {
     const {
@@ -38,16 +39,23 @@ export const updatePost = async (req, res) => {
     const { body, file, user } = req;
 
     try {
-        await User.findByIdAndUpdate(
-            user._id,
-            {
-                ...body,
-                avatarUrl: file ? file.path : "",
-            },
-            {
-                new: true,
-            }
-        );
+        console.log(file);
+        const uploader = async (path) => await cloudinary.uploads(path, "Images");
+        if (file) {
+            const { path } = file;
+            const newPath = await uploader(path);
+            console.log(newPath);
+        }
+        // await User.findByIdAndUpdate(
+        //     user._id,
+        //     {
+        //         ...body,
+        //         avatarUrl: file ? file.path : "",
+        //     },
+        //     {
+        //         new: true,
+        //     }
+        // );
 
         return res.redirect(`/user/${user._id}`);
     } catch (error) {
