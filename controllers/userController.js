@@ -2,7 +2,6 @@ import Gallery from "../models/Gallery.js";
 import Gym from "../models/Gym.js";
 import Post from "../models/Post.js";
 import User from "../models/User.js";
-import cloudinary from "../cloudinaryConfig.js";
 
 export const detail = async (req, res) => {
     const {
@@ -43,7 +42,7 @@ export const updatePost = async (req, res) => {
             user._id,
             {
                 ...body,
-                avatarUrl: file ? file.location : body.isAvatar ? user.avatarUrl : "",
+                avatarUrl: file ? file.location : "",
             },
             {
                 new: true,

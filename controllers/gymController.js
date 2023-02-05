@@ -85,12 +85,12 @@ export const upload = (req, res) => {
 export const uploadPost = async (req, res) => {
     const { body, files, user } = req;
     try {
-        const returnPath = files.map((file) => {
-            return file.path;
+        const returnLocation = files.map((file) => {
+            return file.location;
         });
         const newGym = new Gym({
             ...body,
-            photos: returnPath,
+            photos: returnLocation,
             creator: user._id,
         });
         await newGym.save();
@@ -164,15 +164,15 @@ export const updatePost = async (req, res) => {
             return;
         }
 
-        const returnPath = files.map((file) => {
-            return file.path;
+        const returnLocation = files.map((file) => {
+            return file.location;
         });
 
         const updatedGym = await Gym.findByIdAndUpdate(
             gymId,
             {
                 ...body,
-                photos: returnPath.length > 0 ? returnPath : gym.photos,
+                photos: returnLocation.length > 0 ? returnLocation : gym.photos,
             },
             { new: true }
         );

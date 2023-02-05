@@ -15,7 +15,7 @@ block content
                 .viewMore__item
                     .slideContainer
                         each photo in gym.photos
-                            img(src=`/${photo}`, alt="체육관 사진", class="gymImg")
+                            img(src=`${photo}`, alt="체육관 사진", class="gymImg")
                 .viewMore__item 
                     i.fa-solid.fa-chevron-right#nextSlideBtn
             .viewMore__bottom.viewMore__column
@@ -55,11 +55,11 @@ block content
                 while i < 4
                     if i === 0 || i === 1
                         .imgContainer 
-                            img(src=`/${gym.photos[i]}`,)
+                            img(src=`${gym.photos[i]}`,)
                     if i === 2
                         .imgContainer 
-                            img(src=`/${gym.photos[i]}`,)
-                            img(src=`/${gym.photos[i+1]}`,)
+                            img(src=`${gym.photos[i]}`,)
+                            img(src=`${gym.photos[i+1]}`,)
                             #viewMore.btn + 사진 더보기
                     if i === 3
                         span
@@ -68,7 +68,7 @@ block content
             .gymDetail__phoneImgLayout.gymDetail__section.gymDetail__bigSection
                 .phoneImgContainer
                     each photo in gym.photos
-                        img(src=`/${photo}`, alt="체육관 사진", class="phoneImg")
+                        img(src=`${photo}`, alt="체육관 사진", class="phoneImg")
                     
                     i.fa-solid.fa-chevron-right#phoneNextBtn
                     i.fa-solid.fa-chevron-left#phonePrevBtn

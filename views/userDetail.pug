@@ -20,17 +20,14 @@ block content
 
                         input(name="nickname" value=user.nickname placeholder="닉네임")
 
-                        input(name="isAvatar" type="checkbox" checked=(user.avatarUrl ? true : false) hidden)
-        
                         if user.avatarUrl
-                            img(src=`${user.avatarUrl}` id="originalImg"  hidden)
+                            img(src=user.avatarUrl hidden id="originalImg" crossorigin="Anonymous")
 
                         img(src="/static/images/noUser.png" id="noUserImg" hidden)
 
                         input(type="file" name="avatar" hidden)
                         input(type="file" id="fakeFileInput" hidden)
                         .btn.primary#jsSubmit 업데이트
-                        //- button 어베
                 else
                     form(action=`/message/create` method="post").userDetailMessage
                         div #{findUser.nickname}님에게 쪽지 보내기
@@ -40,7 +37,7 @@ block content
     .narrowContainer
         .userDetail
             .userDetail__item
-                +avatarBlock(findUser.avatarUrl, "120px")
+                +avatarBlock(findUser.avatarUrl, "80px")
                 if `${findUser._id}` === `${user._id}`
                     div.nickname #{user.nickname}(나)
                     .btn.primary#modalBtn 

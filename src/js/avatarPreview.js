@@ -26,8 +26,6 @@ const addFile = (file) => {
 
 const removeFile = () => {
     dataTransfer.clearData();
-    const check = document.querySelector("input[name=isAvatar");
-    check.checked = false;
     fileInput.files = dataTransfer.files;
 };
 
@@ -42,13 +40,13 @@ const convertBlobToFile = (blob) => {
 const compressFile = async (file) => {
     const compressOption = {
         maxSizeMB: 1,
-        maxWidthOrHeight: 110,
-        initialQuality: 0.9,
+        maxWidthOrHeight: 120,
+        initialQuality: 1,
         useWebWorker: false,
     };
     try {
         let compressedBlob = await imageCompression(file, compressOption);
-        compressedBlob.name = `${file.name || "힙합"}_compressed`;
+        compressedBlob.name = `${file.name || "힙합"}`;
 
         const convertFile = convertBlobToFile(compressedBlob);
 
@@ -88,7 +86,7 @@ const imgSrcToFile = async (imageEle) => {
 };
 
 const init = () => {
-    // const originalImg = document.getElementById("originalImg");
+    const originalImg = document.getElementById("originalImg");
     const noUserImg = document.getElementById("noUserImg");
 
     const handleLoad = async () => {
@@ -102,11 +100,10 @@ const init = () => {
         });
 
         fakeFileInput.addEventListener("change", fakeHandleFile);
-        // console.log(originalImg);
-        // if (originalImg) {
-        //     const originalImgFile = await imgSrcToFile(originalImg);
-        //     addFile(originalImgFile);
-        // }
+        if (originalImg) {
+            const file = await imgSrcToFile(originalImg);
+            addFile(file);
+        }
         const noUserImgFile = await imgSrcToFile(noUserImg);
         const noUserImgUrl = URL.createObjectURL(noUserImgFile);
         noUserImgSrc = noUserImgUrl;

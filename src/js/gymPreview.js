@@ -219,6 +219,7 @@ const init = () => {
                     const blob = await new Promise((resolve) =>
                         canvas.toBlob((blob) => resolve(blob))
                     );
+                    console.log(blob);
                     const file = convertBlobToFile(blob);
                     const id = generateRandomId();
                     file.id = id;

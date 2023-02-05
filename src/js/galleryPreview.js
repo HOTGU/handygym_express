@@ -47,14 +47,13 @@ const compressFile = async (file) => {
     try {
         if (file) {
             let compressedBlob = await imageCompression(file, compressOption);
-            compressedBlob.name = `${file.name || "힙합"}_compressed`;
+            compressedBlob.name = `${file.name || "compressdImg"}`;
 
             const convertFile = convertBlobToFile(compressedBlob);
 
             return convertFile;
         }
     } catch (error) {
-        console.log(error);
         alert("파일 올리는 도중 오류발생");
         return;
     }
