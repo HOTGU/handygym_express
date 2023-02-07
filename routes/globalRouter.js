@@ -34,7 +34,7 @@ globalRouter
     .get(signup)
     .post(signupPost);
 
-globalRouter.get("/logout", onlyUser, onlyEmailVerified, logout);
+globalRouter.get("/logout", onlyUser, logout);
 
 globalRouter.get("/verify", onlyUser, verifyEmail);
 
