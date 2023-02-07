@@ -9,6 +9,7 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import path from "path";
 // const MongoStore = new ConnectMongo(session);
 
 import globalRouter from "./routes/globalRouter.js";
@@ -44,8 +45,6 @@ const handleDBSuccess = () => console.log(`✅${mongoUrl}에서 DB연결 성공`
 
 db.on("error", handleDBError);
 db.once("open", handleDBSuccess);
-
-app.set("view engine", "pug");
 
 const cspOptions = {
     directives: {
@@ -89,6 +88,7 @@ app.use(
         crossOriginEmbedderPolicy: false,
     })
 );
+
 app.use(cors(corsOption));
 app.use(morgan("dev"));
 app.use(express.json());
@@ -107,6 +107,9 @@ app.use(
 passportInit(app);
 
 app.use(flash());
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "/views"));
+
 app.use("/static", express.static("static"));
 // app.use("/uploads", express.static("uploads"));
 app.use(setLocals);
