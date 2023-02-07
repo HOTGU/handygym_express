@@ -1,11 +1,6 @@
 import express from "express";
-import {
-    // changePassword,
-    // changePasswordPost,
-    detail,
-    updatePost,
-} from "../controllers/userController.js";
-import { avatarUpload, s3AvatarUpload } from "../utils/fileUpload.js";
+import { detail, updatePost } from "../controllers/userController.js";
+import { s3AvatarUpload } from "../utils/fileUpload.js";
 import { onlyEmailVerified, onlyUser } from "../utils/protectAuth.js";
 import protectCSRFToken from "../utils/protectCSRFToken.js";
 import saveCurrentUrl from "../utils/saveCurrentUrl.js";
