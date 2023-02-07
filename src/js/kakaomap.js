@@ -21,6 +21,8 @@ const init = () => {
 
             marker.setPosition(coords);
             map.setCenter(coords);
+        } else {
+            console.log(results);
         }
     };
 
