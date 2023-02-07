@@ -22,7 +22,8 @@ export const detail = async (req, res) => {
             csrfToken: req.csrfToken(),
         });
     } catch (error) {
-        console.log(error);
+        req.flash("서버 오류가 발생했습니다\n 불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -51,6 +52,7 @@ export const updatePost = async (req, res) => {
 
         return res.redirect(`/user/${user._id}`);
     } catch (error) {
-        console.log(error);
+        req.flash("서버 오류가 발생했습니다\n 불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };

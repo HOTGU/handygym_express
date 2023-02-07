@@ -42,8 +42,8 @@ const paintComment = ({ comment, user }) => {
     } else {
         creatorImg.src = "/static/images/noUser.png";
     }
-    creatorImg.style.width = "40px";
-    creatorImg.style.height = "40px";
+    creatorImg.style.width = "24px";
+    creatorImg.style.height = "24px";
     creatorImg.classList.add("avatar");
     const creatorName = document.createElement("div");
     creatorName.innerText = user.nickname;

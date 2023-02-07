@@ -9,7 +9,7 @@ import {
     upload,
     uploadPost,
 } from "../controllers/gymController.js";
-import { gymUpload, s3GymUpload } from "../utils/fileUpload.js";
+import { s3GymUpload } from "../utils/fileUpload.js";
 import { onlyEmailVerified, onlyUser } from "../utils/protectAuth.js";
 import protectCSRFToken from "../utils/protectCSRFToken.js";
 

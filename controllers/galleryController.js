@@ -17,7 +17,8 @@ export const fetch = async (req, res) => {
             .populate("creator");
         return res.render("gallery", { galleries, totalPage: TOTAL_PAGE });
     } catch (error) {
-        console.log(error);
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -25,7 +26,8 @@ export const upload = async (req, res) => {
     try {
         res.render("galleryUpload", { csrfToken: req.csrfToken() });
     } catch (error) {
-        console.log(error);
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -39,10 +41,8 @@ export const uploadPost = async (req, res) => {
     let captionsArr = new Array();
 
     if (typeof captions === "string") {
-        // 캡션이 한개일 때
         captionsArr.push(captions);
     } else {
-        // 캡션이 여러개일 때
         captionsArr = captions;
     }
 
@@ -59,7 +59,8 @@ export const uploadPost = async (req, res) => {
 
         return res.redirect("/gallery");
     } catch (error) {
-        console.log(error);
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -111,7 +112,8 @@ export const detail = async (req, res) => {
             populateGalleries,
         });
     } catch (error) {
-        console.log(error);
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 export const update = async (req, res) => {
@@ -120,13 +122,21 @@ export const update = async (req, res) => {
     } = req;
     try {
         const gallery = await Gallery.findById(galleryId).populate("creator");
+
+        if (String(req.user._id) !== String(gallery.creator._id)) {
+            req.flash("error", "권한이 없습니다");
+            res.redirect("/gallery");
+            return;
+        }
+
         return res.render("galleryUpdate", {
             title: gallery.title,
             gallery,
             csrfToken: req.csrfToken(),
         });
     } catch (error) {
-        console.log(error);
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -137,7 +147,14 @@ export const updatePost = async (req, res) => {
         files,
     } = req;
     try {
-        const gallery = await Gallery.findById(galleryId);
+        const gallery = await Gallery.findById(galleryId).populate("creator");
+
+        if (String(req.user._id) !== String(gallery.creator._id)) {
+            req.flash("error", "권한이 없습니다");
+            res.redirect("/gallery");
+            return;
+        }
+
         const returnPhotosObj = files.map((__, index) => {
             return { photo: files[index].location, caption: captions[index] };
         });
@@ -154,7 +171,8 @@ export const updatePost = async (req, res) => {
         );
         return res.redirect(`/gallery/${updatedGallery._id}`);
     } catch (error) {
-        console.log(error);
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -176,7 +194,8 @@ export const remove = async (req, res) => {
             return;
         }
     } catch (error) {
-        console.log(error);
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -196,6 +215,7 @@ export const like = async (req, res) => {
         }
 
         return res.status(200).json();
-    } catch (error) {}
-    res.status(200).json({ message: `${req.params.gymId}로 좋아요 신청` });
+    } catch (error) {
+        return res.status(400).json();
+    }
 };

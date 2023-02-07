@@ -62,19 +62,6 @@ export const fetch = async (req, res) => {
     }
 };
 
-export const fetchLike = async (req, res) => {
-    const {
-        user: { _id },
-    } = req;
-    try {
-        const gyms = await Gym.find({ like_users: { $in: `${_id}` } });
-        res.render("likeGyms", { title: "좋아요", gyms });
-    } catch (error) {
-        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
-        return res.redirect("/");
-    }
-};
-
 export const upload = (req, res) => {
     return res.render("gymUpload", {
         title: "체육관 업로드",
@@ -138,6 +125,13 @@ export const update = async (req, res) => {
     } = req;
     try {
         const gym = await Gym.findById(gymId).populate("creator");
+
+        if (String(req.user._id) !== String(gym.creator._id)) {
+            req.flash("error", "권한이 없습니다");
+            res.redirect("/gym");
+            return;
+        }
+
         return res.render("gymUpdate", {
             title: `${gym.name} 수정`,
             gym,

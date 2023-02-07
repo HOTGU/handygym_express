@@ -4,8 +4,6 @@ import bcrypt from "bcrypt";
 import User from "../models/User.js";
 import sendMail from "../utils/sendMail.js";
 import Gym from "../models/Gym.js";
-import Post from "../models/Post.js";
-import Gallery from "../models/Gallery.js";
 
 export const home = (req, res) => {
     res.render("home", { title: "홈" });
@@ -135,7 +133,6 @@ export const googleCallback = async (req, res) => {
 export const kakaoCallback = async (req, res) => {
     passport.authenticate("kakao", (err, user, info) => {
         if (err) {
-            console.log(err);
             req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
             return res.redirect("/signin");
         }

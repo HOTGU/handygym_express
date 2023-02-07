@@ -52,7 +52,8 @@ export const fetch = async (req, res) => {
             renderQuery,
         });
     } catch (error) {
-        console.log(error);
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -71,7 +72,8 @@ export const uploadPost = async (req, res) => {
         await newPost.save();
         return res.redirect("/post");
     } catch (error) {
-        next();
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -137,10 +139,9 @@ export const update = async (req, res, next) => {
         const post = await Post.findById(postId).populate("creator");
 
         if (String(user._id) !== String(post.creator._id)) {
-            req.flashType = "error";
-            req.flashMessage = "권한이 없습니다";
-            req.flashRedirect = "/post";
-            next();
+            req.flash("error", "권한이 없습니다");
+            res.redirect("/post");
+            return;
         }
 
         return res.render("postUpdate", {
@@ -149,7 +150,8 @@ export const update = async (req, res, next) => {
             csrfToken: req.csrfToken(),
         });
     } catch (error) {
-        console.log(error);
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -163,10 +165,9 @@ export const updatePost = async (req, res, next) => {
         const post = await Post.findById(postId).populate("creator");
 
         if (String(user._id) !== String(post.creator._id)) {
-            req.flashType = "error";
-            req.flashMessage = "권한이 없습니다";
-            req.flashRedirect = "/post";
-            next();
+            req.flash("error", "권한이 없습니다");
+            res.redirect("/post");
+            return;
         }
 
         const updatedPost = await Post.findByIdAndUpdate(
@@ -179,7 +180,8 @@ export const updatePost = async (req, res, next) => {
 
         return res.redirect(`/post/${updatedPost._id}`);
     } catch (error) {
-        next();
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -200,7 +202,8 @@ export const remove = async (req, res) => {
 
         return res.redirect(`/post`);
     } catch (error) {
-        console.log(error);
+        req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
+        return res.redirect("/");
     }
 };
 
@@ -220,6 +223,7 @@ export const like = async (req, res) => {
         }
 
         return res.status(200).json();
-    } catch (error) {}
-    res.status(200).json({ message: `${req.params.gymId}로 좋아요 신청` });
+    } catch (error) {
+        return res.status(400).json();
+    }
 };
