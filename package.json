@@ -7,7 +7,7 @@
     "scripts": {
         "start": "node index.js",
         "dev:assets": "gulp dev",
-        "dev:server": "nodemon index.js --ignore gulpfile.json"
+        "dev:server": "export NODE_ENV=Development && nodemon index.js --ignore gulpfile.json"
     },
     "repository": {
         "type": "git",
