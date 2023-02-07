@@ -4,11 +4,12 @@ import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
 import morgan from "morgan";
+import flash from "connect-flash";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
-import flash from "connect-flash";
+// const MongoStore = new ConnectMongo(session);
 
 import globalRouter from "./routes/globalRouter.js";
 import gymRouter from "./routes/gymRouter.js";
@@ -30,7 +31,7 @@ if (process.env.NODE_ENV === "Development") {
     mongoUrl = process.env.DEV_MONGO_URL;
 }
 
-if (process.env.NODE_ENV === "Prodcution") {
+if (process.env.NODE_ENV === "Production") {
     mongoUrl = process.env.PROD_MONGO_URL;
 }
 
