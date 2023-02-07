@@ -113,3 +113,5 @@ app.use("/user", userRouter);
 const handleListen = () => console.log(`✅서버가 ${port}에서 실행중입니다`);
 
 app.listen(port, handleListen);
+
+export default app;
