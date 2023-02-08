@@ -91,8 +91,11 @@ app.use(
     })
 );
 
+if (process.env.NODE_ENV === "development") {
+    app.use(morgan("dev"));
+}
+
 app.use(cors(corsOption));
-app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -112,7 +115,6 @@ app.use(flash());
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "/views"));
 app.use("/static", express.static(__dirname + "/static"));
-// app.use("/uploads", express.static("uploads"));
 app.use(setLocals);
 
 app.use("/", globalRouter);

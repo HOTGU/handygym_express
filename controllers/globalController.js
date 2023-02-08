@@ -96,11 +96,14 @@ export const signupPost = async (req, res) => {
             password: hashedPassword,
         });
 
-        sendMail(email, user.email_verify_string, user._id);
+        await sendMail(email, user.email_verify_string, user._id);
 
         await user.save();
 
-        req.flash("success", "회원가입 성공! 이메일 인증");
+        req.flash(
+            "success",
+            "회원가입 성공!\n이메일 인증을 해야 서비스 이용이 가능합니다"
+        );
         if (redirectUrl) {
             return res.redirect(`/signin?redirectUrl=${redirectUrl}`);
         } else {
@@ -175,6 +178,7 @@ export const verifyEmail = async (req, res) => {
             return res.redirect("/");
         }
     } catch (error) {
+        cosnole.log(error);
         req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
         return res.redirect("/");
     }
