@@ -32,6 +32,7 @@ const modalOpen = () => {
 const modalClose = () => {
     viewMoreContainer.style.transform = "translateY(-100%)";
     viewMoreContainer.style.opacity = 0;
+    viewMore.style.top = 0;
     body.style.overflowY = "scroll";
 };
 
