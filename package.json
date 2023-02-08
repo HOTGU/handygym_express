@@ -5,7 +5,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "gulp build && node index.js",
+        "start": "node index.js",
         "dev:assets": "gulp dev",
         "dev:server": "export NODE_ENV=Development && nodemon index.js --ignore gulpfile.json",
         "test": "export NODE_ENV=Production && node index.js"

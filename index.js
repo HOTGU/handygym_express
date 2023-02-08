@@ -29,6 +29,7 @@ let mongoUrl;
 
 const app = express();
 const port = process.env.PORT || 5000;
+const cookieSecure = Boolean(process.env.NODE_ENV === "Production");
 
 if (process.env.NODE_ENV === "Development") {
     mongoUrl = process.env.DEV_MONGO_URL;
@@ -43,7 +44,7 @@ mongoose.connect(mongoUrl);
 const db = mongoose.connection;
 
 const handleDBError = () => console.log("❌DB연결 실패");
-const handleDBSuccess = () => console.log(`✅${mongoUrl}에서 DB연결 성공`);
+const handleDBSuccess = () => console.log(`✅DB연결 성공`);
 
 db.on("error", handleDBError);
 db.once("open", handleDBSuccess);
@@ -91,7 +92,7 @@ app.use(
     })
 );
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV === "Development") {
     app.use(morgan("dev"));
 }
 
@@ -105,7 +106,10 @@ app.use(
         resave: false,
         saveUninitialized: true,
         store: MongoStore.create({ mongoUrl }),
-        cookie: { maxAge: 3.6e6 * 24 }, // 24시간 유효
+        cookie: {
+            maxAge: 3.6e6 * 24,
+            secure: cookieSecure,
+        }, // 24시간 유효
     })
 );
 
@@ -126,7 +130,7 @@ app.use("/comment", commentRouter);
 app.use("/post", postRouter);
 app.use("/user", userRouter);
 
-const handleListen = () => console.log(`✅서버가 ${port}에서 실행중입니다`);
+const handleListen = () => console.log(`✅서버가 실행중입니다`);
 
 app.listen(port, handleListen);
 
