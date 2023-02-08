@@ -178,7 +178,6 @@ export const verifyEmail = async (req, res) => {
             return res.redirect("/");
         }
     } catch (error) {
-        cosnole.log(error);
         req.flash("error", "서버 오류가 발생했습니다\n불편함을 드려 죄송합니다");
         return res.redirect("/");
     }
@@ -213,7 +212,7 @@ export const noAccess = (req, res) => {
             return `이메일 인증이 안되었습니다.\n ${req?.user?.email}을 확인해주세요.\n 이메일이 없으시면 아래 재전송 버튼을 눌러주세요.`;
         }
         if (disAllowedType === "resendEmail") {
-            return `인증이메일을 보냈습니다.\n ${req?.user?.email}을 확인해주세요\n 이메일이 없으시면 아래 재전송 버튼을 눌러주세요.`;
+            return `인증이메일을 보냈습니다.\n ${req?.user?.email}을 확인해주세요.`;
         }
     };
 

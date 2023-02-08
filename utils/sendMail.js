@@ -22,7 +22,6 @@ const sendMail = async (email, verifyString, userId, redirectUrl) => {
             pass: process.env.NODEMAILER_PASSWORD,
         },
     });
-    console.log("1");
     await transport.sendMail({
         to: email,
         subject: "핸디짐에서 보낸 인증메일입니다",
@@ -30,7 +29,6 @@ const sendMail = async (email, verifyString, userId, redirectUrl) => {
             redirectUrl || ""
         }">인증링크</a>`,
     });
-    console.log("2");
 };
 
 export default sendMail;
