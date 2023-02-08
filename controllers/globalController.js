@@ -190,7 +190,7 @@ export const resendEmail = async (req, res, next) => {
         query: { redirectUrl },
     } = req;
     try {
-        sendMail(email, email_verify_string, _id, redirectUrl);
+        await sendMail(email, email_verify_string, _id, redirectUrl);
 
         req.flash("success", `인증이메일을 보냈습니다 ${email}을 확인하세요`);
 

@@ -36,7 +36,7 @@ globalRouter
 
 globalRouter.get("/logout", onlyUser, logout);
 
-globalRouter.get("/verify", onlyUser, verifyEmail);
+globalRouter.get("/verify", verifyEmail);
 
 globalRouter.get("/like", onlyUser, onlyEmailVerified, like);
 
